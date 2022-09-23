@@ -1,4 +1,5 @@
 <div align="center">
+Project entirely written in python and pygame. <br>
 <img src="./data/doc/header_image.png" width=400 height=390>
 <p>Game available over <a href="https://ibox-studios.itch.io/johns-adventure-chapter-1">here.</a></p>
 <br/>
@@ -8,12 +9,10 @@
 
 # John's Adventures : Chapter 1
 
+
 Welcome to game! The project started *seriously* at early August 2021 and ended in March 2022. 
 The games philosophy was introduced by our Story Writer. Whose idea was to find someone to bring his idea to life for a dear friend.
 Then one based student and his friends decided to make it come true by creating its first chapter.
-
-<br> 
-Welcome to John's Adventure! A project entirely written in python and pygame.
 
 
 ## Usage
