@@ -1,0 +1,67 @@
+{
+    "frames": 
+    {
+        "button.png": {
+            "frame": {"x": 27, "y": 85, "w":56, "h":12}
+        },
+        
+        "button_hover.png": {
+            "frame": {"x": 27, "y": 98, "w":56, "h":12}
+        },
+        
+        "keybind.png": {
+            "frame": {"x": 2, "y":85, "w":24, "h":10}
+        },
+
+        "catalog_button.png":{
+            "frame": {"x": 2, "y":111, "w":79, "h":41}
+        },
+
+        "interface_button.png":
+        {
+            "frame": {"x": 0, "y":54, "w":122, "h":30}
+        },
+
+        "inventory":
+        {
+            "frame": {"x": 104, "y": 0, "w":30, "h":26}
+        },
+
+        "inventory_hover":
+        {
+            "frame": {"x": 104, "y": 27, "w":30, "h":26}
+        },
+
+        "health":
+        {
+            "frame": {"x": 0, "y":0, "w": 72, "h":46}
+        },
+        
+        "level_status":
+        {
+            "frame": {"x": 73, "y":0, "w": 30, "h":26}
+        },
+        
+        "mouse.png":
+        {
+            "frame": {"x": 107, "y":115, "w": 12, "h":21}
+        },
+
+        "reward.png":
+        {
+            "frame": {"x": 86, "y":117, "w": 14, "h":15}
+        },
+
+        "chest_popup":
+        {
+            "frame": {"x": 91, "y": 85, "w": 40, "h":14}
+        },
+
+        "chest_popup_hover":
+        {
+            "frame": {"x": 91, "y": 100, "w": 40, "h":14}
+        }
+
+
+    }
+}

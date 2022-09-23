@@ -1,0 +1,94 @@
+{
+  "john_house": {"x":284, "y":59, "w":270, "h":257, "it":  1, "sc": 3, "crect": [22, 82, 225, 155], "ccty":200,
+    "sheet": "houses"},
+  "manos_hut":{"x":0, "y":0, "w":282, "h":344, "it":  1, "sc": 3, "crect":  [0, 123, 282, 170], "ccty": 277, "sheet": "houses",
+    "add_args":  {"particle":  {"name":  "smoke", "pos":  [80, 122], "size":  [25, 2], "player": "player"}
+  }},
+
+  "feevos_shop":{"x":557, "y": 64, "w":218, "h":213, "it":  1, "sc": 3, "crect":  [20, 82, 180, 130], "ccty":200, "sheet": "houses",
+    "add_args":  {"particle":  {"name":  "smoke", "pos":  [168, 15], "size":  [25, 2], "player": "player"}
+  }},
+  
+  "cave_entrance": {"x":776, "y":0, "w":424, "h":323, "it":  1, "sc": 3, "sort": true, "crect": [0, 20, 424, 305], "ccty":200,
+    "sheet": "houses"},
+
+  "school_entrance": {"x":0, "y":0, "w": 678, "h":317, "it":  1, "sc": 4, "sheet": "school_gate"},
+
+  "m_hut_bed":{"x": 209, "y":0, "w":66, "h":122, "it":  1, "sc": 3, "sheet":  "temp_open_world"},
+  "m_hut_fireplace":{"x":0, "y": 2, "w":74, "h":236, "it":  1, "sc": 3, "crect":  [0, 152, 43, 81], "ccty": 144,
+    "add_args": {
+      "polygon_light": [{"pos": [42, 179], "height": 55, "radius": 60, "dep_angle": -45, "end_angle": 90,
+        "color": [207, 112, 23], "dep_alpha": 180
+      }]
+  }, "sheet":  "temp_open_world"},
+
+
+  "m_hut_table":{"x":79, "y": 1, "w":126, "h":75, "it":  1, "sc": 3, "sheet":  "temp_open_world"},
+  "m_hut_sofa":{"x": 79, "y": 80, "w": 52, "h":133, "it":  1, "sc": 3, "sheet":  "temp_open_world"},
+
+  "tree": {"x":27, "y":112, "w":150, "h":158, "it":  1, "sc": 2.5, "crect":  [58, 113, 32, 44], "ccty": 125, "sheet":  "open_world"},
+  "grass": {"x":259, "y":249, "w":28, "h":26, "it": 1, "sc": 2, "col": false, "sort": false, "sheet":  "open_world"},
+  "bush": {"x":242, "y": 236, "w": 14, "h": 16, "it": 1, "sc": 2, "sort": false, "sheet":  "open_world"},
+  "cave_spike": {"x":205, "y": 233, "w": 10, "h": 27, "it": 1, "sc": 3, "crect":  [0, 15, 10, 12], "sort": true, "sheet":  "open_world"},
+  "cave_spike_small": {"x":210, "y": 261, "w": 6, "h": 12, "it": 1, "sc": 2, "sort": false, "sheet":  "open_world"},
+
+  "street_lamp": {"x": 185, "y": 144, "w": 68, "h": 76, "it": 1, "sc": 3, "crect": [25, 50, 15, 25], "ccty": 50,
+    "add_args": {"light_sources": [{"pos":  [11, 16], "radius": 100, "opacity": 150, "color": [255, 255, 51]},
+                                   {"pos":  [56, 16], "radius": 100, "opacity": 150, "color": [255, 255, 51]}]
+    }, "sheet":  "open_world"},
+
+  "sign_all": {"x": 186,"y":274, "w":52, "h":66, "it":  1, "sc": 3,"crect": [22, 47, 8, 18], "ccty": 65, "sheet":  "open_world"},
+
+  "sign_side_1": {"x":151 , "y":302, "w":52, "h":53, "it":  1, "sc": 3,"crect": [22, 38, 8, 15], "ccty": 65, "sheet":  "open_world"},
+  "sign_hori_1": {"x":36 , "y":289, "w":8, "h":66, "it":  1, "sc": 3, "crect": [0, 47, 8, 18], "ccty": 65, "sheet":  "open_world"},
+  "sign_1_2": {"x":257, "y":289, "w":30, "h":66, "it":  1, "sc": 3, "crect": [0, 47, 8, 18], "ccty": 65, "sheet":  "open_world"},
+  "sign_1_2_d": {"x":5 , "y":302, "w":29, "h":53, "it":  1, "sc": 3,"crect": [0, 38, 8, 15], "ccty": 65, "sheet":  "open_world"},
+  "sign_1_3": {"x":98 , "y":289, "w":52, "h":66, "it":  1, "sc": 3, "crect": [22, 47, 8, 18], "ccty": 65, "sheet":  "open_world"},
+  "sign_1_3_d": {"x":45 , "y":303, "w":52, "h":53, "it":  1, "sc": 3, "crect": [22, 47, 8, 18], "ccty": 65, "sheet":  "open_world"},
+
+
+  "side_fence": {"x":287 , "y":72, "w":8, "h":254, "it":  1, "sc": 3, "sheet":  "open_world"},
+  "hori_fence": {"x":53 , "y":72, "w":233, "h":36, "it":  1, "sc": 3, "sheet":  "open_world"},
+  "hori_fence_rev": {"x":53 , "y":72, "w":233, "h":36, "it":  1, "sc": 3, "sheet":  "open_world", "reverse":  true},
+
+
+  "ver_road": {"x": 333, "y": 2, "w": 34, "h": 353, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet":  "open_world"},
+  "ver_road_half": {"x": 297, "y": 72, "w": 33, "h": 161, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet":  "open_world"},
+  "ver_turn":{"x": 254, "y": 140, "w": 33, "h": 34, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet":  "open_world"},
+  "ver_end":{"x":  258, "y": 213, "w": 29, "h": 34, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet":  "open_world"},
+  "ver_dirt": {"x": 297, "y": 236, "w": 35, "h": 121, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet":  "open_world"},
+  "ver_sides": {"x": 181, "y": 109, "w": 33, "h": 33, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet": "open_world"},
+
+  "hori_road": {"x": 2, "y": 2, "w": 329, "h": 34, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet": "open_world"},
+  "hori_road_half": {"x": 166, "y": 37, "w": 164, "h": 34, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet": "open_world"},
+  "hori_turn":{"x": 217, "y": 109, "w": 34, "h": 33, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet": "open_world"},
+  "hori_end":{"x":  253, "y": 109, "w": 34, "h": 29, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet": "open_world"},
+  "hori_dirt": {"x": 42, "y": 39, "w": 123, "h": 34, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet": "open_world"},
+  "hori_sides": {"x": 253, "y": 176, "w": 33, "h": 34, "it": 1, "sc": 3, "col":  false, "sort": false, "sheet":  "open_world"},
+
+
+  "hill_side_outer":{"x":0, "y": 0, "w": 224, "h": 161, "it": 1, "sc": 3, "crect":  [0, 17, 224, 137], "sheet":  "hills"},
+  "hill_side_outer_rev": {"x":0, "y": 0, "w": 224, "h": 161, "it": 1, "sc": 3, "reverse": true ,"crect":  [0, 17, 224, 137], "sheet":  "hills"},
+  "hill_mid": {"x":225, "y": 0, "w": 224, "h": 162, "it": 1, "sc": 3, "crect":  [0, 17, 223, 137], "sheet":  "hills"},
+  "hill_side_inner":{"x":0, "y": 2, "w": 224, "h": 160, "it": 1, "sc": 3, "reverse": true, "crect":  [0, 17, 223, 137], "sheet":  "hills"},
+  "hill_side_inner_rev":{"x":0, "y": 2, "w": 224, "h": 160, "it": 1, "sc": 3, "reverse": true, "crect":  [0, 17, 223, 137], "sheet":  "hills"},
+  "hill_side_mid": {"x":450, "y": 0, "w": 224, "h": 222, "it": 1, "sc": 3, "crect":  [0, 17, 223, 208], "sheet":  "hills"},
+  "hill_side_mid_rev": {"x":450, "y": 0, "w": 224, "h": 222, "it": 1, "sc": 3, "reverse": true , "crect":  [0, 17, 223, 208], "sheet":  "hills"},
+
+
+  "c_wall_mid":{"x":36, "y": 1, "w": 158, "h": 73, "it": 1, "sc": 3, "crect": [0, 30, 158, 43], "sheet":  "cave_walls"},
+  "c_wall_corner":{"x":35, "y": 150, "w": 159, "h": 73, "it": 1, "sc": 3, "crect":  [0, 30, 158, 43], "sheet":  "cave_walls"},
+  "c_wall_corner_turn": {"x":35, "y": 76, "w": 159, "h": 73, "it": 1, "sc": 3, "crect":  [0, 30, 158, 43], "sheet":  "cave_walls"},
+  "c_wall_side": {"x":6, "y": 66, "w": 12, "h": 157, "it": 1, "sc": 3, "crect":  [0, 0, 0, 0], "sheet":  "cave_walls"},
+
+  "ladder": {"x":3, "y": 39, "w": 17, "h": 75, "it": 1, "sc": 4, "crect":  [0, 0, 0, 0], "sheet":  "open_world"},
+  "h_ladder": {"x":5, "y": 269, "w": 23, "h": 15, "it": 1, "sc": 4, "col": false, "sheet":  "open_world"},
+  "door": {"x":369, "y": 2, "w": 30, "h": 47, "it": 1, "sc": 4, "col": false, "sheet":  "open_world"},
+
+  "c_flipped_corner":{"x":35, "y": 150, "w": 159, "h": 73, "it": 1, "sc": 3, "crect":  [0, 30, 158, 43], "sheet":  "cave_walls",
+    "reverse": true
+  },
+  "c_flipped_corner_turn": {"x":35, "y": 76, "w": 159, "h": 73, "it": 1, "sc": 3, "crect":  [0, 30, 158, 43], "sheet":  "cave_walls",
+    "reverse": true
+  }
+}

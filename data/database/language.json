@@ -1,0 +1,26 @@
+{
+  "mau": {
+    "txt": "Meow Meow Meow."
+  },
+
+  "candy": {
+    "txt": "Meow Meow Meow."
+  },
+
+  "candy_hut": {
+    "txt": "'Zzzz'. She is sleeping,\n better not wake her up." 
+  },
+
+  "manos_tr": {
+    "txt": "Hello John\n are you ready for some training\n beat those dummies and\n come back to me"
+  },
+
+  "cynthia": {
+    "txt": "Good morning brother\nYou look pale. is everything alright?\nAnyway Manos is waiting for you in the Training field.",
+    "txt2": "I will be in school with alexia, see you around."
+  },
+
+  "alex": {
+    "txt": "john! you need to hurry up!\nmonsters are attacking our area, cynthia run away\n make sure to check if she is in the house"
+  }
+}
