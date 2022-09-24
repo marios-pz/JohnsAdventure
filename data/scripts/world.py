@@ -18,7 +18,7 @@ from .PLAYER.player_sub.tools import set_camera_to
 
 from .PLAYER.player_sub.animation_handler import user_interface
 
-import asyncio
+
 
 from .levels import (
     Gymnasium,
@@ -51,12 +51,6 @@ TITLE_TRANSLATOR = {
     "cave_room_2": "C-Floor 2",
     "cave_passage": "Cave Passage",
 }
-
-
-def main(debug=False, first_state="player_room", no_rect=False):
-    return GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
-
-
 class GameManager:
     """
 

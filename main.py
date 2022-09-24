@@ -6,18 +6,18 @@
 
 """
 
-from data.scripts.world import main
+from data.scripts.world import GameManager
 
 import asyncio
 
 
-async def amain():
+async def main(debug=False, first_state="player_room", no_rect=False):
+    while 1:
+        gm = GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
 
-    game_instance = main()
-    game_instance.update()
-
-    await asyncio.sleep(0)
+        gm.update()
+        await asyncio.sleep(0)
 
 
 if __name__ == "__main__":
-    asyncio.run(amain())
+    asyncio.run(main())
