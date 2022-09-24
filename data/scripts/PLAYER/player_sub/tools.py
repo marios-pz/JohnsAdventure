@@ -8,7 +8,7 @@ from copy import copy
 from .animation_handler import update_attack
 
 pygame.font.init()
-font = pygame.font.Font(resource_path("data/database/menu-font.ttf"), 35)
+font = pygame.font.Font( resource_path("data/database/menu-font.ttf"), 35)
 
 
 def get_crit(mod_dmg, wpn):

@@ -83,7 +83,7 @@ def flip_vertical(img):
 def flip_horizontal(img):
     return pygame.transform.flip(img, False, True)
 
-
+@lru_cache(1000)
 def get_sprite(spritesheet: pygame.Surface, x, y, w, h) -> pygame.Surface:  # Gets NPC from spritesheet
 
     rect = pygame.Rect(
