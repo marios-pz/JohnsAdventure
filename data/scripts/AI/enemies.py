@@ -10,7 +10,6 @@ class Dummy(Enemy):
         level_instance,
         screen: pg.Surface,
         pos: tuple[int, int],
-        player: object,
         hp: int = 100,
         xp_drop=105,
     ):
@@ -18,7 +17,6 @@ class Dummy(Enemy):
             level_instance,
             screen,
             pos,
-            player,
             hp=100,
             xp_drop=210,
             custom_rect=[8 * 4 + 2, 34 + 17, (24 - 8) * 4, 34 * 4],
@@ -43,7 +41,6 @@ class ShadowDummy(Enemy):
         level_instance,
         screen: pg.Surface,
         pos: tuple[int, int],
-        player: object,
         hp: int = 100,
         xp_drop=65,
     ):
@@ -59,7 +56,6 @@ class ShadowDummy(Enemy):
             level_instance,
             screen,
             pos,
-            player,
             hp=65,
             xp_drop=65,
             custom_rect=[10, 25, 29 * 3, 24 * 3],
@@ -100,7 +96,6 @@ class Guardian(Enemy):
         level_instance,
         screen: pg.Surface,
         pos: tuple[int, int],
-        player: object,
         hp: int = 100,
         xp_drop=160,
     ):
@@ -108,7 +103,6 @@ class Guardian(Enemy):
             level_instance,
             screen,
             pos,
-            player,
             hp=175,
             xp_drop=210,
             custom_rect=[25 * 5 + 10, 50, 29 * 2, 45 * 2 + 25],
@@ -150,7 +144,6 @@ class Goblin(Enemy):
         level_instance,
         screen: pg.Surface,
         pos: tuple[int, int],
-        player: object,
         hp: int = 100,
         xp_drop=45,
     ):
@@ -158,7 +151,6 @@ class Goblin(Enemy):
             level_instance,
             screen,
             pos,
-            player,
             hp=65,
             xp_drop=45,
             custom_rect=[15, 35, 17 * 2, 25 * 2 + 10],
@@ -200,7 +192,6 @@ class BigShadowDummy(Enemy):
         level_instance,
         screen: pg.Surface,
         pos: tuple[int, int],
-        player: object,
         hp: int = 1200,
         xp_drop: int = 700,
     ):
@@ -210,17 +201,16 @@ class BigShadowDummy(Enemy):
             level_instance,
             screen,
             pos,
-            player,
             hp,
             xp_drop,
             custom_rect=[50, 50, 29 * 4, 24 * 6],
             enemy_type="boss",
             intensiveness=calc_intensity,
             vel=1,
-            up_hitbox=(29 * 4, 24 * 7),
-            down_hitbox=(29 * 4, 24 * 7),
-            left_hitbox=(29 * 4, 24 * 7),
-            right_hitbox=(29 * 4, 24 * 7),
+            up_hitbox=(29 * 8, 24 * 7),
+            down_hitbox=(29 * 8, 24 * 7),
+            left_hitbox=(29 * 8, 24 * 7),
+            right_hitbox=(29 * 8, 24 * 7),
         )
 
         self.boss_name = "The Big Dummie"

@@ -25,6 +25,8 @@ from ..PLAYER.player import Player
 from ..particle_system import SmokeManager, DustManager, Shadow_Manager
 from math import ceil, pi, cos, sin, tan, atan, degrees, sqrt, atan2
 
+from data.scripts.PLAYER import player
+
 vec = pg.math.Vector2
 
 
@@ -41,7 +43,6 @@ class Enemy:
         level_instance,
         screen: pg.Surface,
         pos: tuple[int, int],
-        player: Any,  # TODO , remove player from here, or the parameters where he is passed (he is used only in move, hit methods)
         hp: int = 100,
         xp_drop=int,
         custom_rect=None,
@@ -107,13 +108,13 @@ class Enemy:
         # How powerful the enemy is
         self.intensiveness = intensiveness
 
-        self.player = player
         # SHADOW PARTICLES only for shadow monsters and bosses
         if enemy_type in ["shadow", "boss"]:
+            pass
             # Initialize Shadow Particles only if they are shadow monsters
-            self.aura_particles = Shadow_Manager(
-                self.intensiveness, self.player, self.screen, self
-            )
+            # self.aura_particles = Shadow_Manager(
+            #    self.intensiveness, self.player, self.screen, self
+            # )
 
         self.particle_scroller = None
 
@@ -520,7 +521,7 @@ class Enemy:
                 directions.remove(blocked_direction)
         self.direction = choice(directions)
 
-    def check_for_hit(self, dt, p_rect):
+    def check_for_hit(self, dt, p_rect, player):
         """
 
         Dealing damage to the player.
@@ -552,28 +553,25 @@ class Enemy:
             pg.draw.rect(self.screen, (255, 0, 0), hit_dict[self.direction])
 
             if hit_dict[self.direction].colliderect(t_pl_rect):
-                self.player.health_target = self.player.health - self.damage
+                player.health_target = player.health - self.damage
                 if self.knock_back["duration"] != 0:
                     vel = (
-                        pg.Vector2(self.player.rect.topleft)
-                        - pg.Vector2(self.pos)
+                        pg.Vector2(player.rect.topleft) - pg.Vector2(self.pos)
                     ).normalize() * self.knock_back["vel"]
-                    self.player.knocked_back = True
-                    self.player.knock_back_vel = vel
-                    self.player.knock_back_vel_y = vel.length()
-                    self.player.knock_back_duration = self.knock_back[
-                        "duration"
-                    ]
-                    self.player.knock_back_friction = -vel
-                    self.player.knock_back_friction.scale_to_length(
+                    player.knocked_back = True
+                    player.knock_back_vel = vel
+                    player.knock_back_vel_y = vel.length()
+                    player.knock_back_duration = self.knock_back["duration"]
+                    player.knock_back_friction = -vel
+                    player.knock_back_friction.scale_to_length(
                         self.knock_back["friction"]
                     )
-                    self.player.start_knock_back = pg.time.get_ticks()
+                    player.start_knock_back = pg.time.get_ticks()
 
             # No matter condition, after the hit the enemy must go back to chasing
             self.status = "CHASING"
 
-    def move(self, dt: float) -> None:
+    def move(self, dt: float, player: Any) -> None:
 
         if self.got_stuck:
             if (
@@ -597,10 +595,10 @@ class Enemy:
         self.hitbox_rect = col_rect
         # get player's rect
         pl_rect = pg.Rect(
-            self.player.rect.x - 15,
-            self.player.rect.y + 70,
-            self.player.rect.w - 70,
-            self.player.rect.h - 115,
+            player.rect.x - 15,
+            player.rect.y + 70,
+            player.rect.w - 70,
+            player.rect.h - 115,
         )
 
         # ___ CHECK ENEMY TYPE ____
@@ -645,7 +643,7 @@ class Enemy:
                     )
                     self.just_attacked = pg.time.get_ticks()
                     self.id_anim = 0
-                    self.check_for_hit(dt, pl_rect)
+                    self.check_for_hit(dt, pl_rect, player)
                     self.moving = True
 
                 case "CHASING":
@@ -653,8 +651,7 @@ class Enemy:
                         self.attacking = False
                         self.moving = True
                         self.tp_V = (
-                            vec(self.player.rect.center)
-                            - vec(self.rect.center)
+                            vec(player.rect.center) - vec(self.rect.center)
                         ).normalize() * self.BASE_VEL
 
                         self.direction = (
@@ -685,16 +682,16 @@ class Enemy:
                     except ValueError:
                         pass
 
-    def logic(self, dt: float) -> None:
+    def logic(self, dt: float, player: Any) -> None:
 
         """Here we pass all the behavior of the enemy, movement,
         attacks, spells..."""
 
-        self.move(dt)
+        self.move(dt, player)
         self.update_states()
         self.animate()
 
-    def update(self, scroll, dt) -> None:
+    def update(self, scroll, dt, player) -> None:
         self.scroll = scroll
 
         """We gather all the methods needed to make the enemy work here.
@@ -760,7 +757,7 @@ class Enemy:
 
         # print(self.direction, self.moving, self.idling, self.move_ability)
         # call logic method
-        self.logic(dt)
+        self.logic(dt, player)
 
         # ___SHADOW TYPE MONSTERS GET A OUTLINE/PARTICLES__
         if self.enemy_type == "shadow":
