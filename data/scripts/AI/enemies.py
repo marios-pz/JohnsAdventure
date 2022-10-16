@@ -180,7 +180,7 @@ class Goblin(Enemy):
             flip_anim=True,
         )
 
-        self.damage = 2
+        self.damage = 3
         self.custom_center = (25 * 2 + 10) * 4 / 5
         self.xp_drop = self.xp_available = xp_drop
         self.scale = 2
@@ -207,13 +207,14 @@ class BigShadowDummy(Enemy):
             enemy_type="boss",
             intensiveness=calc_intensity,
             vel=1,
-            up_hitbox=(29 * 8, 24 * 7),
-            down_hitbox=(29 * 8, 24 * 7),
-            left_hitbox=(29 * 8, 24 * 7),
-            right_hitbox=(29 * 8, 24 * 7),
+            up_hitbox=(29 * 8, 24 * 13),
+            down_hitbox=(29 * 8, 24 * 13),
+            left_hitbox=(29 * 8, 24 * 13),
+            right_hitbox=(29 * 8, 24 * 13),
         )
 
         self.boss_name = "The Big Dummie"
+        self.attacking_distance = 180
 
         # custom center is for the shadow aura
         self.custom_center = 24 * 6 * 4 / 5

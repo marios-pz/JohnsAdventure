@@ -492,7 +492,7 @@ class Enemy:
         if self.dead:
             try:
                 self.end_instance()
-            except Exception as e:
+            except:
                 pass
 
             self.show_life_bar = False
@@ -546,8 +546,8 @@ class Enemy:
             re = t_e_rect.topright - vec(0, 30)
 
             if self.enemy_type == "boss":
-                le = t_e_rect.center - vec(hit_d["left"][0] + 50, 30)
-                re = t_e_rect.center - vec(50, 30)
+                le = t_e_rect.center - vec(hit_d["left"][0] - 40, 160)
+                re = t_e_rect.center - vec(50, 160)
 
             hit_dict = {
                 "left": pg.Rect(le, hit_d["left"]),
