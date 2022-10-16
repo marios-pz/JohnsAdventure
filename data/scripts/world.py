@@ -1,3 +1,4 @@
+from typing import Any
 from .PLAYER.player import Player
 from .PLAYER.inventory import *
 from .sound_manager import SoundManager
@@ -18,12 +19,11 @@ from .PLAYER.player_sub.tools import set_camera_to
 
 from .PLAYER.player_sub.animation_handler import user_interface
 
+from .debugging import Debugging
 
 
 from .levels import (
     Gymnasium,
-    get_cutscene_played,
-    play_cutscene,
     GameState,
     PlayerRoom,
     Kitchen,
@@ -38,6 +38,8 @@ from .levels import (
     Credits,
 )
 
+from .levels import get_cutscene_played, play_cutscene
+
 TITLE_TRANSLATOR = {
     "player_room": "John's Room",
     "johns_garden": "Open World",
@@ -51,6 +53,8 @@ TITLE_TRANSLATOR = {
     "cave_room_2": "C-Floor 2",
     "cave_passage": "Cave Passage",
 }
+
+
 class GameManager:
     """
 
@@ -58,38 +62,47 @@ class GameManager:
 
     """
 
-    pg.init()
+    def __init__(
+        self,
+        debug: bool = False,
+        first_state: str = "player_room",
+        no_rect: bool = False,
+    ):
 
-    pg.event.set_allowed(
-        [
-            pg.QUIT,
-            pg.KEYDOWN,
-            pg.KEYUP,
-            pg.MOUSEBUTTONDOWN,
-            pg.MOUSEWHEEL,
-            pg.MOUSEBUTTONUP,
-        ]
-    )
+        pg.init()
 
-    # FONTS
-    pg.mixer.pre_init(
-        44100, 32, 2, 4096
-    )  # Frequency, 32 Bit sound, channels, buffer
-    pg.display.set_caption("iBoxStudio Engine")
-    pg.mouse.set_visible(False)
+        pg.event.set_allowed(
+            [
+                pg.QUIT,
+                pg.KEYDOWN,
+                pg.KEYUP,
+                pg.MOUSEBUTTONDOWN,
+                pg.MOUSEWHEEL,
+                pg.MOUSEBUTTONUP,
+            ]
+        )
 
-    # CONSTS
+        # FONTS
+        pg.mixer.pre_init(
+            44100, 32, 2, 4096
+        )  # Frequency, 32 Bit sound, channels, buffer
+        pg.display.set_caption("iBoxStudio Engine")
+        pg.mouse.set_visible(False)
 
-    display_flags: pg.constants = pg.SRCALPHA | pg.DOUBLEBUF | pg.HWSURFACE | pg.RESIZABLE | pg.SCALED | pg.FULLSCREEN
+        # CONSTS
 
-    DISPLAY = pg.display.set_mode((1280, 720), flags=display_flags)
+        # | pg.DOUBLEBUF | pg.SCALED | pg.FULLSCREEN
 
-    pg.display.set_icon(l_path("data/ui/logo.png", True))
-    W, H = DISPLAY.get_size()
+        self.DISPLAY: pg.Surface = pg.display.set_mode(
+            (1280, 720), flags=pg.SRCALPHA | pg.HWSURFACE | pg.RESIZABLE
+        )
 
-    FPS = 55
+        pg.display.set_icon(l_path("data/ui/logo.png", True))
 
-    def __init__(self, debug=False, first_state="player_room", no_rect=False):
+        self.W: int = self.DISPLAY.get_width()
+        self.H: int = self.DISPLAY.get_height()
+
+        self.FPS = 55
 
         # ------------- SPRITESHEET ---------------
         self.ui = UI_Spritesheet("data/ui/UI_spritesheet.png")
@@ -263,7 +276,7 @@ class GameManager:
         self.dt = self.framerate.tick(self.FPS) / 1000
 
         if (
-                not self.menu and not self.loading and not self.death_screen
+            not self.menu and not self.loading and not self.death_screen
         ):  # if the game is playing
             if self.state != "credits":
                 user_interface(
@@ -305,19 +318,19 @@ class GameManager:
                 time_elapsed = pg.time.get_ticks() - self.begin_new_level_popup
                 if time_elapsed < self.falling_duration:
                     self.new_level_popup_rect.y = (
-                                                          self.popup_target_y / self.falling_duration
-                                                  ) * time_elapsed
+                        self.popup_target_y / self.falling_duration
+                    ) * time_elapsed
                 elif (
-                        self.falling_duration
-                        < time_elapsed
-                        < self.standing_duration
+                    self.falling_duration
+                    < time_elapsed
+                    < self.standing_duration
                 ):
                     pass
                 elif (
-                        time_elapsed
-                        > self.standing_duration
-                        + self.falling_duration
-                        + self.fade_duration
+                    time_elapsed
+                    > self.standing_duration
+                    + self.falling_duration
+                    + self.fade_duration
                 ):
                     self.showing_nl_popup = False
                 else:
@@ -326,9 +339,9 @@ class GameManager:
                             255
                             - 255
                             * (
-                                    time_elapsed
-                                    - self.falling_duration
-                                    - self.standing_duration
+                                time_elapsed
+                                - self.falling_duration
+                                - self.standing_duration
                             )
                             / self.fade_duration
                         )
@@ -348,8 +361,8 @@ class GameManager:
             self.DISPLAY.fill((255, 255, 255))
 
             if (
-                    pg.time.get_ticks() - self.delay_scaling > 25
-                    and self.start_scale - self.current_scale > 0.75
+                pg.time.get_ticks() - self.delay_scaling > 25
+                and self.start_scale - self.current_scale > 0.75
             ):
                 self.delay_scaling = pg.time.get_ticks()
                 self.current_scale += 0.1
@@ -385,7 +398,7 @@ class GameManager:
         raise SystemExit
 
     def start_new_level(
-            self, level_id, last_state="none", first_pos=None, respawn=False
+        self, level_id, last_state="none", first_pos=None, respawn=False
     ):
 
         if level_id == "credits":
@@ -409,10 +422,16 @@ class GameManager:
                 self.last_game_state = copy(self.game_state)
                 self.last_positions = {}
                 for obj_ in self.game_state.objects:
-                    if not isinstance(obj_, pg.Rect):
-                        self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
-                    else:
-                        self.last_positions[id(obj_)] = copy(obj_.topleft)
+                    print(obj_)
+                    try:
+                        if not isinstance(obj_, pg.Rect):
+                            self.last_positions[id(obj_)] = copy(
+                                obj_.rect.topleft
+                            )
+                        else:
+                            self.last_positions[id(obj_)] = copy(obj_.topleft)
+                    except AttributeError:
+                        pass
                 must_store_begin_pos = False
             else:
                 must_store_begin_pos = True
@@ -451,8 +470,8 @@ class GameManager:
         while run_loading:
             # check if loading screen has to be ended
             is_load_alive = (
-                    loading_thread.is_alive()
-                    or pg.time.get_ticks() - start < load_type[1]
+                loading_thread.is_alive()
+                or pg.time.get_ticks() - start < load_type[1]
             )
 
             # don't ask for a key if it's just an in-between level loading. (just exit the loading)
@@ -467,11 +486,11 @@ class GameManager:
                     del loading_thread  # quit the thread
                     self.quit_()
                 elif (
-                        event.type == pg.KEYDOWN
+                    event.type == pg.KEYDOWN
                 ):  # ask for a key to leave the loading
                     if (
-                            event.key == self.loading_screen.get_key()
-                            and not is_load_alive
+                        event.key == self.loading_screen.get_key()
+                        and not is_load_alive
                     ):
                         run_loading = False
             self.DISPLAY.fill((0, 0, 0))  # draw background
@@ -512,6 +531,7 @@ class GameManager:
         if not respawn:
             if must_store_begin_pos:
                 self.last_positions = {}
+                print(self.game_state.objects)
                 for obj_ in self.game_state.objects:
                     if not isinstance(obj_, pg.Rect):
                         self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
@@ -616,8 +636,8 @@ class GameManager:
 
                     if event.type == pg.KEYDOWN:
                         if (
-                                event.key
-                                == self.player.data["controls"]["interact"]
+                            event.key
+                            == self.player.data["controls"]["interact"]
                         ):
                             self.respawn()
                             self.player.health = self.player.maximum_health
@@ -645,8 +665,8 @@ class GameManager:
                     self.end_game_ui_texts[0], self.end_game_ui_rects[0]
                 )
                 if (
-                        floor(pg.time.get_ticks() / 1000) % 2 == 0
-                        and self.black_layer.get_alpha() == 200
+                    floor(pg.time.get_ticks() / 1000) % 2 == 0
+                    and self.black_layer.get_alpha() == 200
                 ):
                     self.DISPLAY.blit(
                         self.end_game_ui_texts[1], self.end_game_ui_rects[1]
@@ -676,8 +696,8 @@ class GameManager:
                     )
 
                     if (
-                            not self.game_state.ended_script
-                            and len(self.game_state.camera_script) > 0
+                        not self.game_state.ended_script
+                        and len(self.game_state.camera_script) > 0
                     ):
                         self.cutscene_engine.init_script(
                             self.game_state.camera_script
@@ -697,128 +717,7 @@ class GameManager:
                         self.player.backup_hp
                     )  # Return full hp
 
+            print(self.framerate.get_fps())
+            print(self.player.rect.topleft)
+
             self.routine()
-
-
-class Debugging:
-    def __init__(self, display, game_instance, no_rect):
-
-        self.no_rect = no_rect
-        self.screen = display
-        self.game = game_instance
-        self.player = self.game.player
-
-        self.colors = {
-            "interaction_rect": (255, 255, 0),
-            "collision_rect": (0, 255, 0),
-            "attacking_rect": (255, 0, 0),
-            "exit_rect": (255, 255, 0),
-            "void": (0, 0, 0),
-        }
-
-        self.font = pg.font.Font(
-            resource_path("data/database/menu-font.ttf"), 15
-        )
-
-    def draw_text(self, txt, color, pos, bottomleft=False):
-        text = self.font.render(txt, True, color)
-        rect = text.get_rect(topleft=pos)
-        if bottomleft:
-            rect.bottomleft = pos
-        self.screen.blit(text, rect)
-
-    def update(self):
-
-        """Primitive debugging system showing rects.
-
-        TODO: Improve it to show stats. And make it more readable."""
-
-        if not self.no_rect:
-            if not self.game.menu and not self.game.loading:
-                scroll = self.player.camera.offset.xy
-                objects = copy(self.game.game_state.objects)
-                objects.append(self.player)
-
-                for obj in objects:
-                    # Remove this once debugging stops
-                    if type(obj) is pg.Rect:
-                        pg.draw.rect(
-                            self.screen,
-                            self.colors["collision_rect"],
-                            pg.Rect(
-                                obj.topleft - self.player.camera.offset.xy,
-                                obj.size,
-                            ),
-                            2,
-                        )
-                    else:
-                        for key, color in self.colors.items():
-                            if hasattr(obj, key):
-                                attr = getattr(obj, key)
-                                if type(attr) is pg.Rect:
-                                    pg.draw.rect(self.screen, color, attr, 1)
-
-                        col_rect = copy(obj.rect)
-                        if hasattr(obj, "IDENTITY"):
-                            if obj.IDENTITY in ["NPC", "PROP", "ENEMY"]:
-                                col_rect.topleft -= scroll
-                            if hasattr(obj, "d_collision"):
-                                col_rect.topleft += pg.Vector2(
-                                    *obj.d_collision[:2]
-                                )
-                                col_rect.size = obj.d_collision[2:]
-                            pg.draw.rect(
-                                self.screen,
-                                self.colors["collision_rect"],
-                                col_rect,
-                                2,
-                            )
-
-                            if obj.IDENTITY == "ENEMY":
-                                self.draw_text(
-                                    f"STATUS: {obj.status}",
-                                    (255, 255, 255),
-                                    obj.rect.topleft - scroll,
-                                )
-
-                exit_rects = self.game.game_state.exit_rects
-                for exit_rect in exit_rects:
-                    r = copy(exit_rects[exit_rect][0])
-                    r.topleft -= scroll
-                    pg.draw.rect(self.screen, self.colors["exit_rect"], r, 2)
-                    self.draw_text(
-                        str("To:" + exit_rect[0]),
-                        self.colors["exit_rect"],
-                        r.topleft,
-                        bottomleft=True,
-                    )
-
-                pl_col_rect = copy(self.player.rect)
-                pl_col_rect.topleft -= scroll
-                pl_col_rect.topleft -= pg.Vector2(15, -70)
-                pl_col_rect.w -= 70
-                pl_col_rect.h -= 115
-                pg.draw.rect(
-                    self.screen, self.colors["collision_rect"], pl_col_rect, 1
-                )
-
-                try:
-                    pg.draw.rect(
-                        self.screen,
-                        (255, 0, 0),
-                        self.player.attacking_hitbox,
-                        2,
-                    )
-                except TypeError:
-                    pass
-
-                position = (
-                        self.player.rect.topleft - self.player.camera.offset.xy
-                )
-                itr_box = pg.Rect(
-                    *position, self.player.rect.w // 2, self.player.rect.h // 2
-                )
-                # Manual Position tweaks
-                itr_box.x -= 17
-                itr_box.y += 45
-                pg.draw.rect(self.screen, (0, 0, 0), itr_box, 2)

@@ -10,6 +10,8 @@ from random import gauss, randint
 from ..PLAYER.player import *
 from ..PLAYER.inventory import *
 from ..utils import resource_path, load, l_path, flip_vertical, flip_horizontal
+
+
 from ..AI.enemy import Enemy
 from ..AI.death_animator import DeathManager
 from .lights_manager import LightManager
@@ -23,7 +25,6 @@ def get_cutscene_played(id_: str):
 
 
 vec = pg.math.Vector2
-
 
 
 class GameState:
@@ -78,7 +79,9 @@ class GameState:
         # dead objects animations
         self.death_anim_manager = DeathManager(self.screen, self.player.camera)
 
-        self.green_leaf = pg.Surface((DISPLAY.get_width(), DISPLAY.get_height()))
+        self.green_leaf = pg.Surface(
+            (DISPLAY.get_width(), DISPLAY.get_height())
+        )
         self.green_leaf.fill((61, 121, 6))
         self.green_leaf.convert()
 
@@ -377,13 +380,22 @@ class GameState:
 
             if hasattr(obj, "move_ability"):
                 objects = copy(self.objects)  # gets all objects
-                objects.remove(obj)  # remove the object that we are currently checking for collisions
-                objects.append(self.player)  # add the player in the object list bc it's still a collider
+                objects.remove(
+                    obj
+                )  # remove the object that we are currently checking for collisions
+                objects.append(
+                    self.player
+                )  # add the player in the object list bc it's still a collider
                 for obj_ in objects:
                     if hasattr(obj_, "IDENTITY"):
                         if obj_.IDENTITY == "PROP":
-                            if not obj_.collidable or vec(obj.rect.center).distance_to(obj_.rect.center) > \
-                                    max(obj.rect.size) + max(obj_.rect.size):
+                            if not obj_.collidable or vec(
+                                obj.rect.center
+                            ).distance_to(obj_.rect.center) > max(
+                                obj.rect.size
+                            ) + max(
+                                obj_.rect.size
+                            ):
                                 objects.remove(obj_)
                 self.collision_system(obj, objects)  # handle collisions
 
@@ -392,9 +404,13 @@ class GameState:
         for obj_ in copy(objects):
             if hasattr(obj_, "IDENTITY"):
                 if obj_.IDENTITY == "PROP":
-                    if not obj_.collidable or \
-                            pg.Vector2(self.player.rect.topleft).distance_to(obj_.rect.center) > \
-                            max(obj_.rect.size) + max(self.player.rect.size):
+                    if not obj_.collidable or pg.Vector2(
+                        self.player.rect.topleft
+                    ).distance_to(obj_.rect.center) > max(
+                        obj_.rect.size
+                    ) + max(
+                        self.player.rect.size
+                    ):
                         objects.remove(obj_)
 
         self.collision_system(self.player, objects)
@@ -439,459 +455,3 @@ class GameState:
                         self.player.is_interacting = False
                         self.player.npc_text = ""
                         return exit_state
-
-    """These are now generation methods, to generate procedurally roads, hills and every other type of object
-    that is in open_world.json"""
-
-    def build_road(
-        self,
-        start_pos: tuple[int, int],
-        n_road: int,
-        type_r: str = "",
-        start_type: str = "",
-        end_type: str = "",
-        types: list = [],
-    ):
-        """Function to procedurally generate roads
-        Parameters
-        ----------
-        start_pos : tuple[int, int]
-                    The position of the first road.
-        n_road : int
-                 The number of roads.
-        type_r : str
-                 The type of the roads generated (except end and start)
-        start_type : str
-                     *Optional* The type of the road first generated
-        end_type : str
-                   *Optional* The type of the last generated road
-        types : list
-                *Optional* The generation will follow the list of types
-        """
-
-        roads = []  # list to store all the generated roads
-        current_pos = list(
-            start_pos
-        )  # first pos, will be incremented according to the added roads
-        default = type_r if type_r != "" else "ver_road"
-        if not types:  # if types is empty
-            for i in range(n_road):
-                if end_type != "" and i == n_road - 1:
-                    road = end_type
-                elif start_type != "" and i == 0:
-                    road = start_type
-                else:
-                    road = default
-                new_road = self.get_new_road_object(road, current_pos)
-                roads.append(new_road)
-                if "hori" in road:
-                    current_pos[0] += new_road.current_frame.get_width()
-                else:
-                    current_pos[1] += new_road.current_frame.get_height()
-        else:
-            for index, road in enumerate(types):
-                new_road = self.get_new_road_object(road, current_pos)
-                if "hori" in road:
-                    current_pos[0] += new_road.current_frame.get_width()
-                else:
-                    current_pos[1] += new_road.current_frame.get_height()
-                roads.append(new_road)
-        return roads
-
-    def generate_chunk(
-        self,
-        type_: str,
-        x: int,
-        y: int,
-        row: int,
-        col: int,
-        step_x: int,
-        step_y: int,
-        randomize: int = 20,
-    ) -> list:
-
-        """Generates a grid of objects, and randomize the positions a little, in order it not to look too much
-        grid-ish, and more realistic.
-        Parameters
-        ----------
-        type_ : str
-                The type of object that will be generated.
-        x : int
-            x position of the beginning of the grid.
-        y : int
-            y position of the beginning of the grid.
-        row : int
-              Number of rows.
-        col : int
-              Number of columns.
-        step_x : int
-                 Width separating each generated object.
-        step_y : int
-                 Height separating each generated object.
-        randomize : int
-                    *Optional* Using gaussian repartition, randomize is moving randomly each objects in the grid, in
-                    order to make the generation more realistic and less strict.
-        """
-
-        return [
-            self.prop_objects[type_](
-                (
-                    x + c * step_x + int(gauss(0, randomize)),
-                    y + r * step_y + int(gauss(0, randomize)),
-                )
-            )
-            for c in range(col)
-            for r in range(row)
-        ]
-
-    def generate_hills(
-        self,
-        direction: str,
-        dep_pos: tuple[int, int],
-        n_hills: int,
-        mid_type: str = "left",
-        end_type: str = "hill_side_inner",
-        no_begin: bool = False,
-        start_type: str = "none",
-    ) -> list:
-        """Generate hills procedurally.
-        Parameters
-        ----------
-        direction : str
-                    Direction of the hill -> "down" to go down vertically, "right" to go right horizontally.
-        dep_pos : tuple[int, int]
-                  Basic position of the hill, the position of the first hill part.
-        n_hills : int
-                  The number of hills (counting the corners).
-        mid_type : str
-                   The type of the middle hills (the ones between the two ends).
-        end_type : str
-                   The type of the last hill.
-        no_begin : bool
-                   Begins directly the hill by a middle.
-        start_type : str
-                     Type of first hill
-        """
-
-        corner_left = "hill_side_outer"
-        corner_right = "hill_side_outer_rev"
-        hill_middle = "hill_mid"
-        hill_middle_down = "hill_mid" if mid_type == "left" else mid_type
-        # dictionary containing all the sizes
-        sizes = {
-            corner_left: self.prop_objects[corner_left](
-                (0, 0)
-            ).current_frame.get_size(),
-            corner_right: self.prop_objects[corner_right](
-                (0, 0)
-            ).current_frame.get_size(),
-            hill_middle: self.prop_objects[hill_middle](
-                (0, 0)
-            ).current_frame.get_size(),
-            hill_middle_down: self.prop_objects[hill_middle_down](
-                (0, 0)
-            ).current_frame.get_size(),
-        }
-
-        # first pos of the first hill, will be incremented
-        current_pos = list(dep_pos)
-        hills = []  # list that contains all the generated hills
-
-        if not no_begin and start_type == "none":
-            if (
-                direction == "right"
-                or direction == "up"
-                or direction == "down"
-            ):
-                hills.append(self.prop_objects[corner_left](dep_pos))
-            else:
-                hills.append(self.prop_objects[corner_right](dep_pos))
-
-            # according to the direction, increment the position for the next hill according to the size of the
-            # hill currently being added
-            match direction:
-                case "right":
-                    current_pos[0] += sizes[corner_left][0]
-                case "down":
-                    current_pos[1] += sizes[corner_left][1]
-                    current_pos[1] -= 102
-        elif not no_begin and start_type != "none":
-            hills.append(self.prop_objects[start_type](dep_pos))
-            match direction:
-                case "right":
-                    current_pos[0] += sizes[start_type][0]
-                case "down":
-                    current_pos[1] += sizes[start_type][1]
-                    current_pos[1] -= 102
-
-        # n_hills - 2 because the ending and starting hills are generated outside the loop
-        for i in range(n_hills - 2):
-            new_hill = None
-            # according to the direction, increment the position for the next hill according to the size of the
-            # hill currently being added
-            match direction:
-                case "right":
-                    new_hill = self.prop_objects[hill_middle](current_pos)
-                    current_pos[0] += sizes[hill_middle][0]
-                case "down":
-                    new_hill = self.prop_objects[hill_middle_down](current_pos)
-                    current_pos[1] += sizes[hill_middle_down][1]
-
-                    # "cancel" the gap that the sprites are applying (can't take the height of the sprite without
-                    # generating a graphical gap
-                    current_pos[1] -= 51
-                case _:
-                    pass
-            if new_hill is not None:
-                # appends the generated hill to the list
-                hills.append(new_hill)
-
-        # add the last hill
-        if end_type != "none":
-            hills.append(self.prop_objects[end_type](current_pos))
-
-        return hills
-
-    def get_new_road_object(self, name, pos):
-        direction = "H" if "hori" in name else "V"  # get the direction
-        flip = {
-            "H": "H" in name,
-            "V": "V" in name,
-        }  # determine the axis to flip
-        if flip["V"] and flip["H"]:
-            name = name[2:]  # removing the useless letters to avoid KeyError
-        elif flip["V"] and not flip["H"] or flip["H"] and not flip["V"]:
-            name = name[1:]  # removing the useless letters to avoid KeyError
-        road_obj = self.prop_objects[name](pos)  # get the object
-
-        # apply the flip
-        if flip["H"]:
-            road_obj.idle[0] = flip_horizontal(road_obj.idle[0])
-        if flip["V"]:
-            road_obj.idle[0] = flip_vertical(road_obj.idle[0])
-
-        return road_obj
-
-    def generate_cave_walls(
-        self,
-        direction: str,
-        dep_pos: tuple[int, int],
-        n_walls: int,
-        no_begin: bool = False,
-        start_type: str = "none",
-        end_type: str = "none",
-        door_n: int = None,
-    ):
-        """Cave Walls (cave_walls) Title : tag
-        "c_wall_mid":
-        "c_wall_corner"
-        "c_wall_corner_turn":
-        "c_wall_side":
-        "c_flipped_corner":
-        "c_flipped_corner_turn":
-
-        same as the above with slight changes
-        """
-
-        c_wall_mid = "c_wall_mid"
-        c_wall_corner = "c_wall_corner"
-        c_wall_corner_turn = "c_wall_corner_turn"
-        c_wall_side = "c_wall_side"
-        c_flipped_corner = "c_flipped_corner"
-        c_flipped_corner_turn = "c_flipped_corner_turn"
-
-        sizes = {
-            c_wall_mid: self.prop_objects[c_wall_mid](
-                (0, 0)
-            ).current_frame.get_size(),
-            c_wall_corner: self.prop_objects[c_wall_corner](
-                (0, 0)
-            ).current_frame.get_size(),
-            c_wall_corner_turn: self.prop_objects[c_wall_corner_turn](
-                (0, 0)
-            ).current_frame.get_size(),
-            c_wall_side: self.prop_objects[c_wall_side](
-                (0, 0)
-            ).current_frame.get_size(),
-            c_flipped_corner: self.prop_objects[c_flipped_corner](
-                (0, 0)
-            ).current_frame.get_size(),
-            c_flipped_corner_turn: self.prop_objects[c_flipped_corner_turn](
-                (0, 0)
-            ).current_frame.get_size(),
-        }
-
-        # first pos of the first hill, will be incremented
-        current_pos = list(dep_pos)
-        walls = []  # list that contains all the generated hills
-
-        if start_type == "none" and no_begin:
-            # according to the direction, increment the position for the next hill according to the size of the
-            # hill currently being added
-            # walls += self.prop_objects[c_wall_corner](dep_pos) if direction in ['right', 'up', 'down'] \
-            # else self.prop_objects[c_flipped_corner](dep_pos)
-            match direction:
-                case "right":
-                    current_pos[0] += sizes[c_wall_corner][0]
-                case "down":
-                    current_pos[1] += sizes[c_wall_corner][1]
-                    current_pos[1] -= 102
-        else:
-            walls.append(self.prop_objects[start_type](dep_pos))
-            match direction:
-                case "right":
-                    current_pos[0] += sizes[start_type][0]
-                case "down":
-                    current_pos[1] += sizes[start_type][1]
-                    current_pos[1] -= 102
-
-        # n_hills - 2 because the ending and starting hills are generated outside the loop
-        for i in range(n_walls - 2):
-            new_wall = None
-            # according to the direction, increment the position for the next hill according to the size of the
-            # hill currently being added
-            match direction:
-                case "right":
-                    new_wall = self.prop_objects[c_wall_mid](current_pos)
-                    current_pos[0] += sizes[c_wall_mid][0]
-                case "down":
-                    new_wall = self.prop_objects[c_wall_side](current_pos)
-                    current_pos[1] += sizes[c_wall_side][1]
-                    # "cancel" the gap that the sprites are applying (can't take the height of the sprite without
-                    # generating a graphical gap
-                    current_pos[1] -= 51
-
-            if new_wall is not None:
-                if type(door_n) is list:
-                    if i not in door_n:
-                        walls.append(new_wall)
-                else:
-                    if door_n != i:
-                        walls.append(new_wall)
-
-        # add the last wall (this has a logic flaw, I will fix it later)
-        if end_type != "none":
-            walls.append(self.prop_objects[end_type](current_pos))
-
-        return walls
-
-    def generate_wall_chunk(
-        self,
-        n=0,  # N chunks of walls
-        x_side=0,  # in case you want N*N+X rather than N*N
-        y_side=0,
-        pos=(0, 0),
-        left_side=True,
-        right_side=True,
-        up_side=True,
-        down_side=True,
-        u_n=None,  # up gate
-        d_n=None,  # down gate
-        l_n=None,  # left gate
-        r_n=None,  # right gate
-        corner=None,
-    ):
-        """
-        Easy and way creating blocks
-
-        Reference:
-            "c_wall_mid":
-            "c_wall_corner"
-            "c_wall_corner_turn":
-            "c_wall_side":
-            "c_flipped_corner":
-            "c_flipped_corner_turn":
-
-
-        Left sizes and Upsides are easy because we position based on top left.
-
-        Right and Downside tho need a bit of calculations :')
-
-        """
-
-        w = self.prop_objects["c_wall_mid"]((0, 0)).idle[0].get_width()
-        h = (
-            self.prop_objects["c_wall_side"]((0, 0)).idle[0].get_width()
-            * 3
-            * 2
-        ) + 23
-
-        new_list = []
-
-        if up_side:
-            new_list.extend(
-                self.generate_cave_walls(
-                    direction="right",
-                    dep_pos=pos,
-                    n_walls=n + x_side,
-                    start_type="c_wall_corner",
-                    end_type="c_flipped_corner_turn",
-                    door_n=u_n,
-                )
-            )
-
-        if left_side:
-            new_list.extend(
-                self.generate_cave_walls(
-                    direction="down",
-                    dep_pos=pos,
-                    n_walls=n + y_side,
-                    start_type="c_wall_corner_turn",
-                    end_type="none",
-                    door_n=l_n,
-                )
-            )
-
-        if right_side:
-            if corner is None:
-                new_list.extend(
-                    self.generate_cave_walls(
-                        direction="down",
-                        dep_pos=(
-                            pos[0]
-                            + w
-                            * (n + (x_side := x_side if x_side != 0 else 1))
-                            - 30,
-                            pos[1],
-                        ),
-                        n_walls=n + y_side,
-                        no_begin=True,
-                        start_type="none",
-                        end_type="none",
-                        door_n=r_n,
-                    )
-                )
-            else:
-                new_list.extend(
-                    self.generate_cave_walls(
-                        direction="down",
-                        dep_pos=(
-                            pos[0]
-                            + w
-                            * (n + (x_side := x_side if x_side != 0 else 1))
-                            - 30,
-                            pos[1] - h * n - 90,
-                        ),
-                        n_walls=n + y_side,
-                        start_type="c_wall_side",
-                        end_type="c_wall_side",
-                        door_n=r_n,
-                    )
-                )
-
-        if down_side:
-            new_list.extend(
-                self.generate_cave_walls(
-                    direction="right",
-                    dep_pos=(
-                        pos[0],
-                        pos[1] + h * n + 1,
-                    ),  # NOTE: do what you did on the below in here
-                    n_walls=n + x_side,
-                    start_type="c_wall_corner",
-                    end_type="c_flipped_corner",
-                    door_n=d_n,
-                )
-            )
-
-        return new_list

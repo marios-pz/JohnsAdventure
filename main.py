@@ -9,15 +9,20 @@
 from data.scripts.world import GameManager
 
 import asyncio
+import sys
+
+flags = sys.argv
 
 
-async def main(debug=False, first_state="player_room", no_rect=False):
-    while 1:
-        gm = GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
-
-        gm.update()
-        await asyncio.sleep(0)
+async def main(
+    debug: bool = False, first_state: str = "player_room", no_rect: bool = True
+):
+    gm = GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
+    gm.update()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    if len(flags) > 1:
+        asyncio.run(main(debug=True, first_state=flags[1]))
+    else:
+        asyncio.run(main())

@@ -226,12 +226,13 @@ class Player:
         self.last_combo_hit_time = 0
         self.next_combo_available = True
         self.attacking = False
-        self.attacking_hitbox = None
+        self.attacking_hitbox: p.Rect = p.Rect(0, 0, 0, 0)
         # reversed when up or down -> (100, 250)
         self.attacking_hitbox_size = (
             self.rect.height // 2,
             self.rect.width // 2,
         )
+
         self.rooms_objects = []
 
         # animation for interaction purposes
