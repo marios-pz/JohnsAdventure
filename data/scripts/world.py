@@ -87,9 +87,6 @@ class GameManager:
             44100, 32, 2, 4096
         )  # Frequency, 32 Bit sound, channels, buffer
         pg.display.set_caption("iBoxStudio Engine")
-        pg.mouse.set_visible(False)
-
-        # CONSTS
 
         # | pg.DOUBLEBUF | pg.SCALED | pg.FULLSCREEN
 
@@ -308,7 +305,6 @@ class GameManager:
                         ),
                     )
             self.cutscene_engine.render()
-            self.DISPLAY.blit(self.player.mouse_icon, pg.mouse.get_pos())
             self.quest_manager.update_quests()
 
             if self.showing_nl_popup:

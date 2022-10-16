@@ -214,11 +214,12 @@ class BigShadowDummy(Enemy):
         )
 
         self.boss_name = "The Big Dummie"
-        self.attacking_distance = 180
+
+        # custom center is for the shadow aura
         self.custom_center = 24 * 6 * 4 / 5
         self.xp_drop = self.xp_available = xp_drop
         self.scale = 4
-        self.damage = 4
+        self.damage = 7
 
         self.load_animation(
             resource_path("data/sprites/shadow_dummie.png"),

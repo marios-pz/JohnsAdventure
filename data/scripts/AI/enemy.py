@@ -7,6 +7,7 @@ enemies.py is the enemy objects in the game
 """
 
 from os import DirEntry
+from pickle import GET
 from types import coroutine
 from typing import Any
 import pygame as pg
@@ -55,6 +56,8 @@ class Enemy:
         left_hitbox=(0, 0),
     ):
 
+        self.attacking_distance = 90
+
         self.IDENTITY = "ENEMY"
         self.level = level_instance
         self.scroll = self.level.scroll
@@ -65,7 +68,7 @@ class Enemy:
             "down": pg.Vector2(0, 1).normalize() * self.BASE_VEL,
             "up": pg.Vector2(0, -1).normalize() * self.BASE_VEL,
         }
-        self.attacking_distance = 90
+
         self.tp_V = pg.Vector2(0, 0)
         self.enemy_type = enemy_type
 
@@ -110,7 +113,7 @@ class Enemy:
 
         # SHADOW PARTICLES only for shadow monsters and bosses
         if enemy_type in ["shadow", "boss"]:
-            pass
+            pass  # TODO ADD THIS SEPERATELY AT SHADOW ONLY ENEMIES
             # Initialize Shadow Particles only if they are shadow monsters
             # self.aura_particles = Shadow_Manager(
             #    self.intensiveness, self.player, self.screen, self
@@ -400,6 +403,7 @@ class Enemy:
             self.knock_back_friction = knock_back["friction"]
             self.start_knock_back = pg.time.get_ticks()
 
+    # TODO, maybe move this seperately to the shadow enemies
     def shadow_highlight(self, screen, pos, frame):
         """A cruel evil with monstrous power.
             Gives objects and rested monsters life.
@@ -541,6 +545,10 @@ class Enemy:
             le = t_e_rect.topleft - vec(hit_d["left"][0], 30)
             re = t_e_rect.topright - vec(0, 30)
 
+            if self.enemy_type == "boss":
+                le = t_e_rect.center - vec(hit_d["left"][0] + 50, 30)
+                re = t_e_rect.center - vec(50, 30)
+
             hit_dict = {
                 "left": pg.Rect(le, hit_d["left"]),
                 "right": pg.Rect(re, hit_d["right"]),
@@ -610,24 +618,23 @@ class Enemy:
                 vec(pl_rect.center)
             )
 
-            if GET_DISTANCE > 300:
-                self.status = "STANDBY"
+            # NOTE όλοι οι εκθροί, χτυπάνε τον παίκτη με τον που αγγίξουνε
+            # Αλλά το boss λειτουργέι διαφορετικά επειδή εγώ έκανα την μαλακία
 
-            elif (
-                GET_DISTANCE > self.attacking_distance
-                and self.enemy_type != "boss"
-            ):
-                self.status = "CHASING"
+            # Να φτιάξω επίσης το bug που όταν βαράνε τον παίκτη πάνε αριστερά/δεξιά
 
-            elif (
+            print(GET_DISTANCE)
+
+            if (
                 GET_DISTANCE
-                > self.attacking_distance - self.attacking_distance // 3
-                and self.enemy_type == "boss"
+                <= self.attacking_distance - self.hitbox_rect[3] // 2
             ):
-                self.status = "CHASING"
-
-            else:
                 self.status = "ATTACKING"
+            else:
+                if self.attacking_distance < 300:
+                    self.status = "CHASING"
+                else:
+                    self.status = "STANDBY"
 
             match self.status:
                 case "STANDBY":
@@ -690,6 +697,15 @@ class Enemy:
         self.move(dt, player)
         self.update_states()
         self.animate()
+
+        if self.enemy_type == "boss":
+            print(
+                "ΒΟΣΣ:",
+                self.moving,
+                self.attacking,
+                self.chase_available,
+                self.time_got_stuck,
+            )
 
     def update(self, scroll, dt, player) -> None:
         self.scroll = scroll

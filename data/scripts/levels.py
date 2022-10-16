@@ -1708,7 +1708,7 @@ class CaveGarden(GameState):
                     BigShadowDummy(
                         self,
                         self.screen,
-                        (3300, self.hh * 4 + 10),
+                        (3000, self.hh * 4 + 10),
                     )
                 )
 
