@@ -1466,8 +1466,8 @@ class ManosHut(GameState):
 
                 self.objects.extend(
                     [
-                        npc.Manos(vec(235 * sc_x, 115 * sc_y), (300, 100)),
-                        npc.Candy(vec(205, 395)),
+                        npc.Manos((235 * sc_x, 115 * sc_y), (300, 100)),
+                        npc.Candy((205, 395)),
                         Chest(
                             (422 * sc_x, 47 * 4 * sc_y - 45),
                             {"items": Knight_Sword(), "coins": 30},
@@ -1549,13 +1549,6 @@ class CaveGarden(GameState):
                 150,
                 0,
                 randomize=10,
-            ),
-            *build_road(
-                self,
-                start_pos=(2040, 2865),
-                n_road=2,
-                type_r="hori_road",
-                end_type="hori_road",
             ),
             # """_________________Cave Borders_________________"""
             # Top
@@ -1724,9 +1717,9 @@ class CaveGarden(GameState):
                     self.started_script = True
                     self.ended_script = False
 
-                self.objects.append(
-                    Rect(self.ww * 5 + 200, self.hh * 4, 200, 400)
-                )
+                # self.objects.append(
+                #    Rect(self.ww * 5 + 200, self.hh * 4, 200, 400)
+                # )
 
                 self.spawn_b = True
 

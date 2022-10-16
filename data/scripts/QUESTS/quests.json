@@ -24,7 +24,7 @@
         "Ask alexia": true,
         "Find the hidden cave entrance": true,
         "Reach the main entrance": true,
-        "Kill the big dummie": false,
+        "Kill the big dummie": true,
         "Reach Manos in his hut": false
       }
     }

@@ -15,7 +15,7 @@ from ..utils import resource_path, load, l_path, flip_vertical, flip_horizontal
 from ..AI.enemy import Enemy
 from ..AI.death_animator import DeathManager
 from .lights_manager import LightManager
-from ..props import Prop, Torch
+from ..props import Prop, PropGetter, Torch
 from ..AI.npc import NPC, MovingNPC
 
 
