@@ -15,7 +15,7 @@ flags = sys.argv
 
 
 async def main(
-    debug: bool = False, first_state: str = "player_room", no_rect: bool = True
+    debug: bool = True, first_state: str = "player_room", no_rect: bool = False
 ):
     gm = GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
     gm.update()

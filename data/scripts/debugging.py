@@ -90,6 +90,7 @@ class Debugging:
                         if hasattr(obj, "IDENTITY"):
                             if obj.IDENTITY in ["NPC", "PROP", "ENEMY"]:
                                 col_rect.topleft -= scroll
+
                             if hasattr(obj, "d_collision"):
                                 col_rect.topleft += pygame.Vector2(
                                     *obj.d_collision[:2]

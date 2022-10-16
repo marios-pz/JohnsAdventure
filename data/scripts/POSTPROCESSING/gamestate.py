@@ -241,7 +241,7 @@ class GameState:
 
                     break
 
-    def update(self, camera, dt):
+    def update(self, camera, dt) -> None:
 
         # update the game values
         self.player.rooms_objects = self.objects

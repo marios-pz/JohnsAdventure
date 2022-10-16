@@ -36,6 +36,46 @@ class UI_Spritesheet:
         )
 
 
+def load_sheet(sheet, coo, flip=False):
+
+    """Load an animation sequence (of sprites) on a sprites,
+    you obviously have to pass the coordinates of the sprites."""
+
+    x, y, width, height = coo[:4]
+    if coo[-1] != 0:  # check for scale
+        if not flip:
+            return [
+                scale(
+                    get_sprite(sheet, x + width * i, y, width, height),
+                    coo[-1],
+                )
+                for i in range(coo[-2])
+            ]
+        else:
+            return [
+                flip_vertical(
+                    scale(
+                        get_sprite(sheet, x + width * i, y, width, height),
+                        coo[-1],
+                    )
+                )
+                for i in range(coo[-2])
+            ]
+    else:
+        if not flip:
+            return [
+                get_sprite(sheet, x + width * i, y, width, height)
+                for i in range(coo[-2])
+            ]
+        else:
+            return [
+                flip_vertical(
+                    get_sprite(sheet, x + width * i, y, width, height)
+                )
+                for i in range(coo[-2])
+            ]
+
+
 def resource_path(relative_path: str) -> str:
     """Get absolute path to resource, works for dev and for PyInstaller"""
     try:
@@ -362,7 +402,7 @@ def generate_cave_walls(
     start_type: str = "none",
     end_type: str = "none",
     door_n: int | None = None,
-):
+) -> list:
     """Cave Walls (cave_walls) Title : tag
     "c_wall_mid":
     "c_wall_corner"
@@ -475,7 +515,6 @@ def generate_wall_chunk(
 ):
     """
     Easy and way creating blocks
-
     Reference:
         "c_wall_mid":
         "c_wall_corner"
@@ -483,12 +522,8 @@ def generate_wall_chunk(
         "c_wall_side":
         "c_flipped_corner":
         "c_flipped_corner_turn":
-
-
     Left sizes and Upsides are easy because we position based on top left.
-
     Right and Downside tho need a bit of calculations :')
-
     """
 
     w = game_state.prop_objects["c_wall_mid"]((0, 0)).idle[0].get_width()
@@ -502,7 +537,8 @@ def generate_wall_chunk(
 
     if up_side:
         new_list.extend(
-            game_state.generate_cave_walls(
+            generate_cave_walls(
+                game_state,
                 direction="right",
                 dep_pos=pos,
                 n_walls=n + x_side,
@@ -514,7 +550,8 @@ def generate_wall_chunk(
 
     if left_side:
         new_list.extend(
-            game_state.generate_cave_walls(
+            generate_cave_walls(
+                game_state,
                 direction="down",
                 dep_pos=pos,
                 n_walls=n + y_side,
@@ -527,7 +564,8 @@ def generate_wall_chunk(
     if right_side:
         if corner is None:
             new_list.extend(
-                game_state.generate_cave_walls(
+                generate_cave_walls(
+                    game_state,
                     direction="down",
                     dep_pos=(
                         pos[0]
@@ -544,7 +582,8 @@ def generate_wall_chunk(
             )
         else:
             new_list.extend(
-                game_state.generate_cave_walls(
+                generate_cave_walls(
+                    game_state,
                     direction="down",
                     dep_pos=(
                         pos[0]
@@ -561,7 +600,8 @@ def generate_wall_chunk(
 
     if down_side:
         new_list.extend(
-            game_state.generate_cave_walls(
+            generate_cave_walls(
+                game_state,
                 direction="right",
                 dep_pos=(
                     pos[0],
@@ -574,4 +614,4 @@ def generate_wall_chunk(
             )
         )
 
-    return new_list
+    return
