@@ -48,40 +48,6 @@ def play_cutscene(id_: str) -> None:
         json.dump(data, data2, indent=2)
 
 
-"""self.camera_script = [
-    
-        # EXAMPLE OF CAMERA SCRIPT THAT INCLUDES EVERY FUNCTIONALITY EXCEPT IMAGE AND CENTERED TEXT
-    
-        {
-            "pos": (self.screen.get_width() // 2 - 120, self.screen.get_height() // 2 - 20),
-            "duration": 0,
-            "text": f"Hello Player. Welcome to John's Adventure.",
-            "waiting_end": 2000,
-            "zoom": 1.4,
-            "text_dt": 1000
-        },
-        {
-            "pos": (1100, 225),
-            "duration": 1000,
-            "waiting_end": 2000,
-            "text": "Your quest is waiting for you downstairs.",
-            "text_dt": 1000
-        },
-        {
-            "pos": (self.screen.get_width() // 2 - 120, self.screen.get_height() // 2 - 20),
-            "duration": 750,
-            "waiting_end": 250,
-        },
-        {
-            "duration": 1200,
-            "next_cam_status": "follow",
-            "zoom": 1,
-            "zoom_duration": 1200
-        }
-    ]
-"""
-
-
 class PlayerRoom(GameState):
     def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
         super().__init__(
@@ -114,81 +80,9 @@ class PlayerRoom(GameState):
             "kitchen": (self.exit_rects["kitchen"][0].bottomleft + vec(0, 50))
         }
 
-        self.camera_script = [
-            {
-                "duration": 4000,
-                "image": scale(
-                    l_path("data/sprites/cutscenes/cutscene1.png"), 3
-                ),
-            },
-            {
-                "no_init": True,  # basically removes the cinema bar init that won't be seen because of black bg
-                "duration": 4000,
-                "centered_text": "PORTO RAFTH 202X ALTERNATIVE UNIVERSE",
-                "centered_text_dt": 2000,
-                "image": pg.Surface((1280, 720)),
-            },
-            {
-                "duration": 3000,
-                "image": pg.Surface((1280, 720)),
-                "centered_text": "A universe, Humans and Monsters lived peacefully.",
-                "centered_text_dt": 2000,
-                "waiting_end": 1000,
-            },
-            {
-                "duration": 3000,
-                "image": pg.Surface((1280, 720)),
-                "centered_text": "But.. on this bare day.. the unpredictable happened.",
-                "centered_text_dt": 2000,
-                "waiting_end": 1000,
-            },
-            {
-                "duration": 3000,
-                "image": pg.Surface((1280, 720)),
-                "centered_text": "and John's Adventure started.",
-                "centered_text_dt": 2000,
-                "waiting_end": 1000,
-            },
-            {
-                "duration": 3000,
-                "image": pg.Surface((1280, 720)),
-                "centered_text": "C.. Cynthia!",
-                "centered_text_dt": 2000,
-                "waiting_end": 1000,
-            },
-            {
-                "pos": (
-                    self.screen.get_width() // 2 - 120,
-                    self.screen.get_height() // 2 - 20,
-                ),
-                "duration": 0,
-                "text": "Man. what a dream.",
-                "waiting_end": 4000,
-                "zoom": 1.4,
-                "text_dt": 1600,
-            },
-            {
-                "pos": (1100, 225),
-                "duration": 1000,
-                "waiting_end": 2000,
-                "text": "I better check on her.",
-                "text_dt": 1600,
-            },
-            {
-                "pos": (
-                    self.screen.get_width() // 2 - 120,
-                    self.screen.get_height() // 2 - 20,
-                ),
-                "duration": 750,
-                "waiting_end": 250,
-            },
-            {
-                "duration": 1200,
-                "next_cam_status": "follow",
-                "zoom": 1,
-                "zoom_duration": 1200,
-            },
-        ]
+        from .scripts import PLAYER_ROOM_SCENE
+
+        self.camera_script = PLAYER_ROOM_SCENE
 
         self.additional_lights = [
             # Windows
@@ -283,42 +177,10 @@ class Kitchen(GameState):
         self.ended_script = True
         self.spawned = False
         self.started_script = False
-        self.camera_script = [
-            {
-                "duration": 4000,
-                "pos": (570, 220),
-                "zoom": 1.2,
-                "text": "Cynthia: Hello brother. you seem dread. are you alright?",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "pos": (570, 220),
-                "text": "Cynthia: Anyway.. Manos is waiting for you in training field",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "pos": (570, 220),
-                "text": "Cynthia: I will go meet my friends in school, see you around",
-                "text_dt": 1500,
-            },
-            {
-                # Show the door
-                "duration": 3000,
-                "pos": (620, 600),
-            },
-            {
-                "duration": 1800,
-                # Go back to the player
-                "zoom": 1,
-                "zoom_duration": 1800,
-                "pos": (
-                    570,
-                    220,
-                ),  # I assume I have to return the camera somewhere near the player?
-            },
-        ]
+
+        from .scripts import KITCHEN_SCENE
+
+        self.camera_script = KITCHEN_SCENE
 
     def update(self, camera, dt):
 
@@ -357,15 +219,13 @@ class JohnsGarden(GameState):
         )
 
         # Get the positions and the sprites' informations from the json files
-        with open(
-            resource_path("data/database/open_world_pos.json")
-        ) as pos, open(
-            resource_path("data/database/open_world.json")
-        ) as infos:
-            self.positions, self.sprite_info = json.load(pos), json.load(infos)
-        self.get_scale = lambda name: self.sprite_info[name][
-            "sc"
-        ]  # func to get the scale of a sprite
+        with open(resource_path("data/database/open_world_pos.json")) as pos:
+            self.positions = json.load(pos)
+
+        with open(resource_path("data/database/open_world.json")) as infos:
+            self.sprite_info = json.load(infos)
+
+        get_scale = lambda name: self.sprite_info[name]["sc"]
 
         self.music_manager = SoundManager(False, True, volume=0.75)
         self.music_manager.play_music("forest_theme")
@@ -373,14 +233,14 @@ class JohnsGarden(GameState):
         # John's house position and size
         jh_pos = self.positions["john_house"][0] - vec(1, 30)
         jh_siz = (
-            self.sprite_info["john_house"]["w"] * self.get_scale("john_house"),
-            self.sprite_info["john_house"]["h"] * self.get_scale("john_house"),
+            self.sprite_info["john_house"]["w"] * get_scale("john_house"),
+            self.sprite_info["john_house"]["h"] * get_scale("john_house"),
         )
-        jh_sc = self.get_scale("john_house")
+        jh_sc = get_scale("john_house")
 
         # Mano's hut position and scale
         mano_pos = self.positions["manos_hut"][0]
-        mano_sc = self.get_scale("manos_hut")
+        mano_sc = get_scale("manos_hut")
 
         # horizontal road width
         hr_r_width = (
@@ -443,8 +303,8 @@ class JohnsGarden(GameState):
             *[
                 self.prop_objects[object_](
                     (
-                        pos[0] * self.get_scale(object_),
-                        pos[1] * self.get_scale(object_),
+                        pos[0] * get_scale(object_),
+                        pos[1] * get_scale(object_),
                     )
                 )
                 for object_, pos_ in self.positions.items()
@@ -1036,59 +896,10 @@ class Training_Field(GameState):
         self.centers = [(0, 0), (0, 0)]
         self.dummies = []
 
-        self.script_1 = [
-            {"duration": 0, "pos": (1138, 1526), "zoom": 1.2},
-            {
-                "duration": 3000,
-                "text": "Manos: Hello john, are you ready to fight?",
-                "text_dt": 1500,
-            },
-            {"duration": 3000, "text": "Candy: *meow meow* ", "text_dt": 1500},
-            {
-                "duration": 4500,
-                "pos": (1660, 1682),
-                "text": "Manos: show me your sword skills in those dummies i've placed.",
-                "text_dt": 1500,
-            },
-            {"duration": 2500},  # show the __static__ dummies
-            {
-                "duration": 2000,
-                "pos": (1138, 1526),
-                "zoom": 1,
-                "zoom_duration": 1800,
-            },
-        ]
+        from .scripts import TRAINING_FIELD_SCENE_1, TRAINING_FIELD_SCENE_2
 
-        self.script_2 = [
-            {
-                "duration": 3000,
-                "text": "Manos: Well done John. now its time for movement-",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 1500,  # move at where dummies were
-                "pos": (1660, 1682),
-            },
-            {"duration": 2500},  # at this point, the dummies appear
-            {
-                "duration": 4000,
-                "pos": (1138, 1526),
-                "text": "Manos: This purple aura.. It couldn't be HIM.",
-                "text_dt": 1200,
-            },
-            {
-                "duration": 4000,
-                "pos": (1138, 1526),
-                "text": "Manos: I need to go, defeat these monsters!",
-                "text_dt": 1200,
-            },
-            {
-                "duration": 4000,
-                "pos": (1138, 1526),
-                "text": "Manos: and get back Cynthia, I will be in my Hut",
-                "text_dt": 1200,
-            },
-        ]
+        self.script_1 = TRAINING_FIELD_SCENE_1
+        self.script_2 = TRAINING_FIELD_SCENE_2
 
         self.camera_script = self.script_1
         self.cutscene_index = 0
@@ -1308,36 +1119,10 @@ class Gymnasium(GameState):
         self.ended_script = True
         self.spawned = False
         self.started_script = False
-        self.camera_script = [
-            {
-                "duration": 4000,
-                "pos": (2762, -75),
-                "zoom": 1.2,
-                "text": "Alex: John! monsters attacked the area!",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "Alex: A huge monster is roaming the area! you cannot go back",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "Alex: There is a secret spot around here",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "Alex: find it, it will help you go back home through the cave.",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "zoom": 1,
-                "text": "Alex: Good luck! hopefully it won't have any monsters.",
-                "text_dt": 1500,
-            },
-        ]
+
+        from .scripts import GYMNASIUM_SCENE
+
+        self.camera_script = GYMNASIUM_SCENE
 
         self.cyn_gone = False
 
@@ -1870,6 +1655,7 @@ class CaveEntrance(GameState):
         )
 
         return super(CaveEntrance, self).update(camera, dt)
+
 
 class CaveRoomPassage(GameState):
     def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
