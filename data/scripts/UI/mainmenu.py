@@ -1,12 +1,18 @@
+from typing import Any
 import pygame as p
 import json
 from ..utils import scale, load, resource_path
 
 
 class Menu:
-    def __init__(self, game_instance, screen, title_font, ui):
+    def __init__(
+        self,
+        game_instance: Any,
+        title_font: p.font.Font,
+        ui: Any,
+    ):
         # Data from Game Class
-        self.screen, self.title_font = screen, title_font
+        self.screen, self.title_font = game_instance.DISPLAY, title_font
         self.game_instance = game_instance
 
         # Macros

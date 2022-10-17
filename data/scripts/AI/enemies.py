@@ -213,9 +213,6 @@ class BigShadowDummy(Enemy):
             left_hitbox=(29 * 8, 24 * 13),
             right_hitbox=(29 * 8, 24 * 13),
         )
-
-        print(dir(self))
-
         self.boss_name = "The Big Dummie"
         self.attacking_distance = 180
 

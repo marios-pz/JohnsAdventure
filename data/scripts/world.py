@@ -145,9 +145,7 @@ class GameManager:
         self.sound_manager.play_music("city_theme")
 
         self.loading_screen: LoadingScreen = LoadingScreen(self.DISPLAY)
-        self.menu_manager: Menu = Menu(
-            self, self.DISPLAY, self.blacksword, self.ui
-        )
+        self.menu_manager: Menu = Menu(self, self.blacksword, self.ui)
         self.interface: Interface = Interface(
             self.DISPLAY,
             scale(self.ui.parse_sprite("interface_button.png"), 8),
@@ -376,7 +374,6 @@ class GameManager:
 
             scale_ = self.start_scale - self.current_scale
 
-            print(self.pygame_logo)
             img = scale(self.pygame_logo, scale_)
             self.DISPLAY.blit(
                 img, img.get_rect(center=(self.W // 2, self.H // 2))
