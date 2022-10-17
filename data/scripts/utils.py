@@ -14,6 +14,14 @@ import sys
 from functools import lru_cache
 from random import gauss
 
+
+def init_pause(w: int, h: int, display: pygame.surface.Surface) -> None:
+    surf = pygame.Surface((w, h))
+    surf.fill((0, 0, 0))
+    surf.set_alpha(200)
+    display.blit(surf, (0, 0))
+
+
 # This class must be purged, useless class
 class UI_Spritesheet:
     def __init__(self, filename: str) -> None:

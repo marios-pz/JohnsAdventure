@@ -6,7 +6,13 @@ from .UI.mainmenu import Menu
 from .UI.interface import Interface
 from .UI.loading_screen import LoadingScreen
 from .UI.pause_menu import PauseMenu
-from .utils import resource_path, l_path, UI_Spritesheet, smooth_scale
+from .utils import (
+    init_pause,
+    resource_path,
+    l_path,
+    UI_Spritesheet,
+    smooth_scale,
+)
 from .QUESTS.quest_manager import QuestManager
 from .QUESTS.quest_ui import QuestUI
 from .props import PropGetter, init_sheets, del_sheets
@@ -90,7 +96,7 @@ class GameManager:
 
         # | pg.DOUBLEBUF | pg.SCALED | pg.FULLSCREEN
 
-        self.DISPLAY: pg.Surface = pg.display.set_mode(
+        self.DISPLAY: pg.surface.Surface = pg.display.set_mode(
             (1280, 720), flags=pg.SRCALPHA | pg.HWSURFACE | pg.RESIZABLE
         )
 
@@ -248,7 +254,7 @@ class GameManager:
 
     def pause(self):
         if self.player.paused:
-            self.pause_menu.init_pause()
+            init_pause(self.W, self.H, self.DISPLAY)
             while True:
                 upd = self.pause_menu.update()
 
