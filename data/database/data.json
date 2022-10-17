@@ -7,7 +7,8 @@
         "interact": 32,
         "dash": 1073742049,
         "inventory": 101,
-        "healing": 113
+        "healing": 113,
+        "fullscreen": 1073741893
     },
     "coins": 0,
     "world": "johns_room"

@@ -22,7 +22,7 @@ from .utils import (
 )
 
 from .props import Chest, Torch
-from .PLAYER.items import Training_Sword, Knight_Sword
+from .PLAYER.items import ManosSword, Training_Sword
 from .POSTPROCESSING.light_types import PolygonLight, LightSource
 from .POSTPROCESSING.gamestate import GameState
 from .sound_manager import SoundManager
@@ -958,6 +958,7 @@ class Training_Field(GameState):
                 self.centers = [dummy.rect.center for dummy in self.dummies]
                 self.radius_circles += 2
                 self.sound_manager.play_sound("magic_shooting")
+                self.sound_manager.play_sound("ShadowSummon")
 
                 if self.music_manager.playing_music != "garden_theme":
                     self.music_manager.play_music("garden_theme")
@@ -1256,7 +1257,7 @@ class ManosHut(GameState):
                         npc.Candy((205, 395)),
                         Chest(
                             (422 * sc_x, 47 * 4 * sc_y - 45),
-                            {"items": Knight_Sword(), "coins": 30},
+                            {"items": ManosSword(), "coins": 30},
                         ),
                     ]
                 )

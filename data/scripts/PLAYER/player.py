@@ -404,6 +404,7 @@ class Player:
             inv = a["inventory"]
             itr = a["interact"]
             heal = a["healing"]
+            fullscreen = a["fullscreen"]
 
             self.velocity = (
                 p.Vector2(-self.base_vel, self.base_vel)
@@ -429,19 +430,20 @@ class Player:
             match e.type:
 
                 case p.KEYDOWN:
-                    match e.key:
 
-                        case p.K_F12:
-                            p.display.toggle_fullscreen()
+                    
+                    if e.key == fullscreen:
+                        p.display.toggle_fullscreen()
 
-                        case p.K_ESCAPE:
-                            self.paused = True
+                    if e.key == p.K_ESCAPE:
+                        self.paused = True
 
                     if e.key == heal:
                         if (
                             self.health_potions > 0
                             and self.health < self.maximum_health
                         ):
+                            self.sound_manager.play_sound("HealUp")
                             self.health_target += 40
                             self.health_potions -= 1
 

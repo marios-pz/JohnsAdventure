@@ -1,6 +1,10 @@
+from re import L
 from typing import Any
 import pygame as p
 import json
+
+from pygame.key import name
+from pygame.mouse import set_visible
 from ..utils import scale, load, resource_path
 
 
@@ -105,7 +109,6 @@ class Menu:
             self.f.render(f"{key}", True, (0, 0, 0))
             for key in self.save["controls"]
         ]
-
         self.start_game = False  # if True, player click Play button]
 
         self.start_time = p.time.get_ticks()
@@ -283,6 +286,10 @@ class Menu:
                             raise SystemExit
 
                 case p.KEYDOWN:
+
+                    if e.key == self.save["controls"]["fullscreen"]:
+                        p.display.toggle_fullscreen()
+
                     if self.changing:
                         controls = list(self.save["controls"])
                         # Find Duplicate among keys (amongus ??!?!?)
@@ -312,6 +319,3 @@ class Menu:
                     ):
                         self.save_data()
                         self.show_settings = False
-
-                case p.K_F12:
-                    p.display.toggle_fullscreen()
