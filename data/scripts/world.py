@@ -5,7 +5,7 @@ from .sound_manager import SoundManager
 from .UI.mainmenu import Menu
 from .UI.interface import Interface
 from .UI.loading_screen import LoadingScreen
-from .UI.pause_menu import PauseMenu, quit_pause
+from .UI.pause_menu import PauseMenu
 from .utils import resource_path, l_path, UI_Spritesheet, smooth_scale
 from .QUESTS.quest_manager import QuestManager
 from .QUESTS.quest_ui import QuestUI
@@ -253,13 +253,11 @@ class GameManager:
                 upd = self.pause_menu.update()
 
                 if upd == "quit":
-                    quit_pause()
                     self.menu = True
                     self.player.paused = False
                     self.menu_manager.start_game = False
                     break
                 elif upd == "resume":
-                    quit_pause()
                     self.player.paused = False
                     break
 
