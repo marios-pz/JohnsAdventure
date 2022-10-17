@@ -28,6 +28,7 @@ class CutsceneManager:
         self.began_state_time = 0
 
         # cinema bars status
+        self.delay_cinema_bars = 0
         self.cinema_bar_height = 100
         self.cinema_bars_dy: list[float | int] = [
             -self.cinema_bar_height,
