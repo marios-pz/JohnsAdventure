@@ -12,13 +12,12 @@ from copy import copy
 class Debugging:
     def __init__(
         self,
-        display: pygame.Surface,
         game_instance: Any,
         no_rect: bool,
     ) -> None:
 
         self.no_rect = no_rect
-        self.screen = display
+        self.screen = game_instance.DISPLAY
         self.game: Any = game_instance
         self.player: Player = self.game.player
 

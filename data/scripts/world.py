@@ -191,7 +191,7 @@ class GameManager:
 
         # ------------ DEBUG ----------------------
         self.debug = debug
-        self.debugger = Debugging(self.DISPLAY, self, no_rect)
+        self.debugger = Debugging(self, no_rect)
 
         # -------- CAMERA SRC HANDLER -------------
         self.cutscene_engine = CutsceneManager(self, self.DISPLAY)
@@ -422,16 +422,10 @@ class GameManager:
                 self.last_game_state = copy(self.game_state)
                 self.last_positions = {}
                 for obj_ in self.game_state.objects:
-                    print(obj_)
-                    try:
-                        if not isinstance(obj_, pg.Rect):
-                            self.last_positions[id(obj_)] = copy(
-                                obj_.rect.topleft
-                            )
-                        else:
-                            self.last_positions[id(obj_)] = copy(obj_.topleft)
-                    except AttributeError:
-                        pass
+                    if not isinstance(obj_, pg.Rect):
+                        self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
+                    else:
+                        self.last_positions[id(obj_)] = copy(obj_.topleft)
                 must_store_begin_pos = False
             else:
                 must_store_begin_pos = True
