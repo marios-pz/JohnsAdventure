@@ -144,7 +144,7 @@ class Menu:
             self.title_logo[0],
             (
                 self.half_w + 20 - self.title_logo[0].get_width() // 2,
-                self.half_h - 190,
+                self.half_h - 262,
             ),
         )
         # White Texture
@@ -152,7 +152,7 @@ class Menu:
             self.title_logo[1],
             (
                 self.half_w + 20 - self.title_logo[1].get_width() // 2,
-                self.half_h - 192,
+                self.half_h - 264,
             ),
         )
 
@@ -219,7 +219,7 @@ class Menu:
                     rect = key.get_rect(
                         center=(
                             self.half_w + 265,
-                            self.half_h - 350 + group_y + 60 * i,
+                            self.half_h - 370 + group_y + 60 * i,
                         )
                     )
                     self.screen.blit(key, rect), self.screen.blit(

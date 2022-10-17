@@ -1,36 +1,44 @@
-'''
+"""
 Credits @Marios325346
 
 This script contains our lovely npcs! 
 
 
-'''
+"""
 from random import choice
 import pygame as pg
 from pygame import sprite
-from ..utils import load, get_sprite, flip_vertical, scale, resource_path, UI_Spritesheet
+from ..utils import (
+    load,
+    get_sprite,
+    flip_vertical,
+    scale,
+    resource_path,
+    UI_Spritesheet,
+)
 
 
 class NPC:
     """Base class for every NPC."""
 
-    def __init__(self,
-                 moving: bool,
-                 pos: pg.Vector2,
-                 sprite_sheet_path: str,
-                 idle: bool = False,
-                 idle_left=None,
-                 idle_right=None,
-                 idle_down=None,
-                 idle_up=None,
-                 move_anim: bool = False,
-                 move_left=None,
-                 move_right=None,
-                 move_down=None,
-                 move_up=None,
-                 tell_story="",
-                 remove_bubble=False
-                 ):
+    def __init__(
+        self,
+        moving: bool,
+        pos: pg.Vector2,
+        sprite_sheet_path: str,
+        idle: bool = False,
+        idle_left=None,
+        idle_right=None,
+        idle_down=None,
+        idle_up=None,
+        move_anim: bool = False,
+        move_left=None,
+        move_right=None,
+        move_down=None,
+        move_up=None,
+        tell_story="",
+        remove_bubble=False,
+    ):
 
         self.IDENTITY = "NPC"  # -> useful to check fastly the type of object we're dealing with
 
@@ -38,7 +46,7 @@ class NPC:
             "left": True,
             "right": True,
             "up": True,
-            "down": True
+            "down": True,
         }
 
         self.quest_interactions = {}
@@ -57,10 +65,7 @@ class NPC:
         # ANIMATION
         self.anim_delay = 0
         self.anim_index = 0
-        self.anim_duration = {
-            "idle": 100,
-            "move": 100
-        }
+        self.anim_duration = {"idle": 100, "move": 100}
 
         # Story telling
         self.remove_bubble = remove_bubble
@@ -73,22 +78,36 @@ class NPC:
         self.interaction_rect = None
 
         self.move_manager = {
-            "right": self.load_from_spritesheet(move_right) if self.move_anim else None,
-            "left": self.load_from_spritesheet(move_left) if self.move_anim else None,
-            "up": self.load_from_spritesheet(move_up) if self.move_anim else None,
-            "down": self.load_from_spritesheet(move_down) if self.move_anim else None
+            "right": self.load_from_spritesheet(move_right)
+            if self.move_anim
+            else None,
+            "left": self.load_from_spritesheet(move_left)
+            if self.move_anim
+            else None,
+            "up": self.load_from_spritesheet(move_up)
+            if self.move_anim
+            else None,
+            "down": self.load_from_spritesheet(move_down)
+            if self.move_anim
+            else None,
         }
 
         self.idle_manager = {
-            "right": self.load_from_spritesheet(idle_right) if self.idle else None,
-            "left": self.load_from_spritesheet(idle_left) if self.idle else None,
+            "right": self.load_from_spritesheet(idle_right)
+            if self.idle
+            else None,
+            "left": self.load_from_spritesheet(idle_left)
+            if self.idle
+            else None,
             "up": self.load_from_spritesheet(idle_up) if self.idle else None,
-            "down": self.load_from_spritesheet(idle_down) if self.idle else None
+            "down": self.load_from_spritesheet(idle_down)
+            if self.idle
+            else None,
         }
 
         self.anim_manager = {
             "idle": self.idle_manager,
-            "move": self.move_manager
+            "move": self.move_manager,
         }
 
         # IMAGES AND COORDINATES
@@ -99,12 +118,34 @@ class NPC:
         if coords == [0, 0, 0, 0, 0, 0] or coords is None:
             return None
         if coords[-1] == "flip":
-            return [flip_vertical(
-                scale(get_sprite(self.sprite_sheet, coords[0] + coords[2] * i, coords[1], coords[2], coords[3]),
-                      coords[4])) for i in range(coords[5])]
+            return [
+                flip_vertical(
+                    scale(
+                        get_sprite(
+                            self.sprite_sheet,
+                            coords[0] + coords[2] * i,
+                            coords[1],
+                            coords[2],
+                            coords[3],
+                        ),
+                        coords[4],
+                    )
+                )
+                for i in range(coords[5])
+            ]
         return [
-            scale(get_sprite(self.sprite_sheet, coords[0] + coords[2] * i, coords[1], coords[2], coords[3]), coords[4])
-            for i in range(coords[5])]
+            scale(
+                get_sprite(
+                    self.sprite_sheet,
+                    coords[0] + coords[2] * i,
+                    coords[1],
+                    coords[2],
+                    coords[3],
+                ),
+                coords[4],
+            )
+            for i in range(coords[5])
+        ]
 
     def state_manager(self):
         if self.interacting:
@@ -120,7 +161,10 @@ class NPC:
         if type(current_anim) is dict:
             current_anim = current_anim[self.direction]
 
-        if pg.time.get_ticks() - self.anim_delay > self.anim_duration[self.state]:
+        if (
+            pg.time.get_ticks() - self.anim_delay
+            > self.anim_duration[self.state]
+        ):
             self.anim_delay = pg.time.get_ticks()
             self.anim_index = (self.anim_index + 1) % len(current_anim)
             self.image = current_anim[self.anim_index]
@@ -129,21 +173,33 @@ class NPC:
     def update_interaction_rect(self, scroll):
         match self.direction:  # lgtm [py/syntax-error]
             case "left":
-                self.interaction_rect = pg.Rect(self.rect.x - self.it_re_size[0],
-                                                self.rect.centery - self.it_re_size[1] // 2, *self.it_re_size)
+                self.interaction_rect = pg.Rect(
+                    self.rect.x - self.it_re_size[0],
+                    self.rect.centery - self.it_re_size[1] // 2,
+                    *self.it_re_size
+                )
             case "right":
-                self.interaction_rect = pg.Rect(self.rect.right, self.rect.centery - self.it_re_size[1] // 2,
-                                                *self.it_re_size)
+                self.interaction_rect = pg.Rect(
+                    self.rect.right,
+                    self.rect.centery - self.it_re_size[1] // 2,
+                    *self.it_re_size
+                )
             case "up":
-                self.interaction_rect = pg.Rect(self.rect.centerx - self.it_re_size[0] // 2,
-                                                self.rect.y - self.it_re_size[1], *self.it_re_size)
+                self.interaction_rect = pg.Rect(
+                    self.rect.centerx - self.it_re_size[0] // 2,
+                    self.rect.y - self.it_re_size[1],
+                    *self.it_re_size
+                )
             case "down":
-                self.interaction_rect = pg.Rect(self.rect.centerx - self.it_re_size[0] // 2, self.rect.bottom,
-                                                *self.it_re_size)
+                self.interaction_rect = pg.Rect(
+                    self.rect.centerx - self.it_re_size[0] // 2,
+                    self.rect.bottom,
+                    *self.it_re_size
+                )
         self.interaction_rect.topleft -= scroll
 
     def render_highlight(self, screen, scroll):
-        """ Outlining the npcs, to show interactness
+        """Outlining the npcs, to show interactness
         Args:
             screen (pygame.Surface): main window of the game
             scroll (int tuple): the camera scroller offset
@@ -154,12 +210,14 @@ class NPC:
         outline.set_alpha(155)
         thickness = 2
         pos = self.rect.topleft - scroll
-        screen.blits([
-            (outline, pos + pg.Vector2(thickness, 0)),
-            (outline, pos + pg.Vector2(-thickness, 0)),
-            (outline, pos + pg.Vector2(0, -thickness)),
-            (outline, pos + pg.Vector2(0, thickness))
-        ])
+        screen.blits(
+            [
+                (outline, pos + pg.Vector2(thickness, 0)),
+                (outline, pos + pg.Vector2(-thickness, 0)),
+                (outline, pos + pg.Vector2(0, -thickness)),
+                (outline, pos + pg.Vector2(0, thickness)),
+            ]
+        )
 
     def logic(self, scroll):
         self.state_manager()
@@ -170,35 +228,49 @@ class NPC:
         self.logic(scroll)
         if self.highlight:
             self.render_highlight(screen, scroll)
-        screen.blit(self.image, (self.rect.x - scroll[0], self.rect.y - scroll[1]))
+        screen.blit(
+            self.image, (self.rect.x - scroll[0], self.rect.y - scroll[1])
+        )
         # pg.draw.rect(screen, (0, 0, 255), self.interaction_rect, 1)
 
 
 class MovingNPC(NPC):
-
-    def __init__(self,
-                 movement: str,  # "random" | "lateral" | "vertical"
-                 range_rect: pg.Rect,  # basically the delimitations of the npc's movements
-                 velocity: pg.Vector2,
-                 pos: pg.Vector2,
-                 sprite_sheet_path: str,
-                 idle: bool = False,
-                 idle_left=None,
-                 idle_right=None,
-                 idle_down=None,
-                 idle_up=None,
-                 move_anim: bool = False,
-                 move_left=None,
-                 move_right=None,
-                 move_down=None,
-                 move_up=None,
-                 tell_story=None,
-                 remove_bubble=False
-                 ):
+    def __init__(
+        self,
+        movement: str,  # "random" | "lateral" | "vertical"
+        range_rect: pg.Rect,  # basically the delimitations of the npc's movements
+        velocity: pg.Vector2,
+        pos: pg.Vector2,
+        sprite_sheet_path: str,
+        idle: bool = False,
+        idle_left=None,
+        idle_right=None,
+        idle_down=None,
+        idle_up=None,
+        move_anim: bool = False,
+        move_left=None,
+        move_right=None,
+        move_down=None,
+        move_up=None,
+        tell_story=None,
+        remove_bubble=False,
+    ):
 
         super().__init__(
-            True, pos, sprite_sheet_path, idle, idle_left, idle_right, idle_down, idle_up, move_anim, move_left,
-            move_right, move_down, move_up, tell_story
+            True,
+            pos,
+            sprite_sheet_path,
+            idle,
+            idle_left,
+            idle_right,
+            idle_down,
+            idle_up,
+            move_anim,
+            move_left,
+            move_right,
+            move_down,
+            move_up,
+            tell_story,
         )
 
         self.remove_bubble = remove_bubble
@@ -209,17 +281,45 @@ class MovingNPC(NPC):
     def check_outside_rect(self):
         match self.direction:
             case "left":
-                return True if not pg.Rect(self.rect.x - self.velocity[0], self.rect.y, *self.rect.size).colliderect(
-                    self.range_rect) else False
+                return (
+                    True
+                    if not pg.Rect(
+                        self.rect.x - self.velocity[0],
+                        self.rect.y,
+                        *self.rect.size
+                    ).colliderect(self.range_rect)
+                    else False
+                )
             case "right":
-                return True if not pg.Rect(self.rect.x + self.velocity[0], self.rect.y, *self.rect.size).colliderect(
-                    self.range_rect) else False
+                return (
+                    True
+                    if not pg.Rect(
+                        self.rect.x + self.velocity[0],
+                        self.rect.y,
+                        *self.rect.size
+                    ).colliderect(self.range_rect)
+                    else False
+                )
             case "up":
-                return True if not pg.Rect(self.rect.x, self.rect.y - self.velocity[1], *self.rect.size).colliderect(
-                    self.range_rect) else False
+                return (
+                    True
+                    if not pg.Rect(
+                        self.rect.x,
+                        self.rect.y - self.velocity[1],
+                        *self.rect.size
+                    ).colliderect(self.range_rect)
+                    else False
+                )
             case "down":
-                return True if not pg.Rect(self.rect.x, self.rect.y + self.velocity[1], *self.rect.size).colliderect(
-                    self.range_rect) else False
+                return (
+                    True
+                    if not pg.Rect(
+                        self.rect.x,
+                        self.rect.y + self.velocity[1],
+                        *self.rect.size
+                    ).colliderect(self.range_rect)
+                    else False
+                )
 
     def move(self):
 
@@ -227,13 +327,21 @@ class MovingNPC(NPC):
         if not self.interacting:
             match self.direction:
                 case "left":
-                    self.rect.x -= self.velocity[0] if self.move_ability["left"] else 0
+                    self.rect.x -= (
+                        self.velocity[0] if self.move_ability["left"] else 0
+                    )
                 case "right":
-                    self.rect.x += self.velocity[0] if self.move_ability["right"] else 0
+                    self.rect.x += (
+                        self.velocity[0] if self.move_ability["right"] else 0
+                    )
                 case "down":
-                    self.rect.y += self.velocity[1] if self.move_ability["up"] else 0
+                    self.rect.y += (
+                        self.velocity[1] if self.move_ability["up"] else 0
+                    )
                 case "up":
-                    self.rect.y -= self.velocity[1] if self.move_ability["down"] else 0
+                    self.rect.y -= (
+                        self.velocity[1] if self.move_ability["down"] else 0
+                    )
 
     def switch_directions(self, blocked_direction=None):
 
@@ -252,7 +360,9 @@ class MovingNPC(NPC):
                     elif self.direction == blocked_direction == "right":
                         self.direction = "left"
                 else:
-                    self.direction = "right" if self.direction == "left" else "left"
+                    self.direction = (
+                        "right" if self.direction == "left" else "left"
+                    )
 
             case "vertical":
                 if blocked_direction is not None:
@@ -261,7 +371,9 @@ class MovingNPC(NPC):
                     elif self.direction == blocked_direction == "down":
                         self.direction = "up"
                 else:
-                    self.direction = "up" if self.direction == "down" else "down"
+                    self.direction = (
+                        "up" if self.direction == "down" else "down"
+                    )
 
     def logic(self, scroll):
         super().logic(scroll)
@@ -277,47 +389,45 @@ class MovingNPC(NPC):
 
 
 class Mau(MovingNPC):
-
     def __init__(self, dep_pos, range_):
         super().__init__(
             pos=dep_pos,
             movement="lateral",
             range_rect=pg.Rect(*dep_pos, *range_),
             velocity=pg.Vector2(1, 1),
-            sprite_sheet_path='data/sprites/npc_spritesheet.png',
+            sprite_sheet_path="data/sprites/npc_spritesheet.png",
             idle=True,
             idle_right=[131, 49, 43, 33, 2, 3],
             idle_left=[131, 49, 33, 33, 2, 3, "flip"],
             move_anim=True,
             move_right=[3 + 39, 49, 43, 33, 2, 3],
             move_left=[3 + 39, 49, 43, 33, 2, 3, "flip"],
-            tell_story='Meow meow meow'
+            tell_story="Meow meow meow",
         )
 
         self.it_re_size = (75, 100)
-        self.anim_duration = {
-            "idle": 115,  # HE FLOPS
-            "move": 100
-        }
+        self.anim_duration = {"idle": 115, "move": 100}  # HE FLOPS
 
 
 class Candy(MovingNPC):
     """
-         Όταν
+    Όταν
     """
 
     def __init__(self, pos, awake=False):
         super(Candy, self).__init__(
             movement="lateral",
-            range_rect=pg.Rect(pos, (400, 200)),  # TODO : get a real range rect (didn't know what to put)
+            range_rect=pg.Rect(
+                pos, (400, 200)
+            ),  # TODO : get a real range rect (didn't know what to put)
             velocity=pg.Vector2(2, 0),
             pos=pos,
-            sprite_sheet_path='data/sprites/npc_spritesheet.png',
+            sprite_sheet_path="data/sprites/npc_spritesheet.png",
             idle=True,
             idle_down=[119, 87, 37, 27, 2, 2],
             move_anim=True,
             move_right=[2, 86, 38, 29, 2, 2],
-            move_left=[2, 86, 38, 29, 2, 2, "flip"]
+            move_left=[2, 86, 38, 29, 2, 2, "flip"],
         )
         self.direction = "down"
         self.state = "idle"
@@ -363,78 +473,64 @@ class Candy(MovingNPC):
 
 
 class Cynthia(NPC):
-
     def __init__(self, pos):
         super().__init__(
             moving=False,
             pos=pos,
-            sprite_sheet_path='data/sprites/npc_spritesheet.png',
+            sprite_sheet_path="data/sprites/npc_spritesheet.png",
             idle=True,
             idle_down=[1, 1, 26, 42, 3, 3],
-            remove_bubble=True
+            remove_bubble=True,
         )
         self.direction = "down"
         self.state = "idle"
-        self.anim_duration = {
-            "idle": 750,
-            "move": 100
-        }
+        self.anim_duration = {"idle": 750, "move": 100}
         self.it_re_size = (60, 60)
+
 
 class CynthiaSchool(NPC):
     def __init__(self, pos):
         super().__init__(
             moving=False,
             pos=pos,
-            sprite_sheet_path='data/sprites/npc_spritesheet.png',
+            sprite_sheet_path="data/sprites/npc_spritesheet.png",
             idle=True,
             idle_down=[1, 1, 26, 42, 3, 3],
-            tell_story="John what are you doing here?\nyou are supposed to go to Manos."
+            tell_story="John what are you doing here?\nYou are supposed to go to the training field ",
         )
         self.direction = "down"
         self.state = "idle"
-        self.anim_duration = {
-            "idle": 750,
-            "move": 100
-        }
+        self.anim_duration = {"idle": 750, "move": 100}
         self.it_re_size = (60, 60)
 
 
 class Manos(NPC):
-
     def __init__(self, pos, tell_story=""):
         super().__init__(
             moving=False,
             pos=pos,
-            sprite_sheet_path='data/sprites/npc_spritesheet.png',
+            sprite_sheet_path="data/sprites/npc_spritesheet.png",
             idle=True,
             idle_down=[2, 120, 20, 45, 3, 3],
-            remove_bubble=True
+            remove_bubble=True,
         )
         self.direction = "down"
         self.state = "idle"
-        self.anim_duration = {
-            "idle": 750,
-            "move": 100
-        }
+        self.anim_duration = {"idle": 750, "move": 100}
         self.it_re_size = (60, 60)
 
 
-class Alex(NPC):
-
+class Alexia(NPC):
     def __init__(self, pos):
-        super(Alex, self).__init__(
+        super(Alexia, self).__init__(
             moving=False,
             pos=pos,
-            sprite_sheet_path='data/sprites/npc_spritesheet.png',
+            sprite_sheet_path="data/sprites/npc_spritesheet.png",
             idle=True,
             idle_down=[0, 169, 26, 43, 3, 3],
-            remove_bubble=True
+            remove_bubble=True,
         )
         self.direction = "down"
         self.state = "idle"
-        self.anim_duration = {
-            "idle": 750,
-            "move": 100
-        }
+        self.anim_duration = {"idle": 750, "move": 100}
         self.it_re_size = (60, 60)

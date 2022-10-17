@@ -72,7 +72,6 @@ class PlayerRoom(GameState):
         ]
 
         self.music_manager = SoundManager(False, True, volume=0.45)
-        self.music_manager.play_music("main_theme")
 
         self.world = pg.transform.scale(
             l_path("data/sprites/world/Johns_room.png"), (1280, 720)
@@ -231,6 +230,8 @@ class JohnsGarden(GameState):
 
         self.music_manager = SoundManager(False, True, volume=0.75)
         self.music_manager.play_music("forest_theme")
+
+        # Add background ambience
 
         # John's house position and size
         jh_pos = self.positions["john_house"][0] - vec(1, 30)
@@ -774,7 +775,7 @@ class JohnsGarden(GameState):
                     100,
                     50,
                 ),
-                "Enter Mano's hut ?",
+                "Enter Manos's hut ?",
             ),
         }
         self.spawn = {
@@ -1093,7 +1094,7 @@ class Gymnasium(GameState):
             self.prop_objects["school_entrance"](
                 (hills_width * 2 - 150, -hills_height * 2 + 30)
             ),
-            npc.Alex((2702, -75)),
+            npc.Alexia((2702, -75)),
             npc.CynthiaSchool((2782, -75)),
         ]
 
@@ -1174,6 +1175,7 @@ class ManosHut(GameState):
         )
         sc_x = 1280 / 453
         sc_y = 720 / 271
+
         self.objects = [
             Rect(-40, 0, 40, 720),  # Left borders
             Rect(1270, 134, 40, 586),  # Right borders
@@ -1201,46 +1203,35 @@ class ManosHut(GameState):
         self.ended_script = True
         self.spawned = False
         self.started_script = False
-        self.camera_script = [
-            {
-                "duration": 4000,
-                "pos": (235 * sc_x, 115 * sc_y),
-                "zoom": 1.2,
-                "text": "Manos: John! did you find your sister?",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "John: I was too late. We gotta get her back!",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "John: What did you want to explain to me before?",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "Manos: I think I know who did it John.",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "Manos: This aura is no one else's but my old nemesis Alcemenos",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "text": "Manos: There is a good chance he is using his old base.",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "zoom": 1,
-                "text": "Manos: We must go to Porto Rafth before the sun goes down.",
-                "text_dt": 1500,
-            },
+        self.additional_lights = [
+            # Windows
+            PolygonLight(
+                vec(640, 35),
+                68 * 5 + 30,
+                250,  # upsos kinda
+                50,  # rotate
+                85,
+                (255, 255, 255),
+                dep_alpha=50,
+                horizontal=True,
+                additional_alpha=175,
+            ),
+            PolygonLight(
+                vec(640, 715),
+                68 * 2,
+                85,  # upsos kinda
+                185,  # rotate
+                170,
+                (255, 255, 255),
+                dep_alpha=50,
+                horizontal=True,
+                additional_alpha=175,
+            ),
         ]
+
+        from .scripts import MANOS_HUT_SCENE
+
+        self.camera_script = MANOS_HUT_SCENE
 
     def update(self, camera, dt):
 
@@ -1266,7 +1257,7 @@ class ManosHut(GameState):
 
         if self.player.game_instance.quest_manager.quests[
             "A new beginning"
-        ].quest_state["Reach Manos in his hut"]:
+        ].quest_state["Find Manos in his hut"]:
             if not get_cutscene_played(self.id) and not self.started_script:
                 self.started_script = True
                 self.ended_script = False
@@ -1444,7 +1435,7 @@ class CaveGarden(GameState):
             {
                 "duration": 4000,
                 "pos": (2080, 2800),
-                "text": "John: Mmmm? what is that?",
+                "text": "John: Hmm? what is that?",
                 "text_dt": 1500,
             },
             {
@@ -1482,7 +1473,7 @@ class CaveGarden(GameState):
             # Just for security
             if not self.player.game_instance.quest_manager.quests[
                 "A new beginning"
-            ].quest_state["Reach Manos in his hut"]:
+            ].quest_state["Find Manos in his hut"]:
 
                 self.objects.append(
                     BigShadowDummy(
@@ -1614,7 +1605,8 @@ class CaveEntrance(GameState):
         self.exit_rects = {
             "cave_garden": (
                 Rect(1400, self.spawn["cave_garden"][1], 150, 300),
-                "Go back to open world ?",
+                "",
+                "mandatory",
             ),
             "cave_room_1": (
                 Rect(-2700, self.spawn["cave_garden"][1], 150, 300),
@@ -1730,7 +1722,8 @@ class CaveRoomPassage(GameState):
         self.exit_rects = {
             "gymnasium": (
                 Rect(732, 530, 150, 140),
-                "Are you sure you want to exit the cave ?",
+                "",
+                "mandatory",
             ),
             "cave_room_2": (
                 Rect(300, self.spawn["cave_room_2"][1] + 420, 950, 140),

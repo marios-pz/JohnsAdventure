@@ -431,12 +431,12 @@ class Player:
 
                 case p.KEYDOWN:
 
-                    
                     if e.key == fullscreen:
                         p.display.toggle_fullscreen()
 
                     if e.key == p.K_ESCAPE:
                         self.paused = True
+                        # self.sound_manager.play_music("main_theme")
 
                     if e.key == heal:
                         if (

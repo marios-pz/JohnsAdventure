@@ -52,7 +52,7 @@ TITLE_TRANSLATOR = {
     "training_field": "Training Field",
     "gymnasium": "Gymnasium",
     "kitchen": "John's Kitchen",
-    "manos_hut": "Mano's hut",
+    "manos_hut": "Manos's hut",
     "cave_garden": "Cave Garden",
     "cave_entrance": "Cave Entrance",
     # "cave_room_1": "C-Floor 1",
@@ -142,7 +142,7 @@ class GameManager:
 
         # ---------- GAME MANAGERS ----------------
         self.sound_manager: SoundManager = SoundManager(False, True)
-        self.sound_manager.play_music("city_theme")
+        self.sound_manager.play_music("main_theme")
 
         self.loading_screen: LoadingScreen = LoadingScreen(self.DISPLAY)
         self.menu_manager: Menu = Menu(self, self.blacksword, self.ui)
@@ -684,7 +684,7 @@ class GameManager:
                             ]
                         )
 
-                        if quests.quest_state["Reach Manos in his hut"]:
+                        if quests.quest_state["Find Manos in his hut"]:
                             update = "credits"
 
                     self.start_new_level(update, last_state=self.state)

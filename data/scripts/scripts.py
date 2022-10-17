@@ -51,7 +51,7 @@ PLAYER_ROOM_SCENE = [
     {
         "no_init": True,
         "duration": 3000,
-        "centered_text": "PORTO RAFTH 202X ALTERNATIVE UNIVERSE",
+        "centered_text": "PORTO RAFTI 202X ALTERNATIVE UNIVERSE",
         "centered_text_dt": 2000,
         "image": image_surface,
     },
@@ -65,7 +65,7 @@ PLAYER_ROOM_SCENE = [
     {
         "duration": 2000,
         "image": image_surface,
-        "centered_text": "But.. on this bare day.. the unpredictable happened.",
+        "centered_text": "But on this day the unpredictable happend.",
         "centered_text_dt": 2000,
         "waiting_end": 1000,
     },
@@ -128,7 +128,7 @@ KITCHEN_SCENE = [
     {
         "duration": 2000,
         "pos": (570, 220),
-        "text": "Cynthia: Anyway.. Manos is waiting for you in training field",
+        "text": "Cynthia: Anyway.. Manos is waiting for you in the training field",
         "text_dt": 1600,
     },
     {
@@ -155,18 +155,59 @@ KITCHEN_SCENE = [
 ]
 
 
+MANOS_HUT_SCENE = [
+    {
+        "duration": 4000,
+        "pos": (235 * (1280 / 453), 115 * (720 / 271)),
+        "zoom": 1.2,
+        "text": "Manos: John! Why did you took so long?",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "text": "John: The passage was blocked by monsters and I made it through the caves to get here.",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "text": "John: The monsters took Cynthia, we got to get her back. Care to explain the situation?",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "text": "Manos: I think I know who did it John.",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "text": "Manos: This aura is no one else's but my old nemesis Alcemenos",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "text": "Manos: There is a good chance he is using his old base.",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "zoom": 1,
+        "text": "Manos: We must go to Porto Rafti before the sun goes down.",
+        "text_dt": 1500,
+    },
+]
+
 TRAINING_FIELD_SCENE_1 = [
     {"duration": 0, "pos": (1138, 1526), "zoom": 1.2},
     {
         "duration": 3000,
-        "text": "Manos: Hello john, are you ready to fight?",
+        "text": "Manos: Hey John ready for your usual training?",
         "text_dt": 1500,
     },
     {"duration": 3000, "text": "Candy: *meow meow* ", "text_dt": 1500},
     {
         "duration": 4500,
         "pos": (1660, 1682),
-        "text": "Manos: show me your sword skills in those dummies i've placed.",
+        "text": "Manos: good, pick up your sword from the chest and show me your skills in those dummies that i've placed",
         "text_dt": 1500,
     },
     {"duration": 2500},  # show the __static__ dummies
@@ -176,14 +217,29 @@ TRAINING_FIELD_SCENE_1 = [
         "zoom": 1,
         "zoom_duration": 1800,
     },
+    {
+        "duration": 2000,
+        "text": "(GAME: you can press Shift to Dash!)",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 2000,
+        "text": "(GAME: you can press Q to Heal!)",
+        "text_dt": 1500,
+    },
 ]
 
 TRAINING_FIELD_SCENE_2 = [
     {
         "duration": 3000,
-        "text": "Manos: Well done John. now its time for movement-",
+        "text": "Manos: Good! you're getting better!",
         "text_dt": 1500,
         "waiting_end": 500,
+    },
+    {
+        "duration": 2000,
+        "text": "(GAME: you can press E to check your inventory!, you can also upgrade your stats!)",
+        "text_dt": 1500,
     },
     {
         "duration": 1300,  # move at where dummies were
@@ -199,13 +255,13 @@ TRAINING_FIELD_SCENE_2 = [
     {
         "duration": 4000,
         "pos": (1138, 1526),
-        "text": "Manos: I need to go, defeat these monsters!",
+        "text": "Manos: Oh no.. Quickly defeat those monsters and meet me at my house, Quickly! I need to go to equip my stuff",
         "text_dt": 1200,
     },
     {
         "duration": 4000,
         "pos": (1138, 1526),
-        "text": "Manos: and get back Cynthia, I will be in my Hut",
+        "text": "Manos: I'll see you in my Hut, don't forget to get cynthia as soon as you can! she might be in danger",
         "text_dt": 1200,
     },
 ]
@@ -215,28 +271,28 @@ GYMNASIUM_SCENE = [
         "duration": 3000,
         "pos": (2762, -75),
         "zoom": 1.2,
-        "text": "Alex: John! monsters attacked the area!",
+        "text": "Alexia: John! monsters kidnapped Cynthia but I managed to run away!",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 3000,
+        "text": "Alexia: Several monsters are roaming the area! you cannot go back",
         "text_dt": 1600,
     },
     {
         "duration": 3000,
-        "text": "Alex: A huge monster is roaming the area! you cannot go back",
+        "text": "Alexia: There is a secret spot around here",
         "text_dt": 1600,
     },
     {
         "duration": 3000,
-        "text": "Alex: There is a secret spot around here",
-        "text_dt": 1600,
-    },
-    {
-        "duration": 3000,
-        "text": "Alex: find it, it will help you go back home through the cave.",
+        "text": "Alexia: find it, it will help you go back home through the cave.",
         "text_dt": 1600,
     },
     {
         "duration": 3000,
         "zoom": 1,
-        "text": "Alex: Good luck! hopefully it won't have any monsters.",
+        "text": "Alexia: Good luck! hopefully it won't have any monsters.",
         "text_dt": 1600,
     },
 ]

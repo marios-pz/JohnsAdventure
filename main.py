@@ -25,6 +25,6 @@ async def main(
 
 if __name__ == "__main__":
     if len(flags) > 1:
-        asyncio.run(main(debug=True, first_state=flags[1], no_rect=False))
+        asyncio.run(main(debug=True, first_state=flags[1], no_rect=True))
     else:
         asyncio.run(main())

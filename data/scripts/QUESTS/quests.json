@@ -9,11 +9,11 @@
         "Kill the dummies": "TARGET:Dummy TYPE:Kill LEVEL:training_field",
         "Talk back to manos": "TYPE:Interact TARGET:Manos LEVEL:training_field",
         "Go find Cynthia in school": "TYPE:Reach LEVEL:gymnasium",
-        "Ask alexia": "TARGET:Alex TYPE:Interact LEVEL:gymnasium",
+        "Ask alexia": "TARGET:Alexia TYPE:Interact LEVEL:gymnasium",
         "Find the hidden cave entrance": "TYPE:Reach LEVEL:cave_passage",
         "Reach the main entrance": "TYPE:Reach LEVEL:cave_garden",
         "Kill the big dummie": "TARGET:BigShadowDummy TYPE:Kill LEVEL:cave_garden",
-        "Reach Manos in his hut": "TARGET:Manos TYPE:Interact LEVEL:manos_hut"
+        "Find Manos in his hut": "TARGET:Manos TYPE:Interact LEVEL:manos_hut"
       },
       "completed": {
         "Talk to Cynthia in the kitchen": true,
@@ -25,7 +25,7 @@
         "Find the hidden cave entrance": true,
         "Reach the main entrance": false,
         "Kill the big dummie": false,
-        "Reach Manos in his hut": false
+        "Find Manos in his hut": false
       }
     }
   }
