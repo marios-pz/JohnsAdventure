@@ -45,39 +45,39 @@ image_surface = pygame.surface.Surface((1280, 720))
 
 PLAYER_ROOM_SCENE = [
     {
-        "duration": 4000,
+        "duration": 3000,
         "image": scale(l_path("data/sprites/cutscenes/cutscene1.png"), 3),
     },
     {
         "no_init": True,
-        "duration": 4000,
+        "duration": 3000,
         "centered_text": "PORTO RAFTH 202X ALTERNATIVE UNIVERSE",
         "centered_text_dt": 2000,
         "image": image_surface,
     },
     {
-        "duration": 3000,
+        "duration": 2000,
         "image": image_surface,
         "centered_text": "A universe, Humans and Monsters lived peacefully.",
         "centered_text_dt": 2000,
         "waiting_end": 1000,
     },
     {
-        "duration": 3000,
+        "duration": 2000,
         "image": image_surface,
         "centered_text": "But.. on this bare day.. the unpredictable happened.",
         "centered_text_dt": 2000,
         "waiting_end": 1000,
     },
     {
-        "duration": 3000,
+        "duration": 2000,
         "image": image_surface,
         "centered_text": "and John's Adventure started.",
         "centered_text_dt": 2000,
         "waiting_end": 1000,
     },
     {
-        "duration": 3000,
+        "duration": 2000,
         "image": image_surface,
         "centered_text": "C.. Cynthia!",
         "centered_text_dt": 2000,
@@ -90,14 +90,14 @@ PLAYER_ROOM_SCENE = [
         ),
         "duration": 0,
         "text": "Man. what a dream.",
-        "waiting_end": 4000,
+        "waiting_end": 3000,
         "zoom": 1.4,
         "text_dt": 1600,
     },
     {
         "pos": (1100, 225),
         "duration": 1000,
-        "waiting_end": 2000,
+        "waiting_end": 1000,
         "text": "I better check on her.",
         "text_dt": 1600,
     },
@@ -119,34 +119,34 @@ PLAYER_ROOM_SCENE = [
 
 KITCHEN_SCENE = [
     {
-        "duration": 4000,
+        "duration": 3000,
         "pos": (570, 220),
         "zoom": 1.2,
         "text": "Cynthia: Hello brother. you seem dread. are you alright?",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
-        "duration": 4000,
+        "duration": 2000,
         "pos": (570, 220),
         "text": "Cynthia: Anyway.. Manos is waiting for you in training field",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
-        "duration": 4000,
+        "duration": 2000,
         "pos": (570, 220),
         "text": "Cynthia: I will go meet my friends in school, see you around",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
         # Show the door
-        "duration": 3000,
+        "duration": 2000,
         "pos": (620, 600),
     },
     {
-        "duration": 1800,
+        "duration": 1600,
         # Go back to the player
         "zoom": 1,
-        "zoom_duration": 1800,
+        "zoom_duration": 1500,
         "pos": (
             570,
             220,
@@ -183,9 +183,10 @@ TRAINING_FIELD_SCENE_2 = [
         "duration": 3000,
         "text": "Manos: Well done John. now its time for movement-",
         "text_dt": 1500,
+        "waiting_end": 500,
     },
     {
-        "duration": 1500,  # move at where dummies were
+        "duration": 1300,  # move at where dummies were
         "pos": (1660, 1682),
     },
     {"duration": 2500},  # at this point, the dummies appear
@@ -211,31 +212,31 @@ TRAINING_FIELD_SCENE_2 = [
 
 GYMNASIUM_SCENE = [
     {
-        "duration": 4000,
+        "duration": 3000,
         "pos": (2762, -75),
         "zoom": 1.2,
         "text": "Alex: John! monsters attacked the area!",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "text": "Alex: A huge monster is roaming the area! you cannot go back",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "text": "Alex: There is a secret spot around here",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "text": "Alex: find it, it will help you go back home through the cave.",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "zoom": 1,
         "text": "Alex: Good luck! hopefully it won't have any monsters.",
-        "text_dt": 1500,
+        "text_dt": 1600,
     },
 ]
