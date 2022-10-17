@@ -1008,8 +1008,8 @@ class Training_Field(GameState):
             npc.Candy((1250, 1470), awake=True),
             npc.Manos((1150, 1480)),
             Chest((1630, 1410), {"items": Training_Sword(), "coins": 50}),
-            Dummy(self, self.screen, (1850, 1534)),
-            Dummy(self, self.screen, (1850, 1734)),
+            Dummy(self, (1850, 1534)),
+            Dummy(self, (1850, 1734)),
         ]
 
         self.exit_rects = {
@@ -1130,14 +1130,12 @@ class Training_Field(GameState):
                 self.dummies = [
                     ShadowDummy(
                         self,
-                        self.screen,
                         (1700, 1540),
                         hp=150,
                         xp_drop=125,
                     ),
                     ShadowDummy(
                         self,
-                        self.screen,
                         (1700, 1720),
                         hp=150,
                         xp_drop=125,
@@ -1700,7 +1698,6 @@ class CaveGarden(GameState):
                 self.objects.append(
                     BigShadowDummy(
                         self,
-                        self.screen,
                         (3000, self.hh * 4 + 10),
                     )
                 )
@@ -1797,15 +1794,11 @@ class CaveEntrance(GameState):
             Rect(-(2700 + 140), self.spawn["cave_garden"][1], 150, 300),
             Goblin(
                 self,
-                self.screen,
                 (-1400, self.spawn["cave_garden"][1] + 10),
-                self.player,
             ),
             Goblin(
                 self,
-                self.screen,
                 (-1300, self.spawn["cave_garden"][1] + 20),
-                self.player,
             ),
             Torch(
                 self,
@@ -2024,18 +2017,18 @@ class CaveRoomOne(GameState):
                 no_begin=True,
             ),
             self.prop_objects["door"]((440, -268)),
-            Goblin(self, self.screen, (6900, 1200)),
-            Goblin(self, self.screen, (6600, 400)),
-            Goblin(self, self.screen, (6700, 450)),
-            Goblin(self, self.screen, (6300, 350)),
-            Goblin(self, self.screen, (7300, 2050)),
-            Goblin(self, self.screen, (6800, 2050)),
-            Goblin(self, self.screen, (3500, 500)),
-            Goblin(self, self.screen, (3700, 650)),
-            Goblin(self, self.screen, (3800, 620)),
-            Goblin(self, self.screen, (4120, 600)),
-            Goblin(self, self.screen, (4570, 750)),
-            Goblin(self, self.screen, (5900, 850)),
+            Goblin(self, (6900, 1200)),
+            Goblin(self, (6600, 400)),
+            Goblin(self, (6700, 450)),
+            Goblin(self, (6300, 350)),
+            Goblin(self, (7300, 2050)),
+            Goblin(self, (6800, 2050)),
+            Goblin(self, (3500, 500)),
+            Goblin(self, (3700, 650)),
+            Goblin(self, (3800, 620)),
+            Goblin(self, (4120, 600)),
+            Goblin(self, (4570, 750)),
+            Goblin(self, (5900, 850)),
         ]
 
         self.spawn = {"cave_entrance": (8000, 1160), "cave_room_2": (460, -20)}
@@ -2278,25 +2271,25 @@ class CaveRoomTwo(GameState):
             Torch(self, (7820, 920), radius=80),
             Torch(self, (7820, -140), radius=80),
             Torch(self, (7820, 1920), radius=80),
-            Goblin(self, self.screen, (1600, 1100)),
-            Goblin(self, self.screen, (1780, 1150)),
-            Goblin(self, self.screen, (1800, 1270)),
-            Guardian(self, self.screen, (1600, 400)),
-            Guardian(self, self.screen, (1800, 400)),
-            Guardian(self, self.screen, (3600, 800)),
-            Guardian(self, self.screen, (3600, 1400)),
-            Goblin(self, self.screen, (5700, 1100)),
-            Goblin(self, self.screen, (5820, 1150)),
-            Goblin(self, self.screen, (5900, 1270)),
-            Goblin(self, self.screen, (6120, 1270)),
-            Guardian(self, self.screen, (6600, 1200)),
-            Goblin(self, self.screen, (5700, 2100)),
-            Goblin(self, self.screen, (5820, 2150)),
-            Goblin(self, self.screen, (5900, 2270)),
-            Goblin(self, self.screen, (6120, 2270)),
-            Guardian(self, self.screen, (7100, 300)),
-            Guardian(self, self.screen, (7200, 380)),
-            Guardian(self, self.screen, (7300, 300)),
+            Goblin(self, (1600, 1100)),
+            Goblin(self, (1780, 1150)),
+            Goblin(self, (1800, 1270)),
+            Guardian(self, (1600, 400)),
+            Guardian(self, (1800, 400)),
+            Guardian(self, (3600, 800)),
+            Guardian(self, (3600, 1400)),
+            Goblin(self, (5700, 1100)),
+            Goblin(self, (5820, 1150)),
+            Goblin(self, (5900, 1270)),
+            Goblin(self, (6120, 1270)),
+            Guardian(self, (6600, 1200)),
+            Goblin(self, (5700, 2100)),
+            Goblin(self, (5820, 2150)),
+            Goblin(self, (5900, 2270)),
+            Goblin(self, (6120, 2270)),
+            Guardian(self, (7100, 300)),
+            Guardian(self, (7200, 380)),
+            Guardian(self, (7300, 300)),
         ]
 
         self.spawn = {"cave_room_1": (-65, -40), "cave_passage": (7500, 20)}
@@ -2380,10 +2373,10 @@ class CaveRoomPassage(GameState):
                 step_y=0,
                 randomize=0,
             ),
-            Goblin(self, self.screen, (440, 920)),
-            Goblin(self, self.screen, (490, 920)),
-            Goblin(self, self.screen, (940, 920)),
-            Goblin(self, self.screen, (970, 920)),
+            Goblin(self, (440, 920)),
+            Goblin(self, (490, 920)),
+            Goblin(self, (940, 920)),
+            Goblin(self, (970, 920)),
         ]
 
         self.exit_rects = {

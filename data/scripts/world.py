@@ -531,7 +531,6 @@ class GameManager:
         if not respawn:
             if must_store_begin_pos:
                 self.last_positions = {}
-                print(self.game_state.objects)
                 for obj_ in self.game_state.objects:
                     if not isinstance(obj_, pygame.Rect):
                         self.last_positions[id(obj_)] = copy(obj_.rect.topleft)

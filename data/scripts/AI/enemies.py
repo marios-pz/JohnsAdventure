@@ -8,14 +8,12 @@ class Dummy(Enemy):
     def __init__(
         self,
         level_instance,
-        screen: pg.Surface,
         pos: tuple[int, int],
         hp: int = 100,
         xp_drop=105,
     ):
         super().__init__(
             level_instance,
-            screen,
             pos,
             hp=100,
             xp_drop=210,
@@ -39,7 +37,6 @@ class ShadowDummy(Enemy):
     def __init__(
         self,
         level_instance,
-        screen: pg.Surface,
         pos: tuple[int, int],
         hp: int = 100,
         xp_drop=65,
@@ -54,7 +51,6 @@ class ShadowDummy(Enemy):
 
         super().__init__(
             level_instance,
-            screen,
             pos,
             hp=65,
             xp_drop=65,
@@ -95,14 +91,12 @@ class Guardian(Enemy):
     def __init__(
         self,
         level_instance,
-        screen: pg.Surface,
         pos: tuple[int, int],
         hp: int = 100,
         xp_drop=160,
     ):
         super().__init__(
             level_instance,
-            screen,
             pos,
             hp=175,
             xp_drop=210,
@@ -143,14 +137,12 @@ class Goblin(Enemy):
     def __init__(
         self,
         level_instance,
-        screen: pg.Surface,
         pos: tuple[int, int],
         hp: int = 100,
         xp_drop=45,
     ):
         super().__init__(
             level_instance,
-            screen,
             pos,
             hp=65,
             xp_drop=45,
@@ -191,7 +183,6 @@ class BigShadowDummy(Enemy):
     def __init__(
         self,
         level_instance,
-        screen: pg.Surface,
         pos: tuple[int, int],
         hp: int = 1200,
         xp_drop: int = 700,
@@ -200,7 +191,6 @@ class BigShadowDummy(Enemy):
 
         super().__init__(
             level_instance,
-            screen,
             pos,
             hp,
             xp_drop,
@@ -216,7 +206,6 @@ class BigShadowDummy(Enemy):
         self.boss_name = "The Big Dummie"
         self.attacking_distance = 180
 
-        # custom center is for the shadow aura
         self.custom_center = 24 * 6 * 4 / 5
         self.xp_drop = self.xp_available = xp_drop
         self.scale = 4

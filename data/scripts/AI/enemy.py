@@ -7,8 +7,6 @@ enemies.py is the enemy objects in the game
 """
 
 from os import DirEntry
-from pickle import GET
-from types import coroutine
 from typing import Any
 import pygame as pg
 from random import choice, randint
@@ -42,7 +40,6 @@ class Enemy:
     def __init__(
         self,
         level_instance,
-        screen: pg.Surface,
         pos: tuple[int, int],
         hp: int = 100,
         xp_drop=int,
@@ -56,10 +53,11 @@ class Enemy:
         left_hitbox=(0, 0),
     ):
 
+        self.screen = level_instance.display
         self.attacking_distance = 90
-
         self.IDENTITY = "ENEMY"
-        self.level = level_instance
+        self.level = level_instance.display
+
         self.scroll = self.level.scroll
         self.BASE_VEL = vel
         self.vel = {
@@ -79,7 +77,7 @@ class Enemy:
 
         self.sheet = load(resource_path("data/sprites/dummy.png"), alpha=False)
         self.attackable = True
-        self.screen = screen
+
         self.idle = scale(get_sprite(self.sheet, 0, 0, 34, 48), 4)
         self.hit_anim = [
             scale(get_sprite(self.sheet, i * 34, 48, 34, 48), 4)
