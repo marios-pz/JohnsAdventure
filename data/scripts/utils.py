@@ -96,7 +96,7 @@ def resource_path(relative_path: str) -> str:
 
 
 @lru_cache(1000)
-def l_path(relative_path: str, alpha: bool = False):
+def l_path(relative_path: str, alpha: bool = False) -> pygame.surface.Surface:
     """Upgraded load function for PyInstaller"""
     if alpha:
         return pygame.image.load(resource_path(relative_path)).convert_alpha()

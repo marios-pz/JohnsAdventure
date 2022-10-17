@@ -16,7 +16,7 @@
         "Reach Manos in his hut": "TARGET:Manos TYPE:Interact LEVEL:manos_hut"
       },
       "completed": {
-        "Talk to Cynthia in the kitchen": false,
+        "Talk to Cynthia in the kitchen": true,
         "Talk to manos in the training field": false,
         "Kill the dummies": false,
         "Talk back to manos": false,

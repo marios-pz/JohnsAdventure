@@ -135,7 +135,7 @@ class GameManager:
             "data/sprites/pygame_powered.png", alpha=True
         )
         self.start_logo_time = pygame.time.get_ticks()
-        self.pygame_logo = False
+        self.pg_logo = False
         self.start_scale = 1
         self.current_scale = 0
         self.delay_scaling = 0
@@ -359,7 +359,7 @@ class GameManager:
 
         pygame.display.update()
 
-    def pygame_loading_screen(self):
+    def pg_loading_screen(self):
         while pygame.time.get_ticks() < 3000:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -375,6 +375,8 @@ class GameManager:
                 self.current_scale += 0.1
 
             scale_ = self.start_scale - self.current_scale
+
+            print(self.pygame_logo)
             img = scale(self.pygame_logo, scale_)
             self.DISPLAY.blit(
                 img, img.get_rect(center=(self.W // 2, self.H // 2))
@@ -583,7 +585,7 @@ class GameManager:
     def update(self):
 
         if not self.debug:
-            self.pygame_loading_screen()
+            self.pg_loading_screen()
         else:
             self.start_new_level(
                 self.state,
