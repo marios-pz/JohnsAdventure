@@ -1011,7 +1011,7 @@ class Training_Field(GameState):
             # 884 = the distance between explosion start and first dummy
             if self.shockwave_radius > 884 and self.dummies != []:
                 # Fix aura bug before re implementing them
-                # self.objects.extend(self.dummies)
+                self.objects.extend(self.dummies)
                 self.dummies = []
 
         return update

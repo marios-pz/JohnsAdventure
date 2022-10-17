@@ -38,8 +38,8 @@ class ShadowDummy(Enemy):
         self,
         level_instance,
         pos: tuple[int, int],
-        hp: int = 100,
-        xp_drop=25,
+        hp: int = 150,
+        xp_drop=35,
     ):
         # OC formula
         # calc_intensity = ceil(damage * health ) / xp_drop (this process must be automated instead of passed in
@@ -52,8 +52,8 @@ class ShadowDummy(Enemy):
         super().__init__(
             level_instance,
             pos,
-            hp=65,
-            xp_drop=65,
+            hp=150,
+            xp_drop=35,
             custom_rect=[10, 25, 29 * 3, 24 * 3],
             enemy_type="shadow",
             intensiveness=calc_intensity,
@@ -80,10 +80,12 @@ class ShadowDummy(Enemy):
             attack_r_coo=[0, 75, 29, 24, 5, 4],
             attack_u_coo=[0, 75, 29, 24, 5, 4],
         )
+
+        self.attacking_distance = 120
         self.custom_center = 24 * 3 * 4 / 5
         self.xp_drop = self.xp_available = xp_drop
         self.scale = 4
-        self.damage = 2
+        self.damage = 8
         self.knock_back = {"duration": 150, "vel": 3, "friction": 2.5}
 
 

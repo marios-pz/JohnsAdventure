@@ -48,7 +48,7 @@ vec = p.math.Vector2
 
 
 class Player:
-    DEFAULT_VEL = 7
+    DEFAULT_VEL = 6
 
     def __init__(self, game_instance, screen, font, ux, ui, data):
         self.game_instance = game_instance
@@ -81,9 +81,8 @@ class Player:
 
         self.data = data
         self.inventory = Inventory(self.screen, ui)
-        self.quest_UI: QuestUI = (
-            None  # will be reassigned later in GameManager.__init__
-        )
+        self.quest_UI: QuestUI = None
+        # will be reassigned later in GameManager.__init__
 
         # States
         self.walking = False
@@ -443,7 +442,7 @@ class Player:
                             self.health_potions > 0
                             and self.health < self.maximum_health
                         ):
-                            self.health_target += 20
+                            self.health_target += 40
                             self.health_potions -= 1
 
                     # Temporar until we get a smart python ver

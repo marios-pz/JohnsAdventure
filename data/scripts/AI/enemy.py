@@ -111,11 +111,10 @@ class Enemy:
 
         # SHADOW PARTICLES only for shadow monsters and bosses
         if enemy_type in ["shadow", "boss"]:
-            pass  # TODO ADD THIS SEPERATELY AT SHADOW ONLY ENEMIES
             # Initialize Shadow Particles only if they are shadow monsters
-            # self.aura_particles = Shadow_Manager(
-            #    self.intensiveness, self.player, self.screen, self
-            # )
+            self.aura_particles = Shadow_Manager(
+                self.intensiveness, level_instance.player, self.screen, self
+            )
 
         self.particle_scroller = None
 

@@ -16,14 +16,14 @@
         "Reach Manos in his hut": "TARGET:Manos TYPE:Interact LEVEL:manos_hut"
       },
       "completed": {
-        "Talk to Cynthia in the kitchen": false,
-        "Talk to manos in the training field": false,
-        "Kill the dummies": false,
+        "Talk to Cynthia in the kitchen": true,
+        "Talk to manos in the training field": true,
+        "Kill the dummies": true,
         "Talk back to manos": true,
         "Go find Cynthia in school": true,
         "Ask alexia": true,
         "Find the hidden cave entrance": true,
-        "Reach the main entrance": true,
+        "Reach the main entrance": false,
         "Kill the big dummie": false,
         "Reach Manos in his hut": false
       }

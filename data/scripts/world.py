@@ -106,7 +106,7 @@ class GameManager:
         self.W: int = self.DISPLAY.get_width()
         self.H: int = self.DISPLAY.get_height()
 
-        self.FPS = 55
+        self.FPS = 60
 
         # ------------- SPRITESHEET ---------------
         self.ui = UI_Spritesheet("data/ui/UI_spritesheet.png")
