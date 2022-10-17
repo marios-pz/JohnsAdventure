@@ -33,8 +33,6 @@ from .levels import (
     Training_Field,
     CaveGarden,
     CaveEntrance,
-    CaveRoomOne,
-    CaveRoomTwo,
     CaveRoomPassage,
     Credits,
 )
@@ -55,8 +53,8 @@ TITLE_TRANSLATOR = {
     "manos_hut": "Mano's hut",
     "cave_garden": "Cave Garden",
     "cave_entrance": "Cave Entrance",
-    "cave_room_1": "C-Floor 1",
-    "cave_room_2": "C-Floor 2",
+    # "cave_room_1": "C-Floor 1",
+    # "cave_room_2": "C-Floor 2",
     "cave_passage": "Cave Passage",
 }
 
@@ -182,8 +180,8 @@ class GameManager:
             "gymnasium": Gymnasium,
             "cave_garden": CaveGarden,
             "cave_entrance": CaveEntrance,
-            "cave_room_1": CaveRoomOne,
-            "cave_room_2": CaveRoomTwo,
+            # "cave_room_1": CaveRoomOne,
+            # "cave_room_2": CaveRoomTwo,
             "cave_passage": CaveRoomPassage,
             "credits": Credits,
         }

@@ -39,7 +39,7 @@ class ShadowDummy(Enemy):
         level_instance,
         pos: tuple[int, int],
         hp: int = 100,
-        xp_drop=65,
+        xp_drop=25,
     ):
         # OC formula
         # calc_intensity = ceil(damage * health ) / xp_drop (this process must be automated instead of passed in
@@ -93,7 +93,7 @@ class Guardian(Enemy):
         level_instance,
         pos: tuple[int, int],
         hp: int = 100,
-        xp_drop=160,
+        xp_drop=45,
     ):
         super().__init__(
             level_instance,
@@ -184,8 +184,8 @@ class BigShadowDummy(Enemy):
         self,
         level_instance,
         pos: tuple[int, int],
-        hp: int = 1200,
-        xp_drop: int = 700,
+        hp: int = 1650,
+        xp_drop: int = 350,
     ):
         calc_intensity = ceil(5 * hp / xp_drop)  # 12 is the damages
 
@@ -204,7 +204,7 @@ class BigShadowDummy(Enemy):
             right_hitbox=(29 * 8, 24 * 13),
         )
         self.boss_name = "The Big Dummie"
-        self.attacking_distance = 180
+        self.attacking_distance = 190
 
         self.custom_center = 24 * 6 * 4 / 5
         self.xp_drop = self.xp_available = xp_drop
