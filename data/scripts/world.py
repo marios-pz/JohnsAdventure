@@ -1,4 +1,6 @@
 import pygame
+
+from data.scripts.QUESTS import quest
 from .PLAYER.player import Player
 from .sound_manager import SoundManager
 from .UI.mainmenu import Menu
@@ -676,17 +678,21 @@ class GameManager:
                 if update is not None:  # if a change of state is detected
 
                     if self.state == "manos_hut" and update == "johns_garden":
-                        if self.player.game_instance.quest_manager.quests[
-                            "A new beginning"
-                        ].quest_state["Reach Manos in his hut"]:
+                        quests = (
+                            self.player.game_instance.quest_manager.quests[
+                                "A new beginning"
+                            ]
+                        )
+
+                        if quests.quest_state["Reach Manos in his hut"]:
                             update = "credits"
 
                     self.start_new_level(update, last_state=self.state)
 
                 """  RUN THE CAMERA ONLY WHEN ITS NOT IN DEBUGGING MODE  """
-                if not self.debug and self.cutscene_engine.state != "inactive":
+                # not self.debug and , put this later
+                if self.cutscene_engine.state != "inactive":
                     self.cutscene_engine.update()
-                    self.FPS = 360
                 elif not self.debug:
                     set_camera_to(
                         self.player.camera, self.player.camera_mode, "follow"
@@ -699,8 +705,6 @@ class GameManager:
                         self.cutscene_engine.init_script(
                             self.game_state.camera_script
                         )
-
-                    self.FPS = 55
                 else:
                     set_camera_to(
                         self.player.camera, self.player.camera_mode, "follow"
@@ -710,9 +714,7 @@ class GameManager:
                     self.death_screen = True
                     self.end_game_bg = self.DISPLAY.copy()
                     self.init_death_screen()
-                    self.player.health = (
-                        self.player.backup_hp
-                    )  # Return full hp
+                    self.player.health = self.player.backup_hp
 
             print(self.framerate.get_fps())
             print(self.player.rect.topleft)

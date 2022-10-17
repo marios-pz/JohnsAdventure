@@ -4,6 +4,8 @@ from typing import Any
 from pygame import Rect
 import json
 
+from data.scripts.QUESTS import quest, quest_manager
+
 # from .PLAYER.items import Chest
 from .PLAYER.player import *
 from .PLAYER.inventory import *
@@ -910,25 +912,26 @@ class Training_Field(GameState):
     def update(self, camera, dt) -> None:
         self.screen.blit(self.green_leaf, (0, 0))
 
-        # if any mission is true start the cutscene
+        quests = self.player.game_instance.quest_manager.quests[
+            "A new beginning"
+        ]
+
         if not self.started_script:
-            if (
-                self.player.game_instance.quest_manager.quests[
-                    "A new beginning"
-                ].quest_state["Talk to manos in the training field"]
-                or self.player.game_instance.quest_manager.quests[
-                    "A new beginning"
-                ].quest_state["Talk back to manos"]
-            ):
+
+            if quests.quest_state["Talk to manos in the training field"]:
+                self.started_script = True
+                self.ended_script = False
+                self.player.is_interacting = False
+                self.player.InteractPoint = 0
+
+            if quests.quest_state["Talk back to manos"]:
                 self.started_script = True
                 self.ended_script = False
                 self.player.is_interacting = False
                 self.player.InteractPoint = 0
 
         # Cutscene 2 script
-        if self.player.game_instance.quest_manager.quests[
-            "A new beginning"
-        ].quest_state["Talk back to manos"]:
+        if quests.quest_state["Talk back to manos"]:
             if not self.reset_scr:
                 reset_cutscene(self.id)
                 self.started_script = False
@@ -963,13 +966,13 @@ class Training_Field(GameState):
 
         update = super(Training_Field, self).update(camera, dt)
 
-        if self.player.game_instance.quest_manager.quests[
-            "A new beginning"
-        ].quest_state["Talk back to manos"]:
-
+        if (
+            quests.quest_state["Talk back to manos"]
+            and self.shockwave_radius < 7000
+        ):
             if self.exploded:
                 self.shockwave_radius += 100  # vel of shockwave
-                # (1000, 1000) = explosion start
+
                 pg.draw.circle(
                     self.screen,
                     (255, 255, 255),
@@ -1007,7 +1010,8 @@ class Training_Field(GameState):
 
             # 884 = the distance between explosion start and first dummy
             if self.shockwave_radius > 884 and self.dummies != []:
-                self.objects.extend(self.dummies)
+                # Fix aura bug before re implementing them
+                # self.objects.extend(self.dummies)
                 self.dummies = []
 
         return update
@@ -1102,18 +1106,17 @@ class Gymnasium(GameState):
 
         self.spawn = {"johns_garden": (500, 0), "cave_passage": (4790, -150)}
 
-        self.cave_stuff = [
-            *self.generate_chunk(
-                "h_ladder",
-                x=4970,
-                y=-200,
-                row=1,
-                col=1,
-                step_x=0,
-                step_y=0,
-                randomize=0,
-            ),
-        ]
+        self.cave_stuff = generate_chunk(
+            self,
+            "h_ladder",
+            x=4970,
+            y=-200,
+            row=1,
+            col=1,
+            step_x=0,
+            step_y=0,
+            randomize=0,
+        )
 
         self.sound_manager = SoundManager(True, False, volume=1)
         self.ended_script = True
