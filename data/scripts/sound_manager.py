@@ -20,7 +20,8 @@ class SoundManager:
             "letterSound": pg.mixer.Sound(resource_path("data/sound/letter_sound.wav")),
             "woodenSword": pg.mixer.Sound(resource_path("data/sound/sword_slice.flac")),
             "dummyHit": pg.mixer.Sound(resource_path("data/sound/dummy_hit.wav")),
-            "magic_shooting": pg.mixer.Sound(resource_path("data/sound/magic_shooting.wav"))
+            "magic_shooting": pg.mixer.Sound(resource_path("data/sound/magic_shooting.wav")),
+            "PlayerHit":  pg.mixer.Sound(resource_path("data/sound/hurt.wav"))
 
         } if not music_only else {}
 

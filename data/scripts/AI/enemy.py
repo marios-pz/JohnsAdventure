@@ -559,10 +559,12 @@ class Enemy:
 
             if hit_dict[self.direction].colliderect(t_pl_rect):
                 player.health_target = player.health - self.damage
+
                 if self.knock_back["duration"] != 0:
                     vel = (
                         pg.Vector2(player.rect.topleft) - pg.Vector2(self.pos)
                     ).normalize() * self.knock_back["vel"]
+                    player.sound_manager.play_sound("PlayerHit")
                     player.knocked_back = True
                     player.knock_back_vel = vel
                     player.knock_back_vel_y = vel.length()
