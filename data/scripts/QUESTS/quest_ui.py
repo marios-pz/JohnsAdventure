@@ -1,3 +1,4 @@
+from typing import Any
 import pygame as pg
 from .quest_manager import QuestManager
 from ..utils import resource_path, smooth_scale
@@ -8,10 +9,9 @@ bg_color_hovered = (199, 134, 26)
 
 
 class QuestUI:
-
-    def __init__(self, screen: pg.Surface, quest_manager: QuestManager):
+    def __init__(self, world_instance: Any, quest_manager: QuestManager):
         # get the screen
-        self.screen = screen
+        self.screen = world_instance.DISPLAY
         # get the quest manager
         self.quest_manager = quest_manager
         # variable to show or not
@@ -23,12 +23,26 @@ class QuestUI:
         self.gap_x = 42  # "indentation" for the inner tasks
 
         self.cross = pg.Surface((25, 25), pg.SRCALPHA)
-        pg.draw.line(self.cross, (255, 0, 0), (0, 0), self.cross.get_size(), width=8)
-        pg.draw.line(self.cross, (255, 0, 0), (self.cross.get_width(), 0), (0, self.cross.get_height()), width=8)
+        pg.draw.line(
+            self.cross, (255, 0, 0), (0, 0), self.cross.get_size(), width=8
+        )
+        pg.draw.line(
+            self.cross,
+            (255, 0, 0),
+            (self.cross.get_width(), 0),
+            (0, self.cross.get_height()),
+            width=8,
+        )
 
-        self.header_font = pg.font.Font(resource_path("data/database/menu-font.ttf"), 20)
-        self.step_font = pg.font.Font(resource_path("data/database/menu-font.ttf"), 15)
-        self.step_font2 = pg.font.Font(resource_path("data/database/menu-font.ttf"), 13)
+        self.header_font = pg.font.Font(
+            resource_path("data/database/menu-font.ttf"), 20
+        )
+        self.step_font = pg.font.Font(
+            resource_path("data/database/menu-font.ttf"), 15
+        )
+        self.step_font2 = pg.font.Font(
+            resource_path("data/database/menu-font.ttf"), 13
+        )
 
         # background for headers (main titles)
         self.bg_headers = pg.Surface((250, 100))
@@ -44,19 +58,30 @@ class QuestUI:
         ]
 
         # will be updated later (for the right positions)
-        self.header_rects: list[pg.Rect] = [header.get_rect() for header in self.headers]
+        self.header_rects: list[pg.Rect] = [
+            header.get_rect() for header in self.headers
+        ]
         for header in self.headers:
-            header.fill((255, 255, 255))  # -> TODO: change the color with your new fancy UI's color
+            header.fill(
+                (255, 255, 255)
+            )  # -> TODO: change the color with your new fancy UI's color
 
         # write the titles on the headers
         for index, quest in enumerate(self.quest_manager.quests.values()):
             header_text = self.header_font.render(quest.name, True, (0, 0, 0))
             self.headers[index] = header_text
 
-        self.quests_inside: list[list[pg.Surface]] = [[self.step_font.render(step_name, True, (0, 0, 0))
-                                                       for step_name in quest.steps_names]
-                                                      for quest in self.quest_manager.quests.values()]
-        self.quests_inside_done = [list(quest.quest_state.values()) for quest in self.quest_manager.quests.values()]
+        self.quests_inside: list[list[pg.Surface]] = [
+            [
+                self.step_font.render(step_name, True, (0, 0, 0))
+                for step_name in quest.steps_names
+            ]
+            for quest in self.quest_manager.quests.values()
+        ]
+        self.quests_inside_done = [
+            list(quest.quest_state.values())
+            for quest in self.quest_manager.quests.values()
+        ]
 
         self.header_active = [True for _ in self.headers]
 
@@ -82,13 +107,22 @@ class QuestUI:
         return click
 
     def get_n_steps(self, index) -> int:
-        n_true = sum(list(list(self.quest_manager.quests.values())[index].quest_state.values()))
+        n_true = sum(
+            list(
+                list(self.quest_manager.quests.values())[
+                    index
+                ].quest_state.values()
+            )
+        )
         length = len(self.quests_inside[index])
         return n_true + 1 if n_true + 1 <= length else length
 
     def render(self):
 
-        self.quests_inside_done = [list(quest.quest_state.values()) for quest in self.quest_manager.quests.values()]
+        self.quests_inside_done = [
+            list(quest.quest_state.values())
+            for quest in self.quest_manager.quests.values()
+        ]
 
         if self.show_menu:
             dy = 0
@@ -98,30 +132,63 @@ class QuestUI:
                     self.header_scroll[index] = self.get_n_steps(index)
 
                 # MISSION HEADER TITLE
-                header_color = bg_color if not pg.Rect(self.start_pos[0], self.start_pos[1] + dy,
-                                                       self.headers[index].get_width() + 10,
-                                                       self.headers[index].get_height() + 10).collidepoint(
-                    pg.mouse.get_pos()) \
+                header_color = (
+                    bg_color
+                    if not pg.Rect(
+                        self.start_pos[0],
+                        self.start_pos[1] + dy,
+                        self.headers[index].get_width() + 10,
+                        self.headers[index].get_height() + 10,
+                    ).collidepoint(pg.mouse.get_pos())
                     else bg_color_hovered
+                )
 
                 # UI HEADER
-                pg.draw.rect(self.screen, header_color,
-                             [self.start_pos[0], self.start_pos[1] + dy, self.headers[index].get_width() + 10,
-                              self.headers[index].get_height() + 10], border_radius=8)
+                pg.draw.rect(
+                    self.screen,
+                    header_color,
+                    [
+                        self.start_pos[0],
+                        self.start_pos[1] + dy,
+                        self.headers[index].get_width() + 10,
+                        self.headers[index].get_height() + 10,
+                    ],
+                    border_radius=8,
+                )
                 # OUTLINE
-                pg.draw.rect(self.screen, (0, 0, 0),
-                             [self.start_pos[0], self.start_pos[1] + dy, self.headers[index].get_width() + 10,
-                              self.headers[index].get_height() + 10], border_radius=8, width=2)
+                pg.draw.rect(
+                    self.screen,
+                    (0, 0, 0),
+                    [
+                        self.start_pos[0],
+                        self.start_pos[1] + dy,
+                        self.headers[index].get_width() + 10,
+                        self.headers[index].get_height() + 10,
+                    ],
+                    border_radius=8,
+                    width=2,
+                )
 
-                self.screen.blit(self.headers[index], [self.start_pos[0] + 5, self.start_pos[1] + dy + 5])
-                self.header_rects[index].topleft = [self.start_pos[0], self.start_pos[1] + dy]
+                self.screen.blit(
+                    self.headers[index],
+                    [self.start_pos[0] + 5, self.start_pos[1] + dy + 5],
+                )
+                self.header_rects[index].topleft = [
+                    self.start_pos[0],
+                    self.start_pos[1] + dy,
+                ]
                 dy += self.headers[index].get_height() + self.gap + 10
 
                 if active:
-                    if pg.time.get_ticks() - self.delays[index] > self.duration:
+                    if (
+                        pg.time.get_ticks() - self.delays[index]
+                        > self.duration
+                    ):
                         self.delays[index] = pg.time.get_ticks()
                         if self.scroll_incrementing[index] == "+":
-                            if self.header_scroll[index] + 1 <= self.get_n_steps(index):
+                            if self.header_scroll[
+                                index
+                            ] + 1 <= self.get_n_steps(index):
                                 self.header_scroll[index] += 1
                             else:
                                 self.scroll_incrementing[index] = "."
@@ -137,32 +204,72 @@ class QuestUI:
                             break
 
                         # Check box
-                        pg.draw.rect(self.screen, bg_color, [self.start_pos[0], self.start_pos[1] + dy,
-                                                             *self.cross.get_size()], width=1)
+                        pg.draw.rect(
+                            self.screen,
+                            bg_color,
+                            [
+                                self.start_pos[0],
+                                self.start_pos[1] + dy,
+                                *self.cross.get_size(),
+                            ],
+                            width=1,
+                        )
 
                         done = self.quests_inside_done[index][index2]
-                        rect = step.get_rect(topleft=[self.start_pos[0] + self.gap_x, self.start_pos[1] + dy])
+                        rect = step.get_rect(
+                            topleft=[
+                                self.start_pos[0] + self.gap_x,
+                                self.start_pos[1] + dy,
+                            ]
+                        )
                         rect.topleft -= pg.Vector2(5, 5)
                         rect.size += pg.Vector2(10, 10)
 
                         # Smaller headers containing the mission
-                        pg.draw.rect(self.screen, header_color, rect, border_radius=8)
-                        pg.draw.rect(self.screen, (0, 0, 0), rect, border_radius=8, width=1)
+                        pg.draw.rect(
+                            self.screen, header_color, rect, border_radius=8
+                        )
+                        pg.draw.rect(
+                            self.screen,
+                            (0, 0, 0),
+                            rect,
+                            border_radius=8,
+                            width=1,
+                        )
 
                         # Mission Completion
                         if done:
-                            self.screen.blit(self.cross, (self.start_pos[0], self.start_pos[1] + dy))
-                            self.screen.blit(step, [self.start_pos[0] + self.gap_x, self.start_pos[1] + dy])
+                            self.screen.blit(
+                                self.cross,
+                                (self.start_pos[0], self.start_pos[1] + dy),
+                            )
+                            self.screen.blit(
+                                step,
+                                [
+                                    self.start_pos[0] + self.gap_x,
+                                    self.start_pos[1] + dy,
+                                ],
+                            )
                             dy += step.get_height() + self.gap
                         else:
-                            self.screen.blit(step, [self.start_pos[0] + self.gap_x, self.start_pos[1] + dy])
+                            self.screen.blit(
+                                step,
+                                [
+                                    self.start_pos[0] + self.gap_x,
+                                    self.start_pos[1] + dy,
+                                ],
+                            )
                             dy += step.get_height() + self.gap
                             break  # don't show the next unavailable quest
         else:
             dy = 110
             dx = 10
-            for index, text in enumerate(self.quest_manager.current_finished_steps):
-                render = self.step_font2.render(f"Step completed:  {text}", True, (0, 0, 0))
+            for index, text in enumerate(
+                self.quest_manager.current_finished_steps
+            ):
+                render = self.step_font2.render(
+                    f"Step completed:  {text}", True, (0, 0, 0)
+                )
                 rect = render.get_rect(topleft=(dx, dy))
                 dy += rect.height + 15
                 delay = self.quest_manager.finished_steps_delays[index]
@@ -173,12 +280,19 @@ class QuestUI:
                     rect.x = dx
                 else:
                     rect.x = -rect.width * (dt - 3750) / 250
-                new_rect = pg.Rect(rect.topleft-pg.Vector2(5, 5), rect.size+pg.Vector2(10, 10))
+                new_rect = pg.Rect(
+                    rect.topleft - pg.Vector2(5, 5),
+                    rect.size + pg.Vector2(10, 10),
+                )
                 pg.draw.rect(self.screen, bg_color, new_rect, border_radius=6)
-                pg.draw.rect(self.screen, (0, 0, 0), new_rect, border_radius=6, width=2)
+                pg.draw.rect(
+                    self.screen, (0, 0, 0), new_rect, border_radius=6, width=2
+                )
                 self.screen.blit(render, rect)
             for index, text in enumerate(self.quest_manager.current_new_steps):
-                render = self.step_font2.render(f"New step:  {text}", True, (0, 0, 0))
+                render = self.step_font2.render(
+                    f"New step:  {text}", True, (0, 0, 0)
+                )
                 rect = render.get_rect(topleft=(dx, dy))
                 dy += rect.height + 15
                 delay = self.quest_manager.new_steps_delays[index]
@@ -189,7 +303,12 @@ class QuestUI:
                     rect.x = dx
                 else:
                     rect.x = -rect.width * (dt - 3750) / 250
-                new_rect = pg.Rect(rect.topleft-pg.Vector2(5, 5), rect.size+pg.Vector2(10, 10))
+                new_rect = pg.Rect(
+                    rect.topleft - pg.Vector2(5, 5),
+                    rect.size + pg.Vector2(10, 10),
+                )
                 pg.draw.rect(self.screen, bg_color, new_rect, border_radius=6)
-                pg.draw.rect(self.screen, (0, 0, 0), new_rect, border_radius=6, width=2)
+                pg.draw.rect(
+                    self.screen, (0, 0, 0), new_rect, border_radius=6, width=2
+                )
                 self.screen.blit(render, rect)

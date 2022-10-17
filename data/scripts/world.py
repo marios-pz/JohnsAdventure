@@ -1,6 +1,5 @@
-from typing import Any
+import pygame
 from .PLAYER.player import Player
-from .PLAYER.inventory import *
 from .sound_manager import SoundManager
 from .UI.mainmenu import Menu
 from .UI.interface import Interface
@@ -13,6 +12,9 @@ from .utils import (
     UI_Spritesheet,
     smooth_scale,
 )
+
+from .utils import scale
+from copy import copy
 from .QUESTS.quest_manager import QuestManager
 from .QUESTS.quest_ui import QuestUI
 from .props import PropGetter, init_sheets, del_sheets
@@ -20,14 +22,7 @@ from threading import Thread
 from .POSTPROCESSING.cutscene_engine import CutsceneManager
 from math import floor
 from .AI.enemy import Enemy
-
-from .PLAYER.player_sub.tools import set_camera_to
-
-from .PLAYER.player_sub.animation_handler import user_interface
-
 from .debugging import Debugging
-
-
 from .levels import (
     Gymnasium,
     GameState,
@@ -44,6 +39,11 @@ from .levels import (
     Credits,
 )
 
+# Your lsp might think the below are unused, but thats wrong.
+from .PLAYER.inventory import Inventory
+from typing import Any
+from .PLAYER.player_sub.tools import set_camera_to
+from .PLAYER.player_sub.animation_handler import user_interface
 from .levels import get_cutscene_played, play_cutscene
 
 TITLE_TRANSLATOR = {
@@ -75,32 +75,33 @@ class GameManager:
         no_rect: bool = False,
     ):
 
-        pg.init()
+        pygame.init()
 
-        pg.event.set_allowed(
+        pygame.event.set_allowed(
             [
-                pg.QUIT,
-                pg.KEYDOWN,
-                pg.KEYUP,
-                pg.MOUSEBUTTONDOWN,
-                pg.MOUSEWHEEL,
-                pg.MOUSEBUTTONUP,
+                pygame.QUIT,
+                pygame.KEYDOWN,
+                pygame.KEYUP,
+                pygame.MOUSEBUTTONDOWN,
+                pygame.MOUSEWHEEL,
+                pygame.MOUSEBUTTONUP,
             ]
         )
 
         # FONTS
-        pg.mixer.pre_init(
+        pygame.mixer.pre_init(
             44100, 32, 2, 4096
         )  # Frequency, 32 Bit sound, channels, buffer
-        pg.display.set_caption("iBoxStudio Engine")
+        pygame.display.set_caption("iBoxStudio Engine")
 
-        # | pg.DOUBLEBUF | pg.SCALED | pg.FULLSCREEN
+        # | pygame.DOUBLEBUF | pygame.SCALED | pygame.FULLSCREEN
 
-        self.DISPLAY: pg.surface.Surface = pg.display.set_mode(
-            (1280, 720), flags=pg.SRCALPHA | pg.HWSURFACE | pg.RESIZABLE
+        self.DISPLAY: pygame.surface.Surface = pygame.display.set_mode(
+            (1280, 720),
+            flags=pygame.SRCALPHA | pygame.HWSURFACE | pygame.RESIZABLE,
         )
 
-        pg.display.set_icon(l_path("data/ui/logo.png", True))
+        pygame.display.set_icon(l_path("data/ui/logo.png", True))
 
         self.W: int = self.DISPLAY.get_width()
         self.H: int = self.DISPLAY.get_height()
@@ -111,7 +112,7 @@ class GameManager:
         self.ui = UI_Spritesheet("data/ui/UI_spritesheet.png")
 
         # ------------ FRAMERATE ------------------
-        self.framerate = pg.time.Clock()
+        self.framerate = pygame.time.Clock()
         self.dt = self.framerate.tick(self.FPS) / 1000
 
         # ----------- GAME STATE VARIABLES --------
@@ -120,12 +121,12 @@ class GameManager:
         self.death_screen = False
 
         #
-        self.font = pg.font.Font(
+        self.font = pygame.font.Font(
             resource_path("data/database/menu-font.ttf"), 24
         )
 
         # (main menu title)
-        self.blacksword = pg.font.Font(
+        self.blacksword = pygame.font.Font(
             resource_path("data/database/Blacksword.otf"), 113
         )
 
@@ -133,23 +134,25 @@ class GameManager:
         self.pygame_logo = l_path(
             "data/sprites/pygame_powered.png", alpha=True
         )
-        self.start_logo_time = pg.time.get_ticks()
-        self.pg_logo = False
+        self.start_logo_time = pygame.time.get_ticks()
+        self.pygame_logo = False
         self.start_scale = 1
         self.current_scale = 0
         self.delay_scaling = 0
 
         # ---------- GAME MANAGERS ----------------
-        self.sound_manager = SoundManager(False, True)
+        self.sound_manager: SoundManager = SoundManager(False, True)
         self.sound_manager.play_music("city_theme")
 
-        self.loading_screen = LoadingScreen(self.DISPLAY)
-        self.menu_manager = Menu(self, self.DISPLAY, self.blacksword, self.ui)
-        self.interface = Interface(
+        self.loading_screen: LoadingScreen = LoadingScreen(self.DISPLAY)
+        self.menu_manager: Menu = Menu(
+            self, self.DISPLAY, self.blacksword, self.ui
+        )
+        self.interface: Interface = Interface(
             self.DISPLAY,
             scale(self.ui.parse_sprite("interface_button.png"), 8),
         )
-        self.pause_menu = PauseMenu(self.DISPLAY, self.ui)
+        self.pause_menu: PauseMenu = PauseMenu(self.DISPLAY, self.ui)
 
         # ------------- PLAYER ----------------
         self.player = Player(
@@ -167,8 +170,8 @@ class GameManager:
         self.last_positions: dict[int, tuple[int, int]] = {}
 
         # ----------- GAME STATE ------------------
-        self.state = first_state
-        self.first_state = False
+        self.state: str = first_state
+        self.first_state: bool = False
         self.prop_objects = PropGetter(self.player).PROP_OBJECTS
 
         # THIS IS WHERE YOU LOAD THE WORLDS
@@ -191,34 +194,36 @@ class GameManager:
 
         # ------------ DEBUG ----------------------
         self.debug = debug
-        self.debugger = Debugging(self, no_rect)
+        self.debugger: Debugging = Debugging(self, no_rect)
 
         # -------- CAMERA SRC HANDLER -------------
-        self.cutscene_engine = CutsceneManager(self, self.DISPLAY)
+        self.cutscene_engine: CutsceneManager = CutsceneManager(self)
 
         # ------------- QUESTS -------------------
-        self.quest_manager = QuestManager(self, self.player)
-        self.quest_UI = QuestUI(self.DISPLAY, self.quest_manager)
+        self.quest_manager: QuestManager = QuestManager(self, self.player)
+
+        self.quest_UI: QuestUI = QuestUI(self, self.quest_manager)
+
         self.player.quest_UI = self.quest_UI
 
         # ------------- DEATH SCREEN --------------
         self.begin_end_screen = 0
         # layer + bg
         self.end_game_bg = self.DISPLAY.copy()
-        self.black_layer = pg.Surface(self.DISPLAY.get_size())
+        self.black_layer = pygame.Surface(self.DISPLAY.get_size())
         self.black_layer.set_alpha(200)
 
         # text + font
-        self.title_font = pg.font.Font(
+        self.title_font = pygame.font.Font(
             resource_path("data/database/menu-font.ttf"), 75
         )
-        self.subtitle_font = pg.font.Font(
+        self.subtitle_font = pygame.font.Font(
             resource_path("data/database/menu-font.ttf"), 15
         )
         self.end_game_ui_texts = [
             self.title_font.render("DEATH", True, (255, 0, 0)),
             self.subtitle_font.render(
-                f"Press {pg.key.name(self.player.data['controls']['interact'])} "
+                f"Press {pygame.key.name(self.player.data['controls']['interact'])} "
                 f"to respawn.",
                 True,
                 (255, 255, 255),
@@ -239,7 +244,7 @@ class GameManager:
         self.fade_duration = 500
         self.standing_duration = 1500
         # font
-        self.new_level_font = pg.font.Font(
+        self.new_level_font = pygame.font.Font(
             resource_path("data/database/menu-font.ttf"), 30
         )
         self.new_level_popup = self.new_level_font.render(
@@ -267,7 +272,7 @@ class GameManager:
                     self.player.paused = False
                     break
 
-                pg.display.update()
+                pygame.display.update()
 
     def routine(self):
 
@@ -282,7 +287,7 @@ class GameManager:
             if self.state != "credits":
                 user_interface(
                     self.player,
-                    pg.mouse.get_pos(),
+                    pygame.mouse.get_pos(),
                     (
                         # 52 48 are players height and width
                         self.player.rect.x - 52 - self.player.camera.offset.x,
@@ -315,7 +320,9 @@ class GameManager:
                 self.DISPLAY.blit(
                     self.new_level_popup, self.new_level_popup_rect
                 )
-                time_elapsed = pg.time.get_ticks() - self.begin_new_level_popup
+                time_elapsed = (
+                    pygame.time.get_ticks() - self.begin_new_level_popup
+                )
                 if time_elapsed < self.falling_duration:
                     self.new_level_popup_rect.y = (
                         self.popup_target_y / self.falling_duration
@@ -350,21 +357,21 @@ class GameManager:
         if self.debug:
             self.debugger.update()
 
-        pg.display.update()
+        pygame.display.update()
 
-    def pg_loading_screen(self):
-        while pg.time.get_ticks() < 3000:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
+    def pygame_loading_screen(self):
+        while pygame.time.get_ticks() < 3000:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     self.quit_()
 
             self.DISPLAY.fill((255, 255, 255))
 
             if (
-                pg.time.get_ticks() - self.delay_scaling > 25
+                pygame.time.get_ticks() - self.delay_scaling > 25
                 and self.start_scale - self.current_scale > 0.75
             ):
-                self.delay_scaling = pg.time.get_ticks()
+                self.delay_scaling = pygame.time.get_ticks()
                 self.current_scale += 0.1
 
             scale_ = self.start_scale - self.current_scale
@@ -373,7 +380,7 @@ class GameManager:
                 img, img.get_rect(center=(self.W // 2, self.H // 2))
             )
 
-            if pg.time.get_ticks() - self.start_logo_time > 700:
+            if pygame.time.get_ticks() - self.start_logo_time > 700:
                 self.DISPLAY.blit(
                     self.font.render(
                         "@Copyright Logo by www.pygame.org", True, (0, 0, 0)
@@ -384,7 +391,7 @@ class GameManager:
                 )
 
             self.framerate.tick(self.FPS)
-            pg.display.update()
+            pygame.display.update()
 
     def quit_(self):
         for key, level in self.loaded_states.items():
@@ -394,7 +401,7 @@ class GameManager:
         for obj in self.game_state.objects:
             if hasattr(obj, "end_instance"):
                 obj.end_instance()
-        pg.quit()
+        pygame.quit()
         raise SystemExit
 
     def start_new_level(
@@ -422,7 +429,7 @@ class GameManager:
                 self.last_game_state = copy(self.game_state)
                 self.last_positions = {}
                 for obj_ in self.game_state.objects:
-                    if not isinstance(obj_, pg.Rect):
+                    if not isinstance(obj_, pygame.Rect):
                         self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
                     else:
                         self.last_positions[id(obj_)] = copy(obj_.topleft)
@@ -449,7 +456,7 @@ class GameManager:
         loading_thread.start()
 
         start = (
-            pg.time.get_ticks()
+            pygame.time.get_ticks()
         )  # time to start (track the loading screen duration)
         self.state = level_id  # update the current state to the next one
         self.player.UI_interaction_anim.clear()  # empty the UI animations
@@ -465,7 +472,7 @@ class GameManager:
             # check if loading screen has to be ended
             is_load_alive = (
                 loading_thread.is_alive()
-                or pg.time.get_ticks() - start < load_type[1]
+                or pygame.time.get_ticks() - start < load_type[1]
             )
 
             # don't ask for a key if it's just an in-between level loading. (just exit the loading)
@@ -475,12 +482,12 @@ class GameManager:
             # ask for a key to end the loading screen
             load_type[0] = "ended" if not is_load_alive else load_type[0]
 
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     del loading_thread  # quit the thread
                     self.quit_()
                 elif (
-                    event.type == pg.KEYDOWN
+                    event.type == pygame.KEYDOWN
                 ):  # ask for a key to leave the loading
                     if (
                         event.key == self.loading_screen.get_key()
@@ -491,7 +498,7 @@ class GameManager:
             self.loading_screen.draw(
                 self.DISPLAY, load_type[0]
             )  # draw loading screen (according to load_type)
-            pg.display.update()
+            pygame.display.update()
 
         if last_state == "none":  # update pos according to spawn points
             keys = [key for key in self.game_state.spawn]
@@ -519,7 +526,7 @@ class GameManager:
         self.new_level_popup_rect = self.new_level_popup.get_rect(
             centerx=self.W // 2, bottom=0
         )
-        self.begin_new_level_popup = pg.time.get_ticks()
+        self.begin_new_level_popup = pygame.time.get_ticks()
         self.showing_nl_popup = True
 
         if not respawn:
@@ -527,7 +534,7 @@ class GameManager:
                 self.last_positions = {}
                 print(self.game_state.objects)
                 for obj_ in self.game_state.objects:
-                    if not isinstance(obj_, pg.Rect):
+                    if not isinstance(obj_, pygame.Rect):
                         self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
                     else:
                         self.last_positions[id(obj_)] = copy(obj_.topleft)
@@ -559,7 +566,7 @@ class GameManager:
             )
         for obj_ in self.game_state.objects:
             if id(obj_) in self.last_positions:
-                if isinstance(obj_, pg.Rect):
+                if isinstance(obj_, pygame.Rect):
                     obj_.topleft = self.last_positions[id(obj_)]
                 else:
                     if isinstance(obj_, Enemy):
@@ -569,14 +576,14 @@ class GameManager:
         self.death_screen = False
 
     def init_death_screen(self):
-        self.begin_end_screen = pg.time.get_ticks()
+        self.begin_end_screen = pygame.time.get_ticks()
         self.black_layer.set_alpha(0)
         self.end_game_ui_texts[0].set_alpha(0)
 
     def update(self):
 
         if not self.debug:
-            self.pg_loading_screen()
+            self.pygame_loading_screen()
         else:
             self.start_new_level(
                 self.state,
@@ -593,18 +600,18 @@ class GameManager:
             # if the credits are playing, the player doesn't get updated, so the controls aren't checked, and
             # the quit event must be detected
             if self.state == "credits":
-                for event in pg.event.get():
-                    if event.type == pg.QUIT:
-                        pg.quit()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
                         raise SystemExit
-                    if event.type == pg.KEYDOWN:
-                        if event.key == pg.K_ESCAPE:
-                            pg.quit()
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            pygame.quit()
                             raise SystemExit
 
             if self.menu:  # menu playing
 
-                self.menu_manager.update(pg.mouse.get_pos())
+                self.menu_manager.update(pygame.mouse.get_pos())
 
                 if self.menu_manager.start_game:  # start the game
                     self.menu = False
@@ -624,11 +631,11 @@ class GameManager:
 
             elif self.death_screen:
 
-                for event in pg.event.get():
-                    if event.type == pg.QUIT:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
                         self.quit_()
 
-                    if event.type == pg.KEYDOWN:
+                    if event.type == pygame.KEYDOWN:
                         if (
                             event.key
                             == self.player.data["controls"]["interact"]
@@ -639,16 +646,16 @@ class GameManager:
                 self.black_layer.set_alpha(
                     floor(
                         (200 / 1500)
-                        * (pg.time.get_ticks() - self.begin_end_screen)
+                        * (pygame.time.get_ticks() - self.begin_end_screen)
                     )
                 )
                 self.end_game_ui_texts[0].set_alpha(
                     floor(
                         (255 / 1500)
-                        * (pg.time.get_ticks() - self.begin_end_screen)
+                        * (pygame.time.get_ticks() - self.begin_end_screen)
                     )
                 )
-                if pg.time.get_ticks() - self.begin_end_screen > 1500:
+                if pygame.time.get_ticks() - self.begin_end_screen > 1500:
                     self.black_layer.set_alpha(200)
                     self.end_game_ui_texts[0].set_alpha(255)
 
@@ -659,7 +666,7 @@ class GameManager:
                     self.end_game_ui_texts[0], self.end_game_ui_rects[0]
                 )
                 if (
-                    floor(pg.time.get_ticks() / 1000) % 2 == 0
+                    floor(pygame.time.get_ticks() / 1000) % 2 == 0
                     and self.black_layer.get_alpha() == 200
                 ):
                     self.DISPLAY.blit(
