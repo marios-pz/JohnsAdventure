@@ -1283,6 +1283,9 @@ class CaveGarden(GameState):
         self.hh = hills_height
         self.ww = hills_width
 
+        self.sound_manager = SoundManager(True, False, volume=0.7)
+        self.sound_manager.play_music("credits_theme")
+
         self.objects = [
             *generate_chunk(
                 self,
@@ -1417,45 +1420,15 @@ class CaveGarden(GameState):
                 "",
                 "mandatory",
             ),
-            # Cave has been removed to avoid more complex code.
-            # it will be returned once john has defeated the boss
         }
 
         self.ended_script = True
         self.spawned = False
         self.started_script = False
 
-        self.camera_script = [
-            {
-                "duration": 4000,
-                "pos": (2080, 2800),
-                "text": "John: well that was.. dangerous.",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 4000,
-                "pos": (2080, 2800),
-                "text": "John: Hmm? what is that?",
-                "text_dt": 1500,
-            },
-            {
-                "duration": 3000,
-                "pos": (2900, 2800),  # enemy position
-                "zoom": 1.2,
-            },
-            {
-                "duration": 4200,
-                # Go back to the player
-                "zoom": 1,
-                "zoom_duration": 1800,
-                "text": "John: Oh no!",
-                "text_dt": 1500,
-                "pos": (
-                    2080,
-                    2800,
-                ),  # I assume I have to return the camera somewhere near the player?
-            },
-        ]
+        from .scripts import CAVE_GARDEN_SCENE
+
+        self.camera_script = CAVE_GARDEN_SCENE
 
         self.spawn_b = False
         self.killed_b = False

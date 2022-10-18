@@ -296,3 +296,36 @@ GYMNASIUM_SCENE = [
         "text_dt": 1600,
     },
 ]
+
+
+CAVE_GARDEN_SCENE = [
+    {
+        "duration": 4000,
+        "pos": (2080, 2800),
+        "text": "John: well that was.. dangerous.",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "pos": (2080, 2800),
+        "text": "John: Hmm? what is that?",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 3000,
+        "pos": (2900, 2800),  # enemy position
+        "zoom": 1.2,
+    },
+    {
+        "duration": 4200,
+        # Go back to the player
+        "zoom": 1,
+        "zoom_duration": 1800,
+        "text": "John: Oh no!",
+        "text_dt": 1500,
+        "pos": (
+            2080,
+            2800,
+        ),  # I assume I have to return the camera somewhere near the player?
+    },
+]
