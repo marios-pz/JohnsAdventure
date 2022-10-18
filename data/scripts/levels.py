@@ -1462,18 +1462,13 @@ class CaveGarden(GameState):
 
     def update(self, camera, dt):
         self.screen.blit(self.green_leaf, (0, 0))
+        quests = self.player.game_instance.quest_manager.quests[
+            "A new beginning"
+        ]
 
         # Spawn the big dummie and then play the cutscene
-        if (
-            self.player.game_instance.quest_manager.quests[
-                "A new beginning"
-            ].quest_state["Reach the main entrance"]
-            and not self.spawn_b
-        ):
-            # Just for security
-            if not self.player.game_instance.quest_manager.quests[
-                "A new beginning"
-            ].quest_state["Find Manos in his hut"]:
+        if quests.quest_state["Reach the main entrance"] and not self.spawn_b:
+            if not quests.quest_state["Find Manos in his hut"]:
 
                 self.objects.append(
                     BigShadowDummy(
@@ -1494,18 +1489,14 @@ class CaveGarden(GameState):
                     self.started_script = True
                     self.ended_script = False
 
-                # self.objects.append(
-                #    Rect(self.ww * 5 + 200, self.hh * 4, 200, 400)
-                # )
+                # Block John from escaping
+                self.objects.append(
+                    Rect(self.ww * 5 + 200, self.hh * 4, 200, 400)
+                )
 
                 self.spawn_b = True
 
-        if (
-            self.player.game_instance.quest_manager.quests[
-                "A new beginning"
-            ].quest_state["Kill the big dummie"]
-            and not self.killed_b
-        ):
+        if quests.quest_state["Kill the big dummie"] and not self.killed_b:
             self.spawn = {
                 "johns_garden": (self.ww * 5 - 100, self.hh * 4 + 100),
                 "cave_entrance": (2150, 2830),

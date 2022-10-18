@@ -23,7 +23,7 @@
         "Go find Cynthia in school": true,
         "Ask alexia": true,
         "Find the hidden cave entrance": true,
-        "Reach the main entrance": false,
+        "Reach the main entrance": true,
         "Kill the big dummie": false,
         "Find Manos in his hut": false
       }

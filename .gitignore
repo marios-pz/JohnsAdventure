@@ -10,3 +10,4 @@ data/scripts/__pycache__/
 data/database/cutscenes.json
 build 
 dist
+data/.DS_Store
