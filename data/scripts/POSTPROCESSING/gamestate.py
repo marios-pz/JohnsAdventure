@@ -34,7 +34,6 @@ class GameState:
 
     def __init__(
         self,
-        DISPLAY: pg.Surface,
         player_instance,
         prop_objects,
         id_: str,
@@ -43,8 +42,13 @@ class GameState:
     ):
         self.id = id_
 
+        print(player_instance)
+
         # ------- SCREEN -----------------
-        self.display, self.screen = DISPLAY, DISPLAY
+        self.display, self.screen = (
+            player_instance.screen,
+            player_instance.screen,
+        )
         self.W, self.H = self.display.get_size()
         self.dt = 0  # wil be updated in update method
 
@@ -80,7 +84,10 @@ class GameState:
         self.death_anim_manager = DeathManager(self.screen, self.player.camera)
 
         self.green_leaf = pg.Surface(
-            (DISPLAY.get_width(), DISPLAY.get_height())
+            (
+                player_instance.screen.get_width(),
+                player_instance.screen.get_height(),
+            )
         )
         self.green_leaf.fill((61, 121, 6))
         self.green_leaf.convert()

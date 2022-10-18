@@ -51,9 +51,8 @@ def play_cutscene(id_: str) -> None:
 
 
 class PlayerRoom(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super().__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "player_room",
@@ -124,9 +123,8 @@ class PlayerRoom(GameState):
 
 
 class Kitchen(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super().__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "kitchen",
@@ -210,9 +208,8 @@ class Kitchen(GameState):
 class JohnsGarden(GameState):
     """Open world state of the game -> includes john's house, mano's hut, and more..."""
 
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super().__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "johns_garden",
@@ -809,9 +806,8 @@ class JohnsGarden(GameState):
 
 
 class Training_Field(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(Training_Field, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "training_field",
@@ -1020,9 +1016,8 @@ class Training_Field(GameState):
 
 
 class Gymnasium(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(Gymnasium, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "gymnasium",
@@ -1162,9 +1157,8 @@ class Gymnasium(GameState):
 
 
 class ManosHut(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super().__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "manos_hut",
@@ -1235,9 +1229,11 @@ class ManosHut(GameState):
 
     def update(self, camera, dt):
 
-        if self.player.game_instance.quest_manager.quests[
+        quests = self.player.game_instance.quest_manager.quests[
             "A new beginning"
-        ].quest_state["Kill the big dummie"]:
+        ]
+
+        if quests.quest_state["Kill the big dummie"]:
             if not self.spawn_npcs:
                 sc_x = 1280 / 453
                 sc_y = 720 / 271
@@ -1255,9 +1251,7 @@ class ManosHut(GameState):
 
                 self.spawn_npcs = True
 
-        if self.player.game_instance.quest_manager.quests[
-            "A new beginning"
-        ].quest_state["Find Manos in his hut"]:
+        if quests.quest_state["Find Manos in his hut"]:
             if not get_cutscene_played(self.id) and not self.started_script:
                 self.started_script = True
                 self.ended_script = False
@@ -1266,9 +1260,8 @@ class ManosHut(GameState):
 
 
 class CaveGarden(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(CaveGarden, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "cave_garden",
@@ -1284,7 +1277,7 @@ class CaveGarden(GameState):
         self.ww = hills_width
 
         self.sound_manager = SoundManager(True, False, volume=0.7)
-        self.sound_manager.play_music("credits_theme")
+        self.sound_manager.play_music("garden_theme")
 
         self.objects = [
             *generate_chunk(
@@ -1493,14 +1486,14 @@ class CaveGarden(GameState):
 
 
 class CaveEntrance(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(CaveEntrance, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "cave_entrance",
-            light_state="inside_dark",
         )
+
+        print(player_instance.screen)
 
         self.spawn = {
             "cave_entrance": (
@@ -1776,8 +1769,6 @@ class Credits(GameState):
         self.pos = 0
         self.dy = 50
 
-        self.sound_manager = SoundManager(False, True, volume=0.75)
-
     def update(self, camera, dt) -> None:
         if self.sound_manager.playing_music != "credits":
             self.sound_manager.play_music("credits")
@@ -1800,5 +1791,24 @@ class Credits(GameState):
                     )
                 ),
             )
+
+        return super(Credits, self).update(camera, dt)
+
+
+class CaveLevel1(GameState):
+    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+        super(Credits, self).__init__(
+            DISPLAY,
+            player_instance,
+            prop_objects,
+            "credits",
+            light_state="inside_clear",
+        )
+        self.sound_manager = SoundManager(True, False, volume=0.75)
+        self.sound_manager.play_music("dramatic")
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
 
         return super(Credits, self).update(camera, dt)

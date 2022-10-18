@@ -445,7 +445,8 @@ class GameManager:
         def load_new_level(parent, level_):
             parent.game_state = (
                 parent.state_manager[level_](
-                    parent.DISPLAY, parent.player, parent.prop_objects
+                    player_instance=parent.player,
+                    prop_objects=parent.prop_objects,
                 )
                 if level_ not in parent.loaded_states
                 else parent.loaded_states[level_]
