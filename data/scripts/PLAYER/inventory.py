@@ -51,7 +51,7 @@ class Inventory:
         self.show_menu = False
 
         # Player Items
-        self.items = [ManosSword()]
+        self.items = []
         self.index_scroll = 0
         self.backup_item_len = len(self.items)
 

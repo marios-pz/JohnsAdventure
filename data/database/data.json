@@ -10,6 +10,22 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "coins": 0,
-    "world": "johns_room"
+    "world": "johns_garden",
+    "player": {
+        "pos": [
+            646,
+            598
+        ],
+        "inventory": [],
+        "health_potions": 0,
+        "level": 1,
+        "xp": 80,
+        "coins": 30,
+        "stats": {
+            "points": 1,
+            "damage": 10,
+            "endurance": 3,
+            "crit_chance": 0.051
+        }
+    }
 }

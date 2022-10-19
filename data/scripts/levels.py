@@ -22,7 +22,7 @@ from .utils import (
 )
 
 from .props import Chest, Torch
-from .PLAYER.items import ManosSword, Training_Sword
+from .PLAYER.items import ManosSword, Training_Sword, make_save
 from .POSTPROCESSING.light_types import PolygonLight, LightSource
 from .POSTPROCESSING.gamestate import GameState
 from random import randint
@@ -221,7 +221,7 @@ class JohnsGarden(GameState):
 
         get_scale = lambda name: self.sprite_info[name]["sc"]
 
-        #self.music_manager.play_music("forest_theme")
+        # self.music_manager.play_music("forest_theme")
 
         # Add background ambience
 
@@ -1607,7 +1607,7 @@ class CaveRoomPassage(GameState):
             light_state="inside_dark",
         )
 
-        self.spawn = {"cave_room_2": (880, 2100), "gymnasium": (783, 730)}
+        self.spawn = {"cave_room_1": (880, 2100), "gymnasium": (783, 730)}
 
         w = self.prop_objects["c_wall_mid"]((0, 0)).idle[0].get_width()
 
@@ -1669,8 +1669,8 @@ class CaveRoomPassage(GameState):
                 "",
                 "mandatory",
             ),
-            "cave_room_2": (
-                Rect(300, self.spawn["cave_room_2"][1] + 420, 950, 140),
+            "cave_room_1": (
+                Rect(300, self.spawn["cave_room_1"][1] + 420, 950, 140),
                 "",
                 "mandatory",
             ),
@@ -1691,7 +1691,6 @@ class CaveRoomPassage(GameState):
         ]
 
     def update(self, camera, dt) -> None:
-        
 
         # Background
         pg.draw.rect(
@@ -1721,6 +1720,46 @@ class CaveRoomPassage(GameState):
         )
 
         return super(CaveRoomPassage, self).update(camera, dt)
+
+
+class CaveLevel1(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveLevel1, self).__init__(
+            player_instance,
+            prop_objects,
+            "credits",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = []
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_passage": (880, 2100), "cave_room_2": (783, 730)}
+        self.exit_rects = {
+            "cave_passage": (
+                Rect(732, 530, 150, 140),
+                "",
+                "mandatory",
+            ),
+            # "cave_room_2": (
+            #     Rect(300, self.spawn["cave_room_2"][1] + 420, 950, 140),
+            #     "",
+            #     "mandatory",
+            # ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveLevel1, self).update(camera, dt)
 
 
 class Credits(GameState):
@@ -1777,32 +1816,5 @@ class Credits(GameState):
                     )
                 ),
             )
-
-        return super(Credits, self).update(camera, dt)
-
-
-class CaveLevel1(GameState):
-    def __init__(self, player_instance, prop_objects):
-        super(Credits, self).__init__(
-            player_instance,
-            prop_objects,
-            "credits",
-            light_state="inside_dark",
-        )
-        # self.sound_manager.play_music("dramatic")
-
-        self.objects = []
-        self.camera_script = []
-        self.started_script = False 
-        self.ended_script = True
-        self.spawn = {"cave_passage": (880, 2100), "cave_room_2": (783, 730)}
-
-    def update(self, camera, dt) -> None:
-
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
-
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
 
         return super(Credits, self).update(camera, dt)

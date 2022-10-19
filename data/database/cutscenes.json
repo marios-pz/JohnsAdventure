@@ -1,6 +1,6 @@
 {
-  "player_room": false,
-  "kitchen": false,
+  "player_room": true,
+  "kitchen": true,
   "johns_garden": false,
   "manos_hut": false,
   "training_field": true,

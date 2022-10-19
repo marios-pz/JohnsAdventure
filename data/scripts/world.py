@@ -1,4 +1,5 @@
 import pygame
+from data.scripts.PLAYER.items import get_save, make_save
 
 from data.scripts.QUESTS import quest
 from .PLAYER.player import Player
@@ -37,6 +38,7 @@ from .levels import (
     CaveEntrance,
     CaveRoomPassage,
     Credits,
+    CaveLevel1,
 )
 
 # Your lsp might think the below are unused, but thats wrong.
@@ -55,7 +57,7 @@ TITLE_TRANSLATOR = {
     "manos_hut": "Manos's hut",
     "cave_garden": "Cave Garden",
     "cave_entrance": "Cave Entrance",
-    # "cave_room_1": "C-Floor 1",
+    "cave_room_1": "C-Floor 1",
     # "cave_room_2": "C-Floor 2",
     "cave_passage": "Cave Passage",
 }
@@ -161,6 +163,7 @@ class GameManager:
             self.ui,  # Other UI like Inventory
             self.menu_manager.save,  # controls
         )
+
         self.last_player_instance: Player | None = copy(self.player)
         self.last_loaded_states: dict[str, GameState] = {}
         self.last_game_state_tag: str = first_state
@@ -168,7 +171,7 @@ class GameManager:
         self.last_positions: dict[int, tuple[int, int]] = {}
 
         # ----------- GAME STATE ------------------
-        self.state: str = first_state
+        self.state: str = get_save(self.player)
         self.first_state: bool = False
         self.prop_objects = PropGetter(self.player).PROP_OBJECTS
 
@@ -182,7 +185,7 @@ class GameManager:
             "gymnasium": Gymnasium,
             "cave_garden": CaveGarden,
             "cave_entrance": CaveEntrance,
-            # "cave_room_1": CaveRoomOne,
+            "cave_room_1": CaveLevel1,
             # "cave_room_2": CaveRoomTwo,
             "cave_passage": CaveRoomPassage,
             "credits": Credits,
@@ -484,6 +487,7 @@ class GameManager:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    make_save(self.player, self.state)
                     del loading_thread  # quit the thread
                     self.quit_()
                 elif (
@@ -601,6 +605,7 @@ class GameManager:
             if self.state == "credits":
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
+                        make_save(self.player, self.state)
                         pygame.quit()
                         raise SystemExit
                     if event.type == pygame.KEYDOWN:
@@ -632,6 +637,7 @@ class GameManager:
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
+                        make_save(self.player, self.state)
                         self.quit_()
 
                     if event.type == pygame.KEYDOWN:

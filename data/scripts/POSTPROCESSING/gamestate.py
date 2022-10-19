@@ -7,6 +7,8 @@ from operator import attrgetter
 import json
 from random import gauss, randint
 
+from data.scripts.PLAYER.items import make_save
+
 from ..PLAYER.player import *
 from ..PLAYER.inventory import *
 from ..utils import resource_path, load, l_path, flip_vertical, flip_horizontal
@@ -130,7 +132,9 @@ class GameState:
         self.step_timer = pg.time.get_ticks()
 
         self.music_manager = SoundManager(True, False, volume=0.7)
-        self.sound_manager = SoundManager(False, True, volume=1)
+        self.sound_manager = SoundManager(False, True, volume=0.9)
+
+        make_save(self.player, id_)
 
     def check(self, moving_object, col_obj, side):
         """Given a side of the moving object,

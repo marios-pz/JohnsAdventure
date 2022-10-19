@@ -1,4 +1,6 @@
 from math import ceil
+from os import write
+from typing import Any
 import pygame as pg
 from copy import copy
 from ..utils import (
@@ -10,6 +12,64 @@ from ..utils import (
     resource_path,
 )
 from .player_sub.tools import load_attack_anim
+
+import json
+
+
+def get_save(player: Any) -> str:
+    with open(resource_path("data/database/data.json")) as file:
+        data = json.load(file)
+
+        player_data = data["player"]
+
+        pos = player_data["pos"]
+        if 0 not in pos:
+            player.rect.topleft = pos
+
+        # Inventory
+        player.xp = player_data["xp"]
+        player.level = player_data["level"]
+        player.data["coins"] = player_data["coins"]
+        player.health_potions = player_data["health_potions"]
+
+        # Stats
+        player.upgrade_station.new_points_available = player_data["stats"][
+            "points"
+        ]
+        player.damage = player_data["stats"]["damage"]
+        player.endurance = player_data["stats"]["endurance"]
+        player.critical_chance = player_data["stats"]["crit_chance"]
+
+        return data["world"]
+
+
+def make_save(player: Any, state: str):
+    data: dict[str, Any] = {
+        "controls": player.data["controls"],
+        "world": state,
+        "player": {
+            "pos": player.rect.topleft,
+            "inventory": [],
+            "health_potions": player.health_potions,
+            "level": player.level,
+            "xp": player.xp,
+            "coins": player.data["coins"],
+            "stats": {
+                "points": player.upgrade_station.new_points_available,
+                "damage": player.damage,
+                "endurance": player.endurance,
+                "crit_chance": player.critical_chance,
+            },
+        },
+    }
+
+    for item in player.inventory.items:
+        data["player"]["inventory"].append(item.__class__.__name__)
+
+    print(data["player"]["inventory"])
+
+    with open(resource_path("data/database/data.json"), "w") as file:
+        json.dump(data, file, indent=4)
 
 
 class Items:
