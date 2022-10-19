@@ -27,6 +27,8 @@ class CutsceneManager:
         )
         self.began_state_time = 0
 
+        self.playing_cutscene = False
+
         # cinema bars status
         self.delay_cinema_bars = 0
         self.cinema_bar_height = 100
@@ -343,6 +345,7 @@ class CutsceneManager:
                         > self.wait_on_end
                     ):
                         self.end_phase()
+                    self.playing_cutscene = False
 
             elif self.state == "quiting":
 

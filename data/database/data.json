@@ -10,19 +10,22 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "world": "johns_garden",
+    "world": "training_field",
     "player": {
         "pos": [
-            1422,
-            3798
+            1477,
+            1632
         ],
-        "inventory": [],
+        "inventory": [
+            "Training_Sword",
+            "Training_Sword"
+        ],
         "health_potions": 0,
-        "level": 1,
+        "level": 4,
         "xp": 80,
-        "coins": 30,
+        "coins": 130,
         "stats": {
-            "points": 1,
+            "points": 4,
             "damage": 10,
             "endurance": 3,
             "crit_chance": 0.051

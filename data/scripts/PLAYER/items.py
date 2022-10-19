@@ -70,12 +70,8 @@ def make_save(player: Any, state: str):
         },
     }
 
-    print("SAVING PLAYER AT POS", data["player"]["pos"])
-
     for item in player.inventory.items:
         data["player"]["inventory"].append(item.__class__.__name__)
-
-    print(data["player"]["inventory"])
 
     with open(resource_path("data/database/data.json"), "w+") as file:
         json.dump(data, file, indent=4)

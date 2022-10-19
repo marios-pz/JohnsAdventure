@@ -50,7 +50,7 @@ vec = p.math.Vector2
 class Player:
     DEFAULT_VEL = 6
 
-    def __init__(self, game_instance, font, ux, ui, data):
+    def __init__(self, game_instance, font, ux, ui, data, cutcene):
         self.game_instance = game_instance
         self.screen, self.InteractPoint = game_instance.DISPLAY, 0
         self.sound_manager = SoundManager(sound_only=True)
@@ -63,6 +63,8 @@ class Player:
             "up": True,
             "down": True,
         }
+
+        self.cutscene = cutcene
 
         # self.screen_shake = False
 

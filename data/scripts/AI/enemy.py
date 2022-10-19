@@ -58,6 +58,8 @@ class Enemy:
         self.IDENTITY = "ENEMY"
         self.level = level_instance.display
 
+        # self.playing_cutscene =
+
         self.scroll = self.level.scroll
         self.BASE_VEL = vel
         self.vel = {
@@ -336,6 +338,7 @@ class Enemy:
                         animation = animation[self.direction]
 
                     if pg.time.get_ticks() - self.delay > 100:
+
                         match val[-1]:
                             case "loop":
                                 self.id_anim = (self.id_anim + 1) % len(
@@ -617,11 +620,7 @@ class Enemy:
                 vec(pl_rect.center)
             )
 
-            # NOTE όλοι οι εκθροί, χτυπάνε τον παίκτη με τον που αγγίξουνε
-            # Αλλά το boss λειτουργέι διαφορετικά επειδή εγώ έκανα την μαλακία
-
-            # Να φτιάξω επίσης το bug που όταν βαράνε τον παίκτη πάνε αριστερά/δεξιά
-
+            print(GET_DISTANCE)
             if (
                 GET_DISTANCE
                 <= self.attacking_distance - self.hitbox_rect[3] // 2
@@ -632,6 +631,10 @@ class Enemy:
                     self.status = "CHASING"
                 else:
                     self.status = "STANDBY"
+
+            print(player.cutscene.playing_cutscene)
+            if player.cutscene.playing_cutscene:
+                self.status = "STANDBY"
 
             match self.status:
                 case "STANDBY":

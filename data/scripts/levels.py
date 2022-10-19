@@ -221,6 +221,8 @@ class JohnsGarden(GameState):
         with open(resource_path("data/database/open_world.json")) as infos:
             self.sprite_info = json.load(infos)
 
+        self.music_manager.play_music("forest_theme")
+
         get_scale = lambda name: self.sprite_info[name]["sc"]
 
         # self.music_manager.play_music("forest_theme")
@@ -788,6 +790,9 @@ class JohnsGarden(GameState):
     def update(self, camera, dt):
         self.screen.blit(self.green_leaf, (0, 0))
 
+        if self.music_manager.playing_music != "forest_theme":
+            self.music_manager.play_music("forest_theme")
+
         update = super().update(camera, dt)
 
         if self.player.game_instance.quest_manager.quests[
@@ -935,13 +940,13 @@ class Training_Field(GameState):
                 self.dummies = [
                     ShadowDummy(
                         self,
-                        (1700, 1540),
+                        (1700, 1720),
                         hp=150,
                         xp_drop=125,
                     ),
                     ShadowDummy(
                         self,
-                        (1700, 1720),
+                        (1700, 1760),
                         hp=150,
                         xp_drop=125,
                     ),

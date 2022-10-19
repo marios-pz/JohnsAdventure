@@ -2,6 +2,7 @@ import pygame
 from data.scripts.PLAYER.items import get_save, make_save
 
 from data.scripts.QUESTS import quest
+from data.scripts.sound_manager import SoundManager
 from .PLAYER.player import Player
 from .UI.mainmenu import Menu
 from .UI.interface import Interface
@@ -149,6 +150,9 @@ class GameManager:
             scale(self.ui.parse_sprite("interface_button.png"), 8),
         )
 
+        # -------- CAMERA SRC HANDLER -------------
+        self.cutscene_engine: CutsceneManager = CutsceneManager(self)
+
         # ------------- PLAYER ----------------
         self.player = Player(
             self,
@@ -156,6 +160,7 @@ class GameManager:
             self.interface,
             self.ui,  # Other UI like Inventory
             self.menu_manager.save,  # controls
+            self.cutscene_engine,
         )
 
         self.last_player_instance: Player | None = copy(self.player)
@@ -193,9 +198,6 @@ class GameManager:
         # ------------ DEBUG ----------------------
         self.debug = debug
         self.debugger: Debugging = Debugging(self, no_rect)
-
-        # -------- CAMERA SRC HANDLER -------------
-        self.cutscene_engine: CutsceneManager = CutsceneManager(self)
 
         # ------------- QUESTS -------------------
         self.quest_manager: QuestManager = QuestManager(self, self.player)
@@ -690,7 +692,9 @@ class GameManager:
                 # not self.debug and , put this later
                 if self.cutscene_engine.state != "inactive":
                     self.cutscene_engine.update()
+                    self.cutscene_engine.playing_cutscene = True
                 else:
+                    self.cutscene_engine.playing_cutscene = False
                     set_camera_to(
                         self.player.camera, self.player.camera_mode, "follow"
                     )
@@ -709,8 +713,8 @@ class GameManager:
                     self.init_death_screen()
                     self.player.health = self.player.backup_hp
 
-            if self.FPS % 30 == 0:
-                print(self.framerate.get_fps())
-                print(self.player.rect.topleft)
+            # if self.FPS % 30 == 0:
+            #     print(self.framerate.get_fps())
+            #     print(self.player.rect.topleft)
 
             self.routine()
