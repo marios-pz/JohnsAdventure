@@ -120,6 +120,14 @@ class Inventory:
                 ),
                 (self.im_rect[0] + 50, self.im_rect[1] + 175),
             )
+            self.screen.blit(
+                self.font.render(
+                    f"Coins:{parent_class.data['coins']}",
+                    True,
+                    (0, 0, 0),
+                ),
+                (self.im_rect[0] + 54, self.im_rect[1] + 295),
+            )
 
     def reset_equippement(self, type_: str, instance: object):
 

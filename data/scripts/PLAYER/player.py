@@ -190,7 +190,6 @@ class Player:
         )
 
         self.upgrade_station = UpgradeStation(
-            self.screen,
             ui,
             p.font.Font(resource_path("data/database/menu-font.ttf"), 13),
             self,
