@@ -8,6 +8,7 @@ data/scripts/QUESTS/__pycache__/
 data/scripts/UI/__pycache__/
 data/scripts/__pycache__/
 data/database/cutscenes.json
+data/scripts/QUESTS/quests.json
 build 
 dist
 data/.DS_Store

@@ -690,26 +690,18 @@ class GameManager:
 
                     self.start_new_level(update, last_state=self.state)
 
-                """  RUN THE CAMERA ONLY WHEN ITS NOT IN DEBUGGING MODE  """
+                """  RUN THE CAMERA  """
                 # not self.debug and , put this later
                 if self.cutscene_engine.state != "inactive":
                     self.cutscene_engine.update()
-                elif not self.debug:
-                    set_camera_to(
-                        self.player.camera, self.player.camera_mode, "follow"
-                    )
+                else:
+                    has_script = len(self.game_state.camera_script) > 0
+                    ended_script = self.game_state.ended_script
 
-                    if (
-                        not self.game_state.ended_script
-                        and len(self.game_state.camera_script) > 0
-                    ):
+                    if not ended_script and has_script:
                         self.cutscene_engine.init_script(
                             self.game_state.camera_script
                         )
-                else:
-                    set_camera_to(
-                        self.player.camera, self.player.camera_mode, "follow"
-                    )
 
                 if self.player.health <= 0:
                     self.death_screen = True

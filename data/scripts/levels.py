@@ -1493,8 +1493,6 @@ class CaveEntrance(GameState):
             "cave_entrance",
         )
 
-        print(player_instance.screen)
-
         self.spawn = {
             "cave_entrance": (
                 self.prop_objects["hill_mid"]((0, 0)).idle[0].get_width() * 3
@@ -1611,9 +1609,8 @@ class CaveEntrance(GameState):
 
 
 class CaveRoomPassage(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(CaveRoomPassage, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "cave_passage",
@@ -1623,6 +1620,12 @@ class CaveRoomPassage(GameState):
         self.spawn = {"cave_room_2": (880, 2100), "gymnasium": (783, 730)}
 
         w = self.prop_objects["c_wall_mid"]((0, 0)).idle[0].get_width()
+        self.ended_script = True
+        self.started_script = False
+
+        from .scripts import CAVE_PASSAGE_SCENE
+
+        self.camera_script = CAVE_PASSAGE_SCENE
 
         self.objects = [
             *generate_cave_walls(
@@ -1708,6 +1711,10 @@ class CaveRoomPassage(GameState):
         pg.draw.rect(
             self.screen, (23, 22, 22), [0, 0, *self.screen.get_size()]
         )
+        # Play cutscene
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
 
         # Flashlight
         pg.draw.circle(
@@ -1736,9 +1743,8 @@ class CaveRoomPassage(GameState):
 
 
 class Credits(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(Credits, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "credits",

@@ -622,8 +622,6 @@ class Enemy:
 
             # Να φτιάξω επίσης το bug που όταν βαράνε τον παίκτη πάνε αριστερά/δεξιά
 
-            print(GET_DISTANCE)
-
             if (
                 GET_DISTANCE
                 <= self.attacking_distance - self.hitbox_rect[3] // 2
@@ -697,14 +695,14 @@ class Enemy:
         self.update_states()
         self.animate()
 
-        if self.enemy_type == "boss":
-            print(
-                "ΒΟΣΣ:",
-                self.moving,
-                self.attacking,
-                self.chase_available,
-                self.time_got_stuck,
-            )
+        # if self.enemy_type == "boss":
+        #     print(
+        #         "ΒΟΣΣ:",
+        #         self.moving,
+        #         self.attacking,
+        #         self.chase_available,
+        #         self.time_got_stuck,
+        #     )
 
     def update(self, scroll, dt, player) -> None:
         self.scroll = scroll

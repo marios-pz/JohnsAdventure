@@ -326,6 +326,28 @@ CAVE_GARDEN_SCENE = [
         "pos": (
             2080,
             2800,
-        ),  # I assume I have to return the camera somewhere near the player?
+        ),
+    },
+]
+
+
+CAVE_PASSAGE_SCENE = [
+    {
+        "zoom": 1.3,
+        "duration": 3000,
+        "pos": (2080, 2800),
+        "text": "John: What are these monsters..",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4200,
+        "zoom": 1,
+        "zoom_duration": 1800,
+        "text": "John: Time to go cyberpunk",
+        "text_dt": 1500,
+        "pos": (
+            2080,
+            2800,
+        ),
     },
 ]

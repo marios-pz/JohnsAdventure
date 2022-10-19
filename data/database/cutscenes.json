@@ -1,14 +1,14 @@
 {
-  "player_room": true,
-  "kitchen": true,
+  "player_room": false,
+  "kitchen": false,
   "johns_garden": false,
   "manos_hut": false,
-  "training_field": true,
+  "training_field": false,
   "gymnasium": false,
+  "cave_passage": false,
   "cave_garden": false,
   "cave_entrance": false,
   "cave_room_1": false,
   "cave_room_2": false,
-  "cave_passage": false,
   "credits": false
 }

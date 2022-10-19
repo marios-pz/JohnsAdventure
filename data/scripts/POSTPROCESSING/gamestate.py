@@ -41,9 +41,6 @@ class GameState:
         has_boss=False,
     ):
         self.id = id_
-
-        print(player_instance)
-
         # ------- SCREEN -----------------
         self.display, self.screen = (
             player_instance.screen,
