@@ -32,6 +32,13 @@ def get_save(player: Any) -> str:
         player.data["coins"] = player_data["coins"]
         player.health_potions = player_data["health_potions"]
 
+        for item in player_data["inventory"]:
+            match item:
+                case "ManosSword":
+                    player.inventory.items.append(ManosSword())
+                case "Training_Sword":
+                    player.inventory.items.append(Training_Sword())
+
         # Stats
         player.upgrade_station.new_points_available = player_data["stats"][
             "points"
@@ -63,12 +70,14 @@ def make_save(player: Any, state: str):
         },
     }
 
+    print("SAVING PLAYER AT POS", data["player"]["pos"])
+
     for item in player.inventory.items:
         data["player"]["inventory"].append(item.__class__.__name__)
 
     print(data["player"]["inventory"])
 
-    with open(resource_path("data/database/data.json"), "w") as file:
+    with open(resource_path("data/database/data.json"), "w+") as file:
         json.dump(data, file, indent=4)
 
 

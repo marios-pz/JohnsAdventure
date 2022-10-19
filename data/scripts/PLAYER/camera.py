@@ -136,7 +136,6 @@ class Follow(CamScroll):
         position.
 
         """
-
         # X Axis
         self.camera.offset_float.x += (
             self.player.rect.x

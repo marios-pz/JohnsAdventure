@@ -2,12 +2,16 @@ from typing import Any
 import pygame
 from ..utils import scale, resource_path
 
+from ..PLAYER.items import make_save
+
 
 class PauseMenu:
-    def __init__(self, display: pygame.surface.Surface, ui: Any):
+    def __init__(self, display: pygame.surface.Surface, ui: Any, state: str):
         self.screen: pygame.surface.Surface = display
         self.W: int = self.screen.get_width()
         self.H: int = self.screen.get_height()
+
+        self.state = state
 
         # initialize font and load background
         self.font: pygame.font.Font = pygame.font.Font(
@@ -45,6 +49,7 @@ class PauseMenu:
         for event in pygame.event.get():
             match event.type:
                 case pygame.QUIT:
+                    make_save(self.player, self.state)
                     pygame.quit()
                     raise SystemExit
                 case pygame.MOUSEBUTTONDOWN:

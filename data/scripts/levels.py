@@ -81,6 +81,8 @@ class PlayerRoom(GameState):
 
         self.camera_script = PLAYER_ROOM_SCENE
 
+        self.music_manager.play_music("main_theme")
+
         self.additional_lights = [
             # Windows
             PolygonLight(
@@ -946,11 +948,10 @@ class Training_Field(GameState):
                 ]
                 self.centers = [dummy.rect.center for dummy in self.dummies]
                 self.radius_circles += 2
+
                 self.sound_manager.play_sound("magic_shooting")
                 self.sound_manager.play_sound("ShadowSummon")
-
-                if self.music_manager.playing_music != "garden_theme":
-                    self.music_manager.play_music("garden_theme")
+                self.music_manager.play_music("credits")
 
                 self.exploded = True
 

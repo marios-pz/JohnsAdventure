@@ -3,7 +3,6 @@ from data.scripts.PLAYER.items import get_save, make_save
 
 from data.scripts.QUESTS import quest
 from .PLAYER.player import Player
-from .sound_manager import SoundManager
 from .UI.mainmenu import Menu
 from .UI.interface import Interface
 from .UI.loading_screen import LoadingScreen
@@ -143,21 +142,16 @@ class GameManager:
         self.delay_scaling = 0
 
         # ---------- GAME MANAGERS ----------------
-        self.sound_manager: SoundManager = SoundManager(False, True)
-        self.sound_manager.play_music("main_theme")
-
         self.loading_screen: LoadingScreen = LoadingScreen(self.DISPLAY)
         self.menu_manager: Menu = Menu(self, self.blacksword, self.ui)
         self.interface: Interface = Interface(
             self.DISPLAY,
             scale(self.ui.parse_sprite("interface_button.png"), 8),
         )
-        self.pause_menu: PauseMenu = PauseMenu(self.DISPLAY, self.ui)
 
         # ------------- PLAYER ----------------
         self.player = Player(
             self,
-            self.DISPLAY,  # Screen surface
             self.font,  # Font
             self.interface,
             self.ui,  # Other UI like Inventory
@@ -174,6 +168,9 @@ class GameManager:
         self.state: str = get_save(self.player)
         self.first_state: bool = False
         self.prop_objects = PropGetter(self.player).PROP_OBJECTS
+        self.pause_menu: PauseMenu = PauseMenu(
+            self.DISPLAY, self.ui, self.state
+        )
 
         # THIS IS WHERE YOU LOAD THE WORLDS
         self.state_manager = {
@@ -265,6 +262,7 @@ class GameManager:
                 upd = self.pause_menu.update()
 
                 if upd == "quit":
+                    make_save(self.player, self.state)
                     self.menu = True
                     self.player.paused = False
                     self.menu_manager.start_game = False
@@ -403,6 +401,7 @@ class GameManager:
         for obj in self.game_state.objects:
             if hasattr(obj, "end_instance"):
                 obj.end_instance()
+
         pygame.quit()
         raise SystemExit
 
@@ -487,7 +486,6 @@ class GameManager:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    make_save(self.player, self.state)
                     del loading_thread  # quit the thread
                     self.quit_()
                 elif (
@@ -505,9 +503,14 @@ class GameManager:
             pygame.display.update()
 
         if last_state == "none":  # update pos according to spawn points
-            keys = [key for key in self.game_state.spawn]
-            self.player.rect.topleft = self.game_state.spawn[keys[0]]
+
+            key: str = list(self.game_state.spawn.items())[0][0]
+
+            if self.player.rect.topleft == self.game_state.spawn[key]:
+                self.player.rect.topleft = self.game_state.spawn[key]
+
         else:
+            # Next Level
             self.player.rect.topleft = self.game_state.spawn[last_state]
 
         # replace the player for the cutscene (if needed)
@@ -561,10 +564,7 @@ class GameManager:
             self.player.camera_status = "follow"
             self.start_new_level(
                 self.state,
-                first_pos=(
-                    self.DISPLAY.get_width() // 2 - 120,
-                    self.DISPLAY.get_height() // 2 - 20,
-                ),
+                first_pos=self.player.rect.topleft,
                 respawn=True,
             )
         for obj_ in self.game_state.objects:
@@ -590,10 +590,7 @@ class GameManager:
         else:
             self.start_new_level(
                 self.state,
-                first_pos=(
-                    self.DISPLAY.get_width() // 2 - 120,
-                    self.DISPLAY.get_height() // 2 - 20,
-                ),
+                first_pos=self.player.rect.topleft,
             )
             self.menu = False
             self.loading = False
@@ -605,7 +602,6 @@ class GameManager:
             if self.state == "credits":
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        make_save(self.player, self.state)
                         pygame.quit()
                         raise SystemExit
                     if event.type == pygame.KEYDOWN:
@@ -623,21 +619,15 @@ class GameManager:
 
                     self.start_new_level(
                         self.state,
-                        first_pos=(
-                            (
-                                self.DISPLAY.get_width() // 2 - 120,
-                                self.DISPLAY.get_height() // 2 - 20,
-                            )
-                            if not self.first_state
-                            else None
-                        ),
+                        first_pos=self.player.rect.topleft
+                        if not self.first_state
+                        else None,
                     )
 
             elif self.death_screen:
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        make_save(self.player, self.state)
                         self.quit_()
 
                     if event.type == pygame.KEYDOWN:
@@ -719,7 +709,8 @@ class GameManager:
                     self.init_death_screen()
                     self.player.health = self.player.backup_hp
 
-            print(self.framerate.get_fps())
-            print(self.player.rect.topleft)
+            if self.FPS % 30 == 0:
+                print(self.framerate.get_fps())
+                print(self.player.rect.topleft)
 
             self.routine()

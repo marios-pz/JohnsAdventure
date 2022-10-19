@@ -132,8 +132,7 @@ class GameState:
         self.step_timer = pg.time.get_ticks()
 
         self.music_manager = SoundManager(True, False, volume=0.7)
-        self.sound_manager = SoundManager(False, True, volume=0.9)
-
+        self.sound_manager = SoundManager(False, True, volume=0.7)
         make_save(self.player, id_)
 
     def check(self, moving_object, col_obj, side):

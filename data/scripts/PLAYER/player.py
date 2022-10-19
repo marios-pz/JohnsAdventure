@@ -50,9 +50,9 @@ vec = p.math.Vector2
 class Player:
     DEFAULT_VEL = 6
 
-    def __init__(self, game_instance, screen, font, ux, ui, data):
+    def __init__(self, game_instance, font, ux, ui, data):
         self.game_instance = game_instance
-        self.screen, self.InteractPoint = screen, 0
+        self.screen, self.InteractPoint = game_instance.DISPLAY, 0
         self.sound_manager = SoundManager(sound_only=True)
         self.base_vel = 10
         self.velocity = p.Vector2(0, 0)  # Player's speed
@@ -80,7 +80,7 @@ class Player:
         ) = self.Left = self.Right = self.Up = False  # Movement
 
         self.data = data
-        self.inventory = Inventory(self.screen, ui)
+        self.inventory = Inventory(game_instance.DISPLAY, ui)
         self.quest_UI: QuestUI = None
         # will be reassigned later in GameManager.__init__
 
@@ -111,7 +111,7 @@ class Player:
         self.dust_particle_effet = DustManager(10, self, self.screen)
 
         # ----------------- CAMERA SETTINGS
-        self.camera = Camera(self, screen)
+        self.camera = Camera(self, game_instance.DISPLAY)
         self.camera_mode = {
             # Follows the player
             "follow": Follow(self.camera, self),
