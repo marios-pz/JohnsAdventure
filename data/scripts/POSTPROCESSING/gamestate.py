@@ -129,7 +129,8 @@ class GameState:
 
         self.step_timer = pg.time.get_ticks()
 
-        self.music_manager = SoundManager(True, False, volume=1)
+        self.music_manager = SoundManager(True, False, volume=0.7)
+        self.sound_manager = SoundManager(False, True, volume=1)
 
     def check(self, moving_object, col_obj, side):
         """Given a side of the moving object,
@@ -234,22 +235,18 @@ class GameState:
 
         for direction in ["left", "right", "down", "up"]:
             for obj in objects_to_collide:
-                check = self.check(obj_moving, obj, direction)
-                if (
-                    check == "kill"
-                ):  # a collision has occured on this side, no need to check more, so break
+                if self.check(obj_moving, obj, direction) == "kill":
                     if hasattr(obj_moving, "switch_directions"):
                         obj_moving.switch_directions(
                             blocked_direction=direction
                         )  # switch NPCs direction for eg.
-
                     break
 
     def update(self, camera, dt) -> None:
 
         # update the game values
         self.player.rooms_objects = self.objects
-        self.player.base_vel = copy(self._PLAYER_VEL)
+        self.player.base_vel = self._PLAYER_VEL
         self.dt = dt
 
         # blit the background
@@ -302,6 +299,8 @@ class GameState:
             # self is ignored, screen and scroll are found by getattr(self, "screen") and getattr(self, "scroll")
             if isinstance(obj, Player) and self.id == "credits":
                 continue
+
+            # Bloody genious way to pass parameters without worrying breaking the game by simple change
             obj.update(
                 *[
                     getattr(self, arg)

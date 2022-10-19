@@ -25,7 +25,6 @@ from .props import Chest, Torch
 from .PLAYER.items import ManosSword, Training_Sword
 from .POSTPROCESSING.light_types import PolygonLight, LightSource
 from .POSTPROCESSING.gamestate import GameState
-from .sound_manager import SoundManager
 from random import randint
 
 
@@ -69,8 +68,6 @@ class PlayerRoom(GameState):
             Rect(450, 40, 410, 192),
             Rect(36, 400, 77, 94),
         ]
-
-        self.music_manager = SoundManager(False, True, volume=0.45)
 
         self.world = pg.transform.scale(
             l_path("data/sprites/world/Johns_room.png"), (1280, 720)
@@ -128,7 +125,7 @@ class Kitchen(GameState):
             player_instance,
             prop_objects,
             "kitchen",
-            light_state="inside_clear",
+            light_state="inside_dark",
         )
         self.world = pg.transform.scale(
             load(resource_path("data/sprites/world/kitchen.png")), (1280, 720)
@@ -172,7 +169,6 @@ class Kitchen(GameState):
         ]
 
         self.pop_cynthia = False
-        self.sound_manager = SoundManager(True, False, volume=1)
         self.ended_script = True
         self.spawned = False
         self.started_script = False
@@ -225,8 +221,7 @@ class JohnsGarden(GameState):
 
         get_scale = lambda name: self.sprite_info[name]["sc"]
 
-        self.music_manager = SoundManager(False, True, volume=0.75)
-        self.music_manager.play_music("forest_theme")
+        #self.music_manager.play_music("forest_theme")
 
         # Add background ambience
 
@@ -819,9 +814,6 @@ class Training_Field(GameState):
             self.prop_objects["hill_side_mid"]((0, 0)).idle[0].get_width()
         )
 
-        self.music_manager = SoundManager(False, True, volume=0.75)
-        self.sound_manager = SoundManager(True, False, volume=0.75)
-
         self.objects = [
             # *generate_chunk(
             #    "grass", -600, 600, 20, 25, 120, 150, randomize=45
@@ -1115,7 +1107,6 @@ class Gymnasium(GameState):
             randomize=0,
         )
 
-        self.sound_manager = SoundManager(True, False, volume=1)
         self.ended_script = True
         self.spawned = False
         self.started_script = False
@@ -1276,8 +1267,7 @@ class CaveGarden(GameState):
         self.hh = hills_height
         self.ww = hills_width
 
-        self.sound_manager = SoundManager(True, False, volume=0.7)
-        self.sound_manager.play_music("garden_theme")
+        self.music_manager.play_music("garden_theme")
 
         self.objects = [
             *generate_chunk(
@@ -1620,12 +1610,6 @@ class CaveRoomPassage(GameState):
         self.spawn = {"cave_room_2": (880, 2100), "gymnasium": (783, 730)}
 
         w = self.prop_objects["c_wall_mid"]((0, 0)).idle[0].get_width()
-        self.ended_script = True
-        self.started_script = False
-
-        from .scripts import CAVE_PASSAGE_SCENE
-
-        self.camera_script = CAVE_PASSAGE_SCENE
 
         self.objects = [
             *generate_cave_walls(
@@ -1707,15 +1691,12 @@ class CaveRoomPassage(GameState):
         ]
 
     def update(self, camera, dt) -> None:
+        
+
         # Background
         pg.draw.rect(
             self.screen, (23, 22, 22), [0, 0, *self.screen.get_size()]
         )
-        # Play cutscene
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
-
         # Flashlight
         pg.draw.circle(
             self.screen,
@@ -1750,8 +1731,7 @@ class Credits(GameState):
             "credits",
             light_state="inside_clear",
         )
-        self.sound_manager = SoundManager(True, False, volume=1)
-        self.sound_manager.play_music("credits_theme")
+        self.music_manager.play_music("credits_theme")
         self.font = pg.font.Font(
             resource_path("data/database/menu-font.ttf"), 24
         )
@@ -1802,19 +1782,27 @@ class Credits(GameState):
 
 
 class CaveLevel1(GameState):
-    def __init__(self, DISPLAY: pg.Surface, player_instance, prop_objects):
+    def __init__(self, player_instance, prop_objects):
         super(Credits, self).__init__(
-            DISPLAY,
             player_instance,
             prop_objects,
             "credits",
-            light_state="inside_clear",
+            light_state="inside_dark",
         )
-        self.sound_manager = SoundManager(True, False, volume=0.75)
-        self.sound_manager.play_music("dramatic")
+        # self.sound_manager.play_music("dramatic")
+
+        self.objects = []
+        self.camera_script = []
+        self.started_script = False 
+        self.ended_script = True
+        self.spawn = {"cave_passage": (880, 2100), "cave_room_2": (783, 730)}
 
     def update(self, camera, dt) -> None:
 
         pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
 
         return super(Credits, self).update(camera, dt)

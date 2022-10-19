@@ -1,5 +1,7 @@
 from typing import Any
 import pygame
+
+from data.scripts.PLAYER.items import ManosSword
 from ..utils import scale, resource_path
 
 
@@ -47,7 +49,9 @@ class Inventory:
         ]
 
         self.show_menu = False
-        self.items = []
+
+        # Player Items
+        self.items = [ManosSword()]
         self.index_scroll = 0
         self.backup_item_len = len(self.items)
 
