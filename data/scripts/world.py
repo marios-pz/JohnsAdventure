@@ -38,8 +38,20 @@ from .levels import (
     CaveEntrance,
     CaveRoomPassage,
     Credits,
-    CaveLevel1,
 )
+
+from .levels import (
+    CaveRoom1,
+    CaveRoom2,
+    CaveRoom3,
+    CaveRoom4,
+    CaveRoom5,
+    CaveRoom6,
+    CaveRoom7,
+    CaveRoom8,
+    CaveRoom9,
+)
+
 
 # Your lsp might think the below are unused, but thats wrong.
 from .PLAYER.inventory import Inventory
@@ -58,7 +70,14 @@ TITLE_TRANSLATOR = {
     "cave_garden": "Cave Garden",
     "cave_entrance": "Cave Entrance",
     "cave_room_1": "C-Floor 1",
-    # "cave_room_2": "C-Floor 2",
+    "cave_room_2": "C-Floor 2",
+    "cave_room_3": "C-Floor 3",
+    "cave_room_4": "C-Floor 4",
+    "cave_room_5": "C-Floor 5",
+    "cave_room_6": "C-Floor 6",
+    "cave_room_7": "C-Floor 7",
+    "cave_room_8": "C-Floor 8",
+    "cave_room_9": "C-Floor 9",
     "cave_passage": "Cave Passage",
 }
 
@@ -187,8 +206,15 @@ class GameManager:
             "gymnasium": Gymnasium,
             "cave_garden": CaveGarden,
             "cave_entrance": CaveEntrance,
-            "cave_room_1": CaveLevel1,
-            # "cave_room_2": CaveRoomTwo,
+            "cave_room_1": CaveRoom1,
+            "cave_room_2": CaveRoom2,
+            "cave_room_3": CaveRoom3,
+            "cave_room_4": CaveRoom4,
+            "cave_room_5": CaveRoom5,
+            "cave_room_6": CaveRoom6,
+            "cave_room_7": CaveRoom7,
+            "cave_room_8": CaveRoom8,
+            "cave_room_9": CaveRoom9,
             "cave_passage": CaveRoomPassage,
             "credits": Credits,
         }
@@ -713,8 +739,8 @@ class GameManager:
                     self.init_death_screen()
                     self.player.health = self.player.backup_hp
 
-            # if self.FPS % 30 == 0:
-            #     print(self.framerate.get_fps())
-            #     print(self.player.rect.topleft)
+            if self.FPS % 30 == 0:
+                print(self.framerate.get_fps())
+                print(self.player.rect.topleft)
 
             self.routine()

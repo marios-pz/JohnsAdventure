@@ -10,23 +10,22 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "world": "training_field",
+    "world": "cave_entrance",
     "player": {
         "pos": [
-            1477,
-            1632
+            -1968,
+            144
         ],
         "inventory": [
-            "Training_Sword",
             "Training_Sword"
         ],
         "health_potions": 0,
-        "level": 4,
+        "level": 6,
         "xp": 80,
-        "coins": 130,
+        "coins": 180,
         "stats": {
-            "points": 4,
-            "damage": 10,
+            "points": 1,
+            "damage": 20,
             "endurance": 3,
             "crit_chance": 0.051
         }

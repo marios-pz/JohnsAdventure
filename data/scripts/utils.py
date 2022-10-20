@@ -622,4 +622,4 @@ def generate_wall_chunk(
             )
         )
 
-    return
+    return new_list

@@ -1498,7 +1498,7 @@ class CaveEntrance(GameState):
                 + 100,
             ),
             "cave_garden": (1300, 100),
-            "cave_room_1": (-2400, 120),
+            "cave_room_9": (-2400, 120),
         }
 
         self.objects = [
@@ -1559,7 +1559,7 @@ class CaveEntrance(GameState):
                 "",
                 "mandatory",
             ),
-            "cave_room_1": (
+            "cave_room_9": (
                 Rect(-2700, self.spawn["cave_garden"][1], 150, 300),
                 "",
                 "mandatory",
@@ -1728,33 +1728,35 @@ class CaveRoomPassage(GameState):
         return super(CaveRoomPassage, self).update(camera, dt)
 
 
-class CaveLevel1(GameState):
+class CaveRoom1(GameState):
     def __init__(self, player_instance, prop_objects):
-        super(CaveLevel1, self).__init__(
+        super(CaveRoom1, self).__init__(
             player_instance,
             prop_objects,
-            "credits",
+            "cave_room_1",
             light_state="inside_dark",
         )
 
         self.sound_manager.play_music("dramatic")
 
-        self.objects = []
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {"cave_passage": (880, 2100), "cave_room_2": (783, 730)}
+        self.spawn = {"cave_entrance": (1000, 300), "cave_room_2": (100, 600)}
         self.exit_rects = {
-            "cave_passage": (
-                Rect(732, 530, 150, 140),
+            "cave_entrance": (
+                Rect(2000, 150, 200, 100),
                 "",
                 "mandatory",
             ),
-            # "cave_room_2": (
-            #     Rect(300, self.spawn["cave_room_2"][1] + 420, 950, 140),
-            #     "",
-            #     "mandatory",
-            # ),
+            "cave_room_2": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
         }
 
     def update(self, camera, dt) -> None:
@@ -1765,7 +1767,427 @@ class CaveLevel1(GameState):
         #     self.started_script = True
         #     self.ended_script = False
 
-        return super(CaveLevel1, self).update(camera, dt)
+        return super(CaveRoom1, self).update(camera, dt)
+
+
+class CaveRoom2(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom2, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_2",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_1": (1000, 300), "cave_room_3": (100, 600)}
+        self.exit_rects = {
+            "cave_room_1": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_3": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom2, self).update(camera, dt)
+
+
+class CaveRoom2(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom2, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_2",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_1": (1000, 300), "cave_room_3": (100, 600)}
+        self.exit_rects = {
+            "cave_room_1": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_3": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom2, self).update(camera, dt)
+
+
+class CaveRoom2(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom2, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_2",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_1": (1000, 300), "cave_room_3": (100, 600)}
+        self.exit_rects = {
+            "cave_room_1": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_3": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom2, self).update(camera, dt)
+
+
+class CaveRoom3(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom3, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_3",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_2": (1000, 300), "cave_room_4": (100, 600)}
+        self.exit_rects = {
+            "cave_room_2": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_4": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom3, self).update(camera, dt)
+
+
+class CaveRoom4(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom4, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_4",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_3": (1000, 300), "cave_room_5": (100, 600)}
+        self.exit_rects = {
+            "cave_room_3": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_5": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom4, self).update(camera, dt)
+
+
+class CaveRoom5(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom5, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_5",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_4": (1000, 300), "cave_room_6": (100, 600)}
+        self.exit_rects = {
+            "cave_room_4": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_6": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom5, self).update(camera, dt)
+
+
+class CaveRoom6(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom6, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_6",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_5": (1000, 300), "cave_room_7": (100, 600)}
+        self.exit_rects = {
+            "cave_room_5": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_7": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom6, self).update(camera, dt)
+
+
+class CaveRoom7(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom7, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_7",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_6": (1000, 300), "cave_room_8": (100, 600)}
+        self.exit_rects = {
+            "cave_room_6": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_8": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom7, self).update(camera, dt)
+
+
+class CaveRoom8(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom8, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_8",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_7": (1000, 300), "cave_room_9": (100, 600)}
+        self.exit_rects = {
+            "cave_room_7": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_room_9": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom8, self).update(camera, dt)
+
+
+class CaveRoom9(GameState):
+    def __init__(self, player_instance, prop_objects):
+        super(CaveRoom9, self).__init__(
+            player_instance,
+            prop_objects,
+            "cave_room_9",
+            light_state="inside_dark",
+        )
+
+        self.sound_manager.play_music("dramatic")
+
+        self.objects = [
+            *generate_wall_chunk(self, n=4, x_side=1),
+        ]
+        self.camera_script = []
+        self.started_script = False
+        self.ended_script = True
+        self.spawn = {"cave_room_8": (1000, 300), "cave_entrance": (100, 600)}
+        self.exit_rects = {
+            "cave_room_8": (
+                Rect(2000, 150, 200, 100),
+                "",
+                "mandatory",
+            ),
+            "cave_entrance": (
+                Rect(150, 950, 200, 100),
+                "",
+                "mandatory",
+            ),
+        }
+
+    def update(self, camera, dt) -> None:
+
+        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+
+        # if not get_cutscene_played(self.id) and not self.started_script:
+        #     self.started_script = True
+        #     self.ended_script = False
+
+        return super(CaveRoom9, self).update(camera, dt)
 
 
 class Credits(GameState):
