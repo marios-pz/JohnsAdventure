@@ -10,11 +10,11 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "world": "cave_entrance",
+    "world": "cave_room_2",
     "player": {
         "pos": [
-            -1968,
-            144
+            1834,
+            300
         ],
         "inventory": [
             "Training_Sword"
