@@ -91,6 +91,15 @@ class GameState:
         self.green_leaf.fill((61, 121, 6))
         self.green_leaf.convert()
 
+        self.gray_ground = pg.Surface(
+            (
+                player_instance.screen.get_width(),
+                player_instance.screen.get_height(),
+            )
+        )
+        self.gray_ground.fill((59, 10, 66))
+        self.gray_ground.convert()
+
         # ----------- COLLISION SYSTEM ---------
 
         self.points_side = {  # -> lambda functions to get the coordinates of the colliding points

@@ -4,6 +4,8 @@ from typing import Any
 from pygame import Rect
 import json
 
+from pygame.display import update
+
 from data.scripts.QUESTS import quest, quest_manager
 
 # from .PLAYER.items import Chest
@@ -47,6 +49,11 @@ def play_cutscene(id_: str) -> None:
     data[id_] = True
     with open(resource_path("data/database/cutscenes.json"), "w") as data2:
         json.dump(data, data2, indent=2)
+
+
+SPAWN_CAVE_RIGHT = 2200
+SPAWN_CAVE_LEFT = 150
+SPAWN_CAVE_TOPRIGHT = 2000
 
 
 class PlayerRoom(GameState):
@@ -1583,9 +1590,7 @@ class CaveEntrance(GameState):
 
     def update(self, camera, dt) -> None:
         # Background
-        pg.draw.rect(
-            self.screen, (23, 22, 22), [0, 0, *self.screen.get_size()]
-        )
+        self.screen.blit(self.gray_ground, (0, 0))
 
         # Top void
         pg.draw.rect(
@@ -1613,7 +1618,10 @@ class CaveRoomPassage(GameState):
             light_state="inside_dark",
         )
 
-        self.spawn = {"cave_room_1": (880, 2100), "gymnasium": (783, 730)}
+        self.spawn = {
+            "cave_room_1": (740, 2550),
+            "gymnasium": (783, 730),
+        }
 
         w = self.prop_objects["c_wall_mid"]((0, 0)).idle[0].get_width()
 
@@ -1676,7 +1684,7 @@ class CaveRoomPassage(GameState):
                 "mandatory",
             ),
             "cave_room_1": (
-                Rect(300, self.spawn["cave_room_1"][1] + 420, 950, 140),
+                Rect(300, self.spawn["cave_room_1"][1] + 150, 950, 140),
                 "",
                 "mandatory",
             ),
@@ -1699,9 +1707,8 @@ class CaveRoomPassage(GameState):
     def update(self, camera, dt) -> None:
 
         # Background
-        pg.draw.rect(
-            self.screen, (23, 22, 22), [0, 0, *self.screen.get_size()]
-        )
+        self.screen.blit(self.gray_ground, (0, 0))
+
         # Flashlight
         pg.draw.circle(
             self.screen,
@@ -1743,32 +1750,61 @@ class CaveRoom1(GameState):
             *generate_wall_chunk(self, n=4, x_side=1),
             self.prop_objects["door"]((2040, 30)),
         ]
+
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {"cave_entrance": (1000, 300), "cave_room_2": (100, 600)}
+        self.spawn = {
+            "cave_passage": (SPAWN_CAVE_TOPRIGHT + 80, 250),
+            "cave_room_2": (SPAWN_CAVE_LEFT + 80, 800),
+        }
         self.exit_rects = {
-            "cave_entrance": (
-                Rect(2000, 150, 200, 100),
+            "cave_passage": (
+                Rect(SPAWN_CAVE_TOPRIGHT, 150, 200, 100),
                 "",
                 "mandatory",
             ),
             "cave_room_2": (
-                Rect(150, 950, 200, 100),
+                Rect(SPAWN_CAVE_LEFT, 950, 200, 100),
                 "",
                 "mandatory",
             ),
         }
 
     def update(self, camera, dt) -> None:
-
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        self.screen.blit(self.gray_ground, (0, 0))
 
         # if not get_cutscene_played(self.id) and not self.started_script:
         #     self.started_script = True
         #     self.ended_script = False
 
-        return super(CaveRoom1, self).update(camera, dt)
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
+
+        update = super(CaveRoom1, self).update(camera, dt)
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom2(GameState):
@@ -1786,18 +1822,22 @@ class CaveRoom2(GameState):
             *generate_wall_chunk(self, n=4, x_side=1),
             self.prop_objects["door"]((2040, 30)),
         ]
+
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {"cave_room_1": (1000, 300), "cave_room_3": (100, 600)}
+        self.spawn = {
+            "cave_room_1": (SPAWN_CAVE_TOPRIGHT + 80, 250),
+            "cave_room_3": (SPAWN_CAVE_LEFT + 160, 600),
+        }
         self.exit_rects = {
             "cave_room_1": (
-                Rect(2000, 150, 200, 100),
+                Rect(SPAWN_CAVE_TOPRIGHT, 150, 200, 100),
                 "",
                 "mandatory",
             ),
             "cave_room_3": (
-                Rect(150, 950, 200, 100),
+                Rect(SPAWN_CAVE_LEFT, 250, 50, 700),
                 "",
                 "mandatory",
             ),
@@ -1805,13 +1845,35 @@ class CaveRoom2(GameState):
 
     def update(self, camera, dt) -> None:
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        self.screen.blit(self.gray_ground, (0, 0))
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        return super(CaveRoom2, self).update(camera, dt)
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
+
+        update = super(CaveRoom2, self).update(camera, dt)
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom3(GameState):
@@ -1831,29 +1893,50 @@ class CaveRoom3(GameState):
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {"cave_room_2": (1000, 300), "cave_room_4": (100, 600)}
+        self.spawn = {"cave_room_2": (1000, 300), "cave_room_4": (300, 600)}
         self.exit_rects = {
             "cave_room_2": (
-                Rect(2000, 150, 200, 100),
+                Rect(SPAWN_CAVE_RIGHT, 250, 50, 700),
                 "",
                 "mandatory",
             ),
             "cave_room_4": (
-                Rect(150, 950, 200, 100),
+                Rect(SPAWN_CAVE_LEFT, 250, 50, 700),
                 "",
                 "mandatory",
             ),
         }
 
     def update(self, camera, dt) -> None:
+        self.screen.blit(self.gray_ground, (0, 0))
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        return super(CaveRoom3, self).update(camera, dt)
+        update = super(CaveRoom3, self).update(camera, dt)
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom4(GameState):
@@ -1888,14 +1971,34 @@ class CaveRoom4(GameState):
         }
 
     def update(self, camera, dt) -> None:
+        self.screen.blit(self.gray_ground, (0, 0))
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        update = super(CaveRoom4, self).update(camera, dt)
 
-        return super(CaveRoom4, self).update(camera, dt)
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom5(GameState):
@@ -1930,14 +2033,35 @@ class CaveRoom5(GameState):
         }
 
     def update(self, camera, dt) -> None:
+        self.screen.blit(self.gray_ground, (0, 0))
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        return super(CaveRoom5, self).update(camera, dt)
+        update = super(CaveRoom5, self).update(camera, dt)
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom6(GameState):
@@ -1972,14 +2096,34 @@ class CaveRoom6(GameState):
         }
 
     def update(self, camera, dt) -> None:
+        self.screen.blit(self.gray_ground, (0, 0))
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        update = super(CaveRoom6, self).update(camera, dt)
 
-        return super(CaveRoom6, self).update(camera, dt)
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom7(GameState):
@@ -2014,14 +2158,34 @@ class CaveRoom7(GameState):
         }
 
     def update(self, camera, dt) -> None:
+        self.screen.blit(self.gray_ground, (0, 0))
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        update = super(CaveRoom7, self).update(camera, dt)
 
-        return super(CaveRoom7, self).update(camera, dt)
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom8(GameState):
@@ -2057,13 +2221,34 @@ class CaveRoom8(GameState):
 
     def update(self, camera, dt) -> None:
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        self.screen.blit(self.gray_ground, (0, 0))
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        return super(CaveRoom8, self).update(camera, dt)
+        update = super(CaveRoom8, self).update(camera, dt)
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class CaveRoom9(GameState):
@@ -2098,14 +2283,35 @@ class CaveRoom9(GameState):
         }
 
     def update(self, camera, dt) -> None:
+        self.screen.blit(self.gray_ground, (0, 0))
 
-        pg.draw.rect(self.screen, (0, 0, 0), [0, 0, *self.screen.get_size()])
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
 
-        # if not get_cutscene_played(self.id) and not self.started_script:
-        #     self.started_script = True
-        #     self.ended_script = False
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
 
-        return super(CaveRoom9, self).update(camera, dt)
+        update = super(CaveRoom9, self).update(camera, dt)
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        return update
 
 
 class Credits(GameState):

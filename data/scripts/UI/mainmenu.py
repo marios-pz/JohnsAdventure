@@ -1,10 +1,6 @@
-from re import L
 from typing import Any
 import pygame as p
 import json
-
-from pygame.key import name
-from pygame.mouse import set_visible
 
 from data.scripts.sound_manager import SoundManager
 from ..utils import scale, load, resource_path
@@ -22,7 +18,9 @@ class Menu:
         self.game_instance = game_instance
 
         self.music_manager = SoundManager(False, True, 0.7)
-        self.music_manager.play_music("main_theme")
+
+        # Mute for debugging measures
+        # self.music_manager.play_music("main_theme")
 
         # Macros
         self.half_w, self.half_h = (
