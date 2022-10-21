@@ -10,19 +10,19 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "world": "cave_room_3",
+    "world": "cave_room_1",
     "player": {
         "pos": [
-            1990,
-            500
+            386,
+            208
         ],
         "inventory": [
             "Training_Sword"
         ],
-        "health_potions": 0,
+        "health_potions": 3,
         "level": 6,
         "xp": 80,
-        "coins": 180,
+        "coins": 660,
         "stats": {
             "points": 1,
             "damage": 20,

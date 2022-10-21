@@ -1736,8 +1736,26 @@ class CaveRoom1(GameState):
         self.sound_manager.play_music("dramatic")
 
         self.objects = [
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1600, 250),
+                n_walls=3,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(-444, 400),
+                n_walls=4,
+                no_begin=True,
+            ),
             *generate_wall_chunk(self, n=4, x_side=1),
             self.prop_objects["door"]((2040, 30)),
+            Torch(self, (200, 500), 80),
+            Torch(self, (700, 500), 80),
+            Chest((230, 150), {"hp_potions": 3, "coins": 30}),
         ]
 
         self.camera_script = []
@@ -1771,6 +1789,16 @@ class CaveRoom1(GameState):
             self.screen,
             (0, 0, 0),
             [*(vec(-300, -300) - vec(self.scroll)), 3230, 500],
+        )
+
+        pg.draw.polygon(
+            self.screen,
+            color=(255, 255, 255),
+            points=[
+                (260, 900) - self.scroll,  # Right
+                (250, 920) - self.scroll,  # Mid
+                (240, 900) - self.scroll,  # Left
+            ],
         )
 
         pg.draw.rect(
