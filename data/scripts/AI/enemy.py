@@ -632,7 +632,6 @@ class Enemy:
                 else:
                     self.status = "STANDBY"
 
-            print(player.cutscene.playing_cutscene)
             if player.cutscene.playing_cutscene:
                 self.status = "STANDBY"
 

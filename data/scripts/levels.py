@@ -829,13 +829,9 @@ class Training_Field(GameState):
         )
 
         self.objects = [
-            # *generate_chunk(
-            #    "grass", -600, 600, 20, 25, 120, 150, randomize=45
-            # ),
             # OUT OF BOUNDS
             Rect(-400, 200, 300, 2600),  # Left
             Rect(2800, 200, 300, 2600),  # Right
-            # No need Top, we have the hills
             Rect(-400, 2800, 2600, 300),
             *generate_hills(
                 self,
@@ -1795,9 +1791,9 @@ class CaveRoom1(GameState):
             self.screen,
             color=(255, 255, 255),
             points=[
-                (260, 900) - self.scroll,  # Right
+                (300, 850) - self.scroll,  # Right
                 (250, 920) - self.scroll,  # Mid
-                (240, 900) - self.scroll,  # Left
+                (200, 850) - self.scroll,  # Left
             ],
         )
 
@@ -1836,8 +1832,45 @@ class CaveRoom2(GameState):
         self.sound_manager.play_music("dramatic")
 
         self.objects = [
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(400, 0),
+                n_walls=4,
+                start_type="c_wall_corner_turn",
+                end_type="c_flipped_corner",
+                door_n=1,
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(800, 0),
+                n_walls=4,
+                no_begin=True,
+                door_n=0,
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1200, 0),
+                n_walls=4,
+                start_type="c_wall_corner_turn",
+                end_type="c_flipped_corner",
+                door_n=1,
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1600, 0),
+                n_walls=4,
+                no_begin=True,
+                door_n=0,
+            ),
             *generate_wall_chunk(self, n=4, x_side=1),
             self.prop_objects["door"]((2040, 30)),
+            Goblin(self, (2040, 420)),
+            Goblin(self, (1900, 380)),
+            Goblin(self, (550, 490)),
         ]
 
         self.camera_script = []
@@ -1912,7 +1945,38 @@ class CaveRoom3(GameState):
         self.sound_manager.play_music("dramatic")
 
         self.objects = [
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 300),
+                n_walls=4,
+                no_begin=True,
+                end_type="c_flipped_corner_turn",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 600),
+                n_walls=4,
+                start_type="c_wall_mid",
+                end_type="none",
+            ),
             *generate_wall_chunk(self, n=4, x_side=1),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1866, 220),
+                n_walls=4,
+                no_begin=True,
+                end_type="none",
+            ),
+            Torch(self, (1600, 110), 90),
+            Torch(self, (1050, 110), 90),
+            Torch(self, (500, 110), 90),
+            Torch(self, (1300, 420), 90),
+            Torch(self, (720, 720), 90),
+            Goblin(self, (720, 490)),
+            Goblin(self, (720, 840)),
         ]
         self.camera_script = []
         self.started_script = False
@@ -1949,6 +2013,16 @@ class CaveRoom3(GameState):
             [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
         )
 
+        pg.draw.polygon(
+            self.screen,
+            color=(255, 255, 255),
+            points=[
+                (300, 850) - self.scroll,  # Right
+                (250, 920) - self.scroll,  # Mid
+                (200, 850) - self.scroll,  # Left
+            ],
+        )
+
         update = super(CaveRoom3, self).update(camera, dt)
 
         pg.draw.rect(
@@ -1982,12 +2056,53 @@ class CaveRoom4(GameState):
             light_state="inside_dark",
         )
 
-        self.sound_manager.play_music("dramatic")
-
         self.objects = [
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1300, -115),
+                n_walls=3,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 255),
+                n_walls=5,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1300, 100),
+                n_walls=3,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(385, 550),
+                n_walls=3,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(475, 504),
+                n_walls=3,
+                no_begin=True,
+                end_type="none",
+            ),
             *generate_wall_chunk(self, n=4, x_side=1),
             self.prop_objects["door"]((2040, 30)),
             self.prop_objects["door"]((190, 30)),
+            Torch(self, (750, 370), 60),
+            Torch(self, (1050, 370), 60),
+            Torch(self, (1900, 120), 60),
         ]
         self.camera_script = []
         self.started_script = False
@@ -2049,11 +2164,68 @@ class CaveRoom5(GameState):
             light_state="inside_dark",
         )
 
-        self.sound_manager.play_music("dramatic")
-
         self.objects = [
             *generate_wall_chunk(self, n=4, x_side=1),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 180),
+                n_walls=5,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 370),
+                n_walls=5,
+                no_begin=True,
+                end_type="none",
+                door_n=1,
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 560),
+                n_walls=5,
+                no_begin=True,
+                end_type="none",
+                door_n=2,
+            ),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(0, 750),
+                n_walls=5,
+                no_begin=True,
+                end_type="none",
+                door_n=0,
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(1863, 350),
+                n_walls=4,
+                no_begin=True,
+                end_type="none",
+            ),
+            *generate_cave_walls(
+                self,
+                direction="down",
+                dep_pos=(474, 0),
+                n_walls=3,
+                no_begin=True,
+                end_type="none",
+            ),
+            Torch(self, (1150, 100), 80),
+            Torch(self, (680, 475), 80),
+            Torch(self, (1650, 475), 80),
+            Torch(self, (1450, 850), 80),
+            Goblin(self, (1620, 600)),
+            Goblin(self, (1150, 420)),
+            Goblin(self, (510, 810)),
         ]
+
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
