@@ -13,8 +13,8 @@
     "world": "cave_room_1",
     "player": {
         "pos": [
-            386,
-            208
+            1044,
+            280
         ],
         "inventory": [
             "Training_Sword"

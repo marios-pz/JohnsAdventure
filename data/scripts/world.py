@@ -1,4 +1,6 @@
 import pygame
+import asyncio
+
 from data.scripts.PLAYER.items import get_save, make_save
 
 from data.scripts.QUESTS import quest
@@ -611,7 +613,7 @@ class GameManager:
         self.black_layer.set_alpha(0)
         self.end_game_ui_texts[0].set_alpha(0)
 
-    def update(self):
+    async def update(self):
 
         if not self.debug:
             self.pg_loading_screen()
@@ -744,3 +746,5 @@ class GameManager:
                 print(self.player.rect.topleft)
 
             self.routine()
+
+            await asyncio.sleep(0)

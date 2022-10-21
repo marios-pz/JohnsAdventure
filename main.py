@@ -14,17 +14,17 @@ import sys
 flags = sys.argv
 
 
-async def main(
+def main(
     debug: bool = False,
     first_state: str = "player_room",
     no_rect: bool = True,
 ):
     gm = GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
-    gm.update()
+    asyncio.run(gm.update())
 
 
 if __name__ == "__main__":
     if len(flags) > 1:
-        asyncio.run(main(debug=True, first_state=flags[1], no_rect=False))
+        main(debug=True, first_state=flags[1], no_rect=False)
     else:
-        asyncio.run(main())
+        main()
