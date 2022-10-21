@@ -1709,6 +1709,17 @@ class CaveRoomPassage(GameState):
         # Background
         self.screen.blit(self.gray_ground, (0, 0))
 
+        # Flashlight
+        pg.draw.circle(
+            self.screen,
+            (240, 240, 240, 30),
+            (
+                self.screen.get_width() // 2 + 20,
+                self.screen.get_height() // 2 + 92,
+            ),
+            70,
+        )
+
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
@@ -1784,13 +1795,13 @@ class CaveRoom1(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         return update
@@ -1817,7 +1828,7 @@ class CaveRoom2(GameState):
         self.ended_script = True
         self.spawn = {
             "cave_room_1": (SPAWN_CAVE_TOPRIGHT + 80, 250),
-            "cave_room_3": (SPAWN_CAVE_LEFT + 160, 500),
+            "cave_room_3": (SPAWN_CAVE_LEFT + 160, 600),
         }
         self.exit_rects = {
             "cave_room_1": (
@@ -1853,13 +1864,13 @@ class CaveRoom2(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         # Left exit
@@ -1890,7 +1901,7 @@ class CaveRoom3(GameState):
         self.started_script = False
         self.ended_script = True
         self.spawn = {
-            "cave_room_2": (SPAWN_CAVE_RIGHT - 150, 500),
+            "cave_room_2": (1000, 300),
             "cave_room_4": (SPAWN_CAVE_LEFT + 80, 800),
         }
         self.exit_rects = {
@@ -1926,20 +1937,20 @@ class CaveRoom3(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         # Right exit
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2120, 35) - vec(self.scroll)), 220, 925],
+            [*(vec(2100, 35) - vec(self.scroll)), 220, 925],
         )
 
         return update
@@ -2000,13 +2011,13 @@ class CaveRoom4(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         return update
@@ -2029,10 +2040,7 @@ class CaveRoom5(GameState):
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {
-            "cave_room_4": (SPAWN_CAVE_RIGHT - 120, 800),
-            "cave_room_6": (280, 500),
-        }
+        self.spawn = {"cave_room_4": (1000, 300), "cave_room_6": (280, 500)}
         self.exit_rects = {
             "cave_room_4": (
                 Rect(2000, 950, 200, 100),
@@ -2066,13 +2074,13 @@ class CaveRoom5(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         # Left exit
@@ -2102,10 +2110,7 @@ class CaveRoom6(GameState):
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {
-            "cave_room_5": (SPAWN_CAVE_RIGHT - 150, 500),
-            "cave_room_7": (SPAWN_CAVE_LEFT + 80, 800),
-        }
+        self.spawn = {"cave_room_5": (SPAWN_CAVE_RIGHT - 80, 300), "cave_room_7": (100, 600)}
         self.exit_rects = {
             "cave_room_5": (
                 Rect(SPAWN_CAVE_RIGHT, 250, 50, 700),
@@ -2138,13 +2143,13 @@ class CaveRoom6(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         # Right exit
@@ -2170,15 +2175,11 @@ class CaveRoom7(GameState):
 
         self.objects = [
             *generate_wall_chunk(self, n=4, x_side=1),
-            self.prop_objects["door"]((2040, 30)),
         ]
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {
-            "cave_room_6": (SPAWN_CAVE_TOPRIGHT + 80, 250),
-            "cave_room_8": (300, 500),
-        }
+        self.spawn = {"cave_room_6": (1000, 300), "cave_room_8": (250, 400)}
         self.exit_rects = {
             "cave_room_6": (
                 Rect(2000, 150, 200, 100),
@@ -2211,13 +2212,13 @@ class CaveRoom7(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         # Left exit
@@ -2247,13 +2248,10 @@ class CaveRoom8(GameState):
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {
-            "cave_room_7": (SPAWN_CAVE_RIGHT - 150, 500),
-            "cave_room_9": ((SPAWN_CAVE_LEFT + 80, 800)),
-        }
+        self.spawn = {"cave_room_7": (1000, 300), "cave_room_9": (100, 600)}
         self.exit_rects = {
             "cave_room_7": (
-                Rect(SPAWN_CAVE_RIGHT, 250, 50, 700),
+                Rect(2000, 150, 200, 100),
                 "",
                 "mandatory",
             ),
@@ -2284,13 +2282,20 @@ class CaveRoom8(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 500],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
+        )
+
+        # Left exit
+        pg.draw.rect(
+            self.screen,
+            (0, 0, 0),
+            [*(vec(35, 35) - vec(self.scroll)), 220, 925],
         )
 
         # Right exit
@@ -2316,23 +2321,19 @@ class CaveRoom9(GameState):
 
         self.objects = [
             *generate_wall_chunk(self, n=4, x_side=1),
-            self.prop_objects["door"]((190, 30)),
         ]
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
-        self.spawn = {
-            "cave_room_8": (SPAWN_CAVE_LEFT + 80, 270),
-            "cave_entrance": (SPAWN_CAVE_RIGHT - 150, 500),
-        }
+        self.spawn = {"cave_room_8": (1000, 300), "cave_entrance": (100, 600)}
         self.exit_rects = {
             "cave_room_8": (
-                Rect(150, 150, 200, 100),
+                Rect(2000, 150, 200, 100),
                 "",
                 "mandatory",
             ),
             "cave_entrance": (
-                Rect(SPAWN_CAVE_RIGHT, 250, 50, 700),
+                Rect(150, 950, 200, 100),
                 "",
                 "mandatory",
             ),
@@ -2358,13 +2359,13 @@ class CaveRoom9(GameState):
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(-100, 1170) - vec(self.scroll)), 3230, 130],
+            [*(vec(-100, 990) - vec(self.scroll)), 3230, 500],
         )
 
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
-            [*(vec(2370, -300) - vec(self.scroll)), 800, 1500],
+            [*(vec(2370, -300) - vec(self.scroll)), 800, 1300],
         )
 
         # Right exit
