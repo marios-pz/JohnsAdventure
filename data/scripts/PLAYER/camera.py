@@ -60,7 +60,6 @@ class Camera:
         The gear to switch between Camera types
         1.   Auto: Camera moves on its own
         2. Follow: Camera follows X object
-        3. Border: Camera is locked player cant go outside of it
         """
         self.method = method
 
@@ -155,49 +154,6 @@ class Follow(CamScroll):
         self.camera.offset.y = int(self.camera.offset_float.y)
 
 
-class Border(CamScroll):
-    """
-
-    Once player has reached a specific point,
-    the camera will stop moving.
-
-    """
-
-    def __init__(self, camera, player):
-        CamScroll.__init__(self, camera, player, status="Border")
-
-    def scroll(self):
-        """
-        Formula to follow the player
-
-        It takes the difference player did to the screen
-        and adds it to camera's offset updating camera's
-        position.
-        """
-
-        self.camera.offset_float.x += (
-            self.player.rect.x
-            - self.camera.offset_float.x
-            + self.camera.CONST.x
-        )
-        self.camera.offset_float.y += (
-            self.player.rect.y
-            - self.camera.offset_float.y
-            + self.camera.CONST.y
-        )
-        self.camera.offset.x, self.camera.offset.y = int(
-            self.camera.offset_float.x
-        ), int(self.camera.offset_float.y)
-
-        # Lock X side
-        self.camera.offset.x = max(self.camera.screen[0], self.camera.offset.x)
-        self.camera.offset.x = min(self.camera.offset.x, 0)
-
-        # Lock Y side
-        self.camera.offset.y = max(self.camera.screen[1], self.camera.offset.y)
-        self.camera.offset.y = min(self.camera.offset.y, 0)
-
-
 class Auto(CamScroll):
     """
     Screen moves independently
@@ -289,8 +245,6 @@ class Auto(CamScroll):
     def scroll(self):
         """
         Moving the camera
-
-        We have to somehow find a way to put x, y cords and dt and then use them to move the camera
         """
         dt = pygame.time.Clock().tick(60) / 1000
 

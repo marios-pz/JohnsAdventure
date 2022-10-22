@@ -10,11 +10,11 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "world": "cave_garden",
+    "world": "kitchen",
     "player": {
         "pos": [
-            1350,
-            114
+            632,
+            294
         ],
         "inventory": [
             "Training_Sword"

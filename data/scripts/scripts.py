@@ -119,31 +119,36 @@ PLAYER_ROOM_SCENE = [
 
 KITCHEN_SCENE = [
     {
-        "duration": 3000,
+        "duration": 2500,
         "pos": (570, 220),
         "zoom": 1.2,
-        "text": "Cynthia: Hello brother. you seem dread. are you alright?",
-        "text_dt": 1600,
+        "text": "Cynthia: Hello brother.",
+        "text_dt": 1500,
     },
+    {"duration": 500},
     {
-        "duration": 2000,
+        "duration": 3000,
         "pos": (570, 220),
-        "text": "Cynthia: Anyway.. Manos is waiting for you in the training field",
-        "text_dt": 1600,
+        "text": "Cynthia: You seem dread. are you alright?",
+        "text_dt": 1500,
     },
+    {"duration": 500},
     {
-        "duration": 2000,
+        "duration": 3000,
         "pos": (570, 220),
-        "text": "Cynthia: I will go meet my friends in school, see you around",
-        "text_dt": 1600,
+        "text": "John: I had a very weird nightmare.",
+        "text_dt": 1500,
     },
+    {"duration": 500},
     {
         # Show the door
-        "duration": 2000,
+        "duration": 3000,
         "pos": (620, 600),
+        "text": "Cynthia: Anyway.. Manos is waiting for you in the training field",
+        "text_dt": 1800,
     },
     {
-        "duration": 1600,
+        "duration": 1300,
         # Go back to the player
         "zoom": 1,
         "zoom_duration": 1500,
@@ -152,6 +157,20 @@ KITCHEN_SCENE = [
             220,
         ),
     },
+    {
+        "duration": 2000,
+        "pos": (570, 220),
+        "text": "Cynthia: I will go meet my friends in school",
+        "text_dt": 1800,
+    },
+    {"duration": 500},
+    {
+        "duration": 2000,
+        "pos": (570, 220),
+        "text": "Cynthia: See you around",
+        "text_dt": 1800,
+    },
+    {"duration": 500},
 ]
 
 

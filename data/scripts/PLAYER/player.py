@@ -37,7 +37,7 @@ from ..utils import (
 )
 from .inventory import Inventory
 from .player_stats import UpgradeStation
-from .camera import Camera, Follow, Border, Auto
+from .camera import Camera, Follow, Auto
 from ..particle_system import DustManager
 from ..UI.UI_animation import InteractionName
 from ..QUESTS.quest_ui import QuestUI
@@ -117,8 +117,6 @@ class Player:
         self.camera_mode = {
             # Follows the player
             "follow": Follow(self.camera, self),
-            # Camera Stops moving, player is free
-            "border": Border(self.camera, self),
             # Camera moves on its own without user's input
             "auto": Auto(self.camera, self),
         }
