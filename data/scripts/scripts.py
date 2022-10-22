@@ -35,13 +35,19 @@
 #         }
 #     ]
 
-from .utils import scale, l_path
+from .utils import resource_path, scale, l_path
 import pygame
 
 infoObject = pygame.display.Info()
 
 image_surface = pygame.surface.Surface((1280, 720))
 
+
+with open(resource_path("data/database/data.json")) as f:
+    import json
+
+    CONTROLS = json.load(f)
+    CONTROLS = CONTROLS["controls"]
 
 PLAYER_ROOM_SCENE = [
     {
@@ -158,14 +164,14 @@ KITCHEN_SCENE = [
         ),
     },
     {
-        "duration": 2000,
+        "duration": 4000,
         "pos": (570, 220),
         "text": "Cynthia: I will go meet my friends in school",
         "text_dt": 1800,
     },
     {"duration": 500},
     {
-        "duration": 2000,
+        "duration": 4000,
         "pos": (570, 220),
         "text": "Cynthia: See you around",
         "text_dt": 1800,
@@ -183,13 +189,23 @@ MANOS_HUT_SCENE = [
         "text_dt": 1500,
     },
     {
-        "duration": 4000,
-        "text": "John: The passage was blocked by monsters and I made it through the caves to get here.",
+        "duration": 3000,
+        "text": "John: The passage was blocked by monsters ",
         "text_dt": 1500,
     },
     {
-        "duration": 4000,
-        "text": "John: The monsters took Cynthia, we got to get her back. Care to explain the situation?",
+        "duration": 3000,
+        "text": "John: I made it through the caves to get here.",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 3000,
+        "text": "John: The monsters took Cynthia, we got to get her back.",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 3000,
+        "text": "John: Care to explain the situation?",
         "text_dt": 1500,
     },
     {
@@ -208,7 +224,7 @@ MANOS_HUT_SCENE = [
         "text_dt": 1500,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "zoom": 1,
         "text": "Manos: We must go to Porto Rafti before the sun goes down.",
         "text_dt": 1500,
@@ -222,11 +238,22 @@ TRAINING_FIELD_SCENE_1 = [
         "text": "Manos: Hey John ready for your usual training?",
         "text_dt": 1500,
     },
+    {
+        "duration": 2000,
+        "text": "John: I sure am",
+        "text_dt": 1200,
+    },
     {"duration": 3000, "text": "Candy: *meow meow* ", "text_dt": 1500},
     {
-        "duration": 4500,
+        "duration": 3000,
         "pos": (1660, 1682),
-        "text": "Manos: good, pick up your sword from the chest and show me your skills in those dummies that i've placed",
+        "text": "Manos: good, pick up your sword from the chest",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 3000,
+        "pos": (1660, 1682),
+        "text": "Manos: show me your skills in those dummies",
         "text_dt": 1500,
     },
     {"duration": 2500},  # show the __static__ dummies
@@ -238,14 +265,10 @@ TRAINING_FIELD_SCENE_1 = [
     },
     {
         "duration": 2000,
-        "text": "(GAME: you can press Shift to Dash!)",
+        "text": "(HINT: Press Left Click to attack)",
         "text_dt": 1500,
     },
-    {
-        "duration": 2000,
-        "text": "(GAME: you can press Q to Heal!)",
-        "text_dt": 1500,
-    },
+    {"duration": 500},
 ]
 
 TRAINING_FIELD_SCENE_2 = [
@@ -256,8 +279,13 @@ TRAINING_FIELD_SCENE_2 = [
         "waiting_end": 500,
     },
     {
-        "duration": 2000,
-        "text": "(GAME: you can press E to check your inventory!, you can also upgrade your stats!)",
+        "duration": 4000,
+        "text": f"(HINT: you can press {pygame.key.name(CONTROLS['inventory'])} to check your inventory!)",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 4000,
+        "text": "(HINT: you can also upgrade your stats in there!)",
         "text_dt": 1500,
     },
     {
@@ -266,22 +294,39 @@ TRAINING_FIELD_SCENE_2 = [
     },
     {"duration": 2500},  # at this point, the dummies appear
     {
-        "duration": 4000,
+        "duration": 3000,
         "pos": (1138, 1526),
         "text": "Manos: This purple aura.. It couldn't be HIM.",
-        "text_dt": 1200,
+        "text_dt": 1500,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "pos": (1138, 1526),
-        "text": "Manos: Oh no.. Quickly defeat those monsters and meet me at my house, Quickly! I need to go to equip my stuff",
-        "text_dt": 1200,
+        "text": "Manos: Oh no.. Quickly defeat those monsters",
+        "text_dt": 1500,
     },
     {
-        "duration": 4000,
+        "duration": 3000,
         "pos": (1138, 1526),
-        "text": "Manos: I'll see you in my Hut, don't forget to get cynthia as soon as you can! she might be in danger",
-        "text_dt": 1200,
+        "text": "Manos: I need to go to equip my stuff",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 2500,
+        "text": f"(HINT: You can press {pygame.key.name(CONTROLS['dash'])} to Dash!)",
+        "text_dt": 1500,
+    },
+    {
+        "duration": 7000,
+        "pos": (1138, 1526),
+        "text": "Manos: Don't forget to get cynthia as soon as you can! she might be in danger",
+        "text_dt": 1300,
+    },
+    {
+        "duration": 3500,
+        "pos": (1138, 1526),
+        "text": "Manos: Then meet my at my hut",
+        "text_dt": 1500,
     },
 ]
 
@@ -291,28 +336,38 @@ GYMNASIUM_SCENE = [
         "pos": (2762, -75),
         "zoom": 1.2,
         "text": "Alexia: John! monsters kidnapped Cynthia but I managed to run away!",
-        "text_dt": 1500,
+        "text_dt": 1300,
     },
     {
         "duration": 3000,
-        "text": "Alexia: Several monsters are roaming the area! you cannot go back",
-        "text_dt": 1600,
+        "text": "John: Oh no! where did they took her?",
+        "text_dt": 1300,
+    },
+    {
+        "duration": 3000,
+        "text": "Alexia: Several monsters are roaming the area!",
+        "text_dt": 1300,
+    },
+    {
+        "duration": 3000,
+        "text": "Alexia: You cannot go back",
+        "text_dt": 1300,
     },
     {
         "duration": 3000,
         "text": "Alexia: There is a secret spot around here",
-        "text_dt": 1600,
+        "text_dt": 1300,
     },
     {
         "duration": 3000,
         "text": "Alexia: find it, it will help you go back home through the cave.",
-        "text_dt": 1600,
+        "text_dt": 1300,
     },
     {
         "duration": 3000,
         "zoom": 1,
         "text": "Alexia: Good luck! hopefully it won't have any monsters.",
-        "text_dt": 1600,
+        "text_dt": 1300,
     },
 ]
 
@@ -346,16 +401,5 @@ CAVE_GARDEN_SCENE = [
             2080,
             2800,
         ),
-    },
-]
-
-
-CAVE_PASSAGE_SCENE = [
-    {
-        "duration": 4200,
-        "zoom": 1,
-        "zoom_duration": 1800,
-        "text": "John: Time to go cyberpunk",
-        "text_dt": 1500,
     },
 ]

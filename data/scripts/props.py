@@ -423,12 +423,15 @@ class Chest(Prop):
             f"{self.rewards['coins']}", True, (255,) * 3
         )
 
-        hp: int = self.rewards["hp_potions"]
-        if hp > 0:
-            self.hp_image = scale(
-                l_path("data/sprites/items/hp_potion.png", alpha=True), 3
-            )
-            self.hp_txt = self.font.render(f"{hp}", True, (255,) * 3)
+        try:
+            hp: int = self.rewards["hp_potions"]
+            if hp > 0:
+                self.hp_image = scale(
+                    l_path("data/sprites/items/hp_potion.png", alpha=True), 3
+                )
+                self.hp_txt = self.font.render(f"{hp}", True, (255,) * 3)
+        except:
+            pass
 
         self.highlight = False
 

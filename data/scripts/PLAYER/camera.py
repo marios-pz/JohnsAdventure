@@ -1,6 +1,6 @@
 # Load Pygame
 import pygame
-import random, math
+import math
 
 from ..utils import resource_path
 
@@ -19,7 +19,7 @@ vec = pygame.math.Vector2  # To simplify things :')
 
 
 class Camera:
-    def __init__(self, player, screen: pygame.surface):
+    def __init__(self, player, screen: pygame.surface.Surface):
         """
         The Player is given a upgraded camera system,
         to make the gameplay look better
@@ -267,8 +267,6 @@ class Auto(CamScroll):
             if -3 < dx < 3 and -3 < dy < 3:
                 self.moving_cam = False
                 self.looking_at = self.target
-
-            # print(dx, dy, self.dx, self.dy, self.looking_at, self.target)
 
         if self.zooming_out:
 

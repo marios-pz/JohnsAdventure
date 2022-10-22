@@ -185,6 +185,7 @@ class GameManager:
         )
 
         self.last_player_instance: Player | None = copy(self.player)
+        self.last_loaded_states: dict[str, GameState] = {}
         self.last_game_state_tag: str = first_state
         self.last_game_state: GameState | None = None
         self.last_positions: dict[int, tuple[int, int]] = {}
@@ -470,10 +471,12 @@ class GameManager:
             self.last_player_instance = copy(self.player)
             self.last_loaded_states = copy(self.loaded_states)
 
-        # print(self.last_player_instance, self.last_game_state_tag, self.last_loaded_states)
-        # print(self.player, self.state, self.loaded_states)
-
         def load_new_level(parent, level_):
+            import gc
+
+            # Call garbage collector to reduce strain after visiting a heavy level
+            gc.collect()
+            gc.collect()
             parent.game_state = (
                 parent.state_manager[level_](
                     player_instance=parent.player,
@@ -740,9 +743,9 @@ class GameManager:
                     self.init_death_screen()
                     self.player.health = self.player.backup_hp
 
-            if self.FPS % 30 == 0:
-                print(self.framerate.get_fps())
-                print(self.player.rect.topleft)
+                if self.FPS % 30 == 0:
+                    print(self.framerate.get_fps())
+                    print(self.player.rect.topleft)
 
             self.routine()
 

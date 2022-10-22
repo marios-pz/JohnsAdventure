@@ -697,15 +697,6 @@ class Enemy:
         self.update_states()
         self.animate()
 
-        # if self.enemy_type == "boss":
-        #     print(
-        #         "ΒΟΣΣ:",
-        #         self.moving,
-        #         self.attacking,
-        #         self.chase_available,
-        #         self.time_got_stuck,
-        #     )
-
     def update(self, scroll, dt, player) -> None:
         self.scroll = scroll
 

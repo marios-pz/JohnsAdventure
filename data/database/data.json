@@ -10,24 +10,22 @@
         "healing": 113,
         "fullscreen": 1073741893
     },
-    "world": "kitchen",
+    "world": "player_room",
     "player": {
         "pos": [
-            632,
+            498,
             294
         ],
-        "inventory": [
-            "Training_Sword"
-        ],
-        "health_potions": 3,
-        "level": 8,
+        "inventory": [],
+        "health_potions": 0,
+        "level": 16,
         "xp": 80,
-        "coins": 660,
+        "coins": 790,
         "stats": {
-            "points": 0,
-            "damage": 24,
-            "endurance": 4,
-            "crit_chance": 0.051
+            "points": 1,
+            "damage": 10,
+            "endurance": 1,
+            "crit_chance": 0.0505
         }
     }
 }

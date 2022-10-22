@@ -2595,9 +2595,8 @@ class CaveRoom9(GameState):
             Torch(self, (1250, 700), 80),
             Torch(self, (1400, 650), 80),
             Torch(self, (1450, 600), 80),
-            Guardian(self, (500, 300)),
-            Guardian(self, (1110, 400)),
-            Guardian(self, (1790, 450)),
+            Guardian(self, (200, 300)),
+            Guardian(self, (300, 400)),
         ]
         self.camera_script = []
         self.started_script = False
