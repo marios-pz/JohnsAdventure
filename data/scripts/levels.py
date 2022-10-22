@@ -2298,6 +2298,14 @@ class CaveRoom6(GameState):
 
         self.objects = [
             *generate_wall_chunk(self, n=4, x_side=1),
+            Torch(self, (900, 100), 80),
+            Torch(self, (300, 100), 80),
+            Torch(self, (1500, 100), 80),
+            Guardian(self, (500, 300)),
+            Goblin(self, (600, 400)),
+            Guardian(self, (1500, 500)),
+            Goblin(self, (900, 300)),
+            Guardian(self, (500, 800)),
         ]
         self.camera_script = []
         self.started_script = False
@@ -2331,6 +2339,16 @@ class CaveRoom6(GameState):
             self.screen,
             (0, 0, 0),
             [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
+
+        pg.draw.polygon(
+            self.screen,
+            color=(255, 255, 255),
+            points=[
+                (300, 850) - self.scroll,  # Right
+                (250, 920) - self.scroll,  # Mid
+                (200, 850) - self.scroll,  # Left
+            ],
         )
 
         update = super(CaveRoom6, self).update(camera, dt)
@@ -2369,15 +2387,38 @@ class CaveRoom7(GameState):
         self.sound_manager.play_music("dramatic")
 
         self.objects = [
-            *generate_wall_chunk(self, n=4, x_side=1),
+            *generate_cave_walls(
+                self,
+                direction="right",
+                dep_pos=(1350, 0),
+                n_walls=4,
+                no_begin=True,
+            ),
+            *generate_wall_chunk(
+                self,
+                n=4,
+                pos=(-480, -84),
+                x_side=2,
+                up_side=False,
+                left_side=False,
+            ),
             self.prop_objects["door"]((2040, 30)),
+            *generate_wall_chunk(
+                self,
+                pos=(-515, -510),
+                n=4,
+                x_side=1,
+                up_side=False,
+                left_side=False,
+                r_n=0,
+            ),
         ]
         self.camera_script = []
         self.started_script = False
         self.ended_script = True
         self.spawn = {
             "cave_room_6": (SPAWN_CAVE_TOPRIGHT + 80, 250),
-            "cave_room_8": (300, 500),
+            "cave_room_8": (300, self.player.rect[1]),
         }
         self.exit_rects = {
             "cave_room_6": (
@@ -2393,7 +2434,6 @@ class CaveRoom7(GameState):
         }
 
     def update(self, camera, dt) -> None:
-        self.screen.blit(self.gray_ground, (0, 0))
         pg.draw.rect(
             self.screen,
             (0, 0, 0),
@@ -2404,6 +2444,18 @@ class CaveRoom7(GameState):
             self.screen,
             (0, 0, 0),
             [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            self.gray_ground_color,
+            [*(vec(-420, 620) - vec(self.scroll)), 2760, 400],
+        )
+
+        pg.draw.rect(
+            self.screen,
+            self.gray_ground_color,
+            [*(vec(1840, 0) - vec(self.scroll)), 500, 800],
         )
 
         update = super(CaveRoom7, self).update(camera, dt)
@@ -2443,6 +2495,13 @@ class CaveRoom8(GameState):
 
         self.objects = [
             *generate_wall_chunk(self, n=4, x_side=1),
+            Torch(self, (1150, 100), 80),
+            Torch(self, (650, 100), 80),
+            Torch(self, (1850, 100), 80),
+            Torch(self, (1450, 100), 80),
+            Goblin(self, (1620, 600)),
+            Goblin(self, (1150, 420)),
+            Goblin(self, (510, 810)),
         ]
         self.camera_script = []
         self.started_script = False
@@ -2477,6 +2536,16 @@ class CaveRoom8(GameState):
             self.screen,
             (0, 0, 0),
             [*(vec(-800, -300) - vec(self.scroll)), 800, 2000],
+        )
+
+        pg.draw.polygon(
+            self.screen,
+            color=(255, 255, 255),
+            points=[
+                (300, 850) - self.scroll,  # Right
+                (250, 920) - self.scroll,  # Mid
+                (200, 850) - self.scroll,  # Left
+            ],
         )
 
         update = super(CaveRoom8, self).update(camera, dt)
@@ -2517,6 +2586,18 @@ class CaveRoom9(GameState):
         self.objects = [
             *generate_wall_chunk(self, n=4, x_side=1),
             self.prop_objects["door"]((190, 30)),
+            # :)
+            Torch(self, (950, 360), 80),
+            Torch(self, (1350, 360), 80),
+            Torch(self, (850, 600), 80),
+            Torch(self, (900, 650), 80),
+            Torch(self, (1050, 700), 80),
+            Torch(self, (1250, 700), 80),
+            Torch(self, (1400, 650), 80),
+            Torch(self, (1450, 600), 80),
+            Guardian(self, (500, 300)),
+            Guardian(self, (1110, 400)),
+            Guardian(self, (1790, 450)),
         ]
         self.camera_script = []
         self.started_script = False

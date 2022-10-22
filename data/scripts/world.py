@@ -185,7 +185,6 @@ class GameManager:
         )
 
         self.last_player_instance: Player | None = copy(self.player)
-        self.last_loaded_states: dict[str, GameState] = {}
         self.last_game_state_tag: str = first_state
         self.last_game_state: GameState | None = None
         self.last_positions: dict[int, tuple[int, int]] = {}

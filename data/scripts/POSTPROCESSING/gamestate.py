@@ -88,6 +88,7 @@ class GameState:
                 player_instance.screen.get_height(),
             )
         )
+
         self.green_leaf.fill((61, 121, 6))
         self.green_leaf.convert()
 
@@ -97,7 +98,8 @@ class GameState:
                 player_instance.screen.get_height(),
             )
         )
-        self.gray_ground.fill((59, 10, 66))
+        self.gray_ground_color: tuple[int, int, int] = (59, 10, 66)
+        self.gray_ground.fill(self.gray_ground_color)
         self.gray_ground.convert()
 
         # ----------- COLLISION SYSTEM ---------
