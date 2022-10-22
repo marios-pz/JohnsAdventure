@@ -94,14 +94,14 @@ class Guardian(Enemy):
         self,
         level_instance,
         pos: tuple[int, int],
-        hp: int = 100,
-        xp_drop=45,
+        hp: int = 200,
+        xp_drop: int = 25,
     ):
         super().__init__(
             level_instance,
             pos,
-            hp=175,
-            xp_drop=210,
+            hp=hp,
+            xp_drop=xp_drop,
             custom_rect=[25 * 5 + 10, 50, 29 * 2, 45 * 2 + 25],
             enemy_type="normal",
             vel=1,
@@ -128,11 +128,14 @@ class Guardian(Enemy):
             attack_u_coo=[0, 34, 67, 34, 5, 5],
             flip_anim=True,
         )
+
+        self.attacking_distance = 200
         self.health_bar_width = 45 * 2
         self.custom_center = (45 * 2 + 25) * 4 / 5
         self.xp_drop = self.xp_available = xp_drop
-        self.damage = 4
+        self.damage = 10
         self.scale = 4
+        self.knock_back = {"duration": 150, "vel": 5, "friction": 2.5}
 
 
 class Goblin(Enemy):
@@ -140,14 +143,14 @@ class Goblin(Enemy):
         self,
         level_instance,
         pos: tuple[int, int],
-        hp: int = 100,
-        xp_drop=45,
+        hp: int = 80,
+        xp_drop=15,
     ):
         super().__init__(
             level_instance,
             pos,
-            hp=65,
-            xp_drop=45,
+            hp=hp,
+            xp_drop=xp_drop,
             custom_rect=[15, 35, 17 * 2, 25 * 2 + 10],
             enemy_type="normal",
             vel=3,
@@ -212,6 +215,8 @@ class BigShadowDummy(Enemy):
         self.xp_drop = self.xp_available = xp_drop
         self.scale = 4
         self.damage = 7
+
+        self.knock_back = {"duration": 250, "vel": 5, "friction": 2.5}
 
         self.load_animation(
             resource_path("data/sprites/shadow_dummie.png"),
