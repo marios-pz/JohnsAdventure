@@ -620,14 +620,13 @@ class Enemy:
                 vec(pl_rect.center)
             )
 
-            # print(GET_DISTANCE)
             if (
                 GET_DISTANCE
                 <= self.attacking_distance - self.hitbox_rect[3] // 2
             ):
                 self.status = "ATTACKING"
             else:
-                if self.attacking_distance < 300:
+                if GET_DISTANCE < 400:
                     self.status = "CHASING"
                 else:
                     self.status = "STANDBY"

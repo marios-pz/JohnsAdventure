@@ -25,6 +25,6 @@ def main(
 
 if __name__ == "__main__":
     if len(flags) > 1:
-        main(debug=True, first_state=flags[1], no_rect=True)
+        main(debug=True, first_state=flags[1], no_rect=False)
     else:
         main()

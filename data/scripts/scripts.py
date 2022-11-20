@@ -62,7 +62,7 @@ PLAYER_ROOM_SCENE = [
         "image": image_surface,
     },
     {
-        "duration": 2000,
+        "duration": 3000,
         "image": image_surface,
         "centered_text": "A universe, Humans and Monsters lived peacefully.",
         "centered_text_dt": 2000,
@@ -76,17 +76,17 @@ PLAYER_ROOM_SCENE = [
         "waiting_end": 1000,
     },
     {
-        "duration": 2000,
+        "duration": 3000,
         "image": image_surface,
         "centered_text": "and John's Adventure started.",
         "centered_text_dt": 2000,
         "waiting_end": 1000,
     },
     {
-        "duration": 2000,
+        "duration": 2500,
         "image": image_surface,
         "centered_text": "C.. Cynthia!",
-        "centered_text_dt": 2000,
+        "centered_text_dt": 1000,
         "waiting_end": 1000,
     },
     {
@@ -129,29 +129,34 @@ KITCHEN_SCENE = [
         "pos": (570, 220),
         "zoom": 1.2,
         "text": "Cynthia: Hello brother.",
-        "text_dt": 1500,
+        "text_dt": 1400,
     },
     {"duration": 500},
     {
-        "duration": 3000,
+        "duration": 4000,
         "pos": (570, 220),
         "text": "Cynthia: You seem dread. are you alright?",
-        "text_dt": 1500,
+        "text_dt": 1600,
+    },
+    {"duration": 500},
+    {
+        "duration": 3500,
+        "pos": (570, 220),
+        "text": "John: I had a very weird nightmare.",
+        "text_dt": 1400,
     },
     {"duration": 500},
     {
         "duration": 3000,
-        "pos": (570, 220),
-        "text": "John: I had a very weird nightmare.",
-        "text_dt": 1500,
+        "text": "Cynthia: Anyway..",
+        "text_dt": 1300,
     },
-    {"duration": 500},
     {
         # Show the door
         "duration": 3000,
         "pos": (620, 600),
-        "text": "Cynthia: Anyway.. Manos is waiting for you in the training field",
-        "text_dt": 1800,
+        "text": "Cynthia: Manos is waiting for you in the training field",
+        "text_dt": 1400,
     },
     {
         "duration": 1300,
@@ -167,14 +172,14 @@ KITCHEN_SCENE = [
         "duration": 4000,
         "pos": (570, 220),
         "text": "Cynthia: I will go meet my friends in school",
-        "text_dt": 1800,
+        "text_dt": 1400,
     },
     {"duration": 500},
     {
         "duration": 4000,
         "pos": (570, 220),
         "text": "Cynthia: See you around",
-        "text_dt": 1800,
+        "text_dt": 1400,
     },
     {"duration": 500},
 ]
@@ -236,36 +241,42 @@ TRAINING_FIELD_SCENE_1 = [
     {
         "duration": 3000,
         "text": "Manos: Hey John ready for your usual training?",
-        "text_dt": 1500,
+        "text_dt": 1400,
     },
     {
         "duration": 2000,
-        "text": "John: I sure am",
-        "text_dt": 1200,
+        "text": "John: I sure am!",
+        "text_dt": 1000,
     },
-    {"duration": 3000, "text": "Candy: *meow meow* ", "text_dt": 1500},
+    {"duration": 3000, "text": "Candy: *meow meow* ", "text_dt": 1300},
     {
         "duration": 3000,
         "pos": (1660, 1682),
         "text": "Manos: good, pick up your sword from the chest",
-        "text_dt": 1500,
+        "text_dt": 1400,
     },
     {
         "duration": 3000,
         "pos": (1660, 1682),
         "text": "Manos: show me your skills in those dummies",
-        "text_dt": 1500,
+        "text_dt": 1400,
     },
-    {"duration": 2500},  # show the __static__ dummies
     {
         "duration": 2000,
         "pos": (1138, 1526),
         "zoom": 1,
+        "text": "(HINT: Press Left Click to attack)",
         "zoom_duration": 1800,
+        "text_dt": 1300,
     },
     {
-        "duration": 2000,
-        "text": "(HINT: Press Left Click to attack)",
+        "duration": 4000,
+        "text": f"(HINT: you can press {pygame.key.name(CONTROLS['inventory'])} to check your inventory!)",
+        "text_dt": 1700,
+    },
+    {
+        "duration": 4000,
+        "text": "(HINT: you can also upgrade your stats in there!)",
         "text_dt": 1500,
     },
     {"duration": 500},
@@ -273,20 +284,10 @@ TRAINING_FIELD_SCENE_1 = [
 
 TRAINING_FIELD_SCENE_2 = [
     {
-        "duration": 3000,
+        "duration": 2500,
         "text": "Manos: Good! you're getting better!",
-        "text_dt": 1500,
+        "text_dt": 1400,
         "waiting_end": 500,
-    },
-    {
-        "duration": 4000,
-        "text": f"(HINT: you can press {pygame.key.name(CONTROLS['inventory'])} to check your inventory!)",
-        "text_dt": 1500,
-    },
-    {
-        "duration": 4000,
-        "text": "(HINT: you can also upgrade your stats in there!)",
-        "text_dt": 1500,
     },
     {
         "duration": 1300,  # move at where dummies were
@@ -312,15 +313,21 @@ TRAINING_FIELD_SCENE_2 = [
         "text_dt": 1500,
     },
     {
-        "duration": 2500,
+        "duration": 3500,
         "text": f"(HINT: You can press {pygame.key.name(CONTROLS['dash'])} to Dash!)",
-        "text_dt": 1500,
+        "text_dt": 1400,
     },
     {
-        "duration": 7000,
+        "duration": 5500,
         "pos": (1138, 1526),
-        "text": "Manos: Don't forget to get cynthia as soon as you can! she might be in danger",
+        "text": "Manos: Don't forget to get cynthia as soon as you can.",
         "text_dt": 1300,
+    },
+    {
+        "duration": 4000,
+        "pos": (1138, 1526),
+        "text": "Manos: she might be in danger!",
+        "text_dt": 1500,
     },
     {
         "duration": 3500,
@@ -335,8 +342,13 @@ GYMNASIUM_SCENE = [
         "duration": 3000,
         "pos": (2762, -75),
         "zoom": 1.2,
-        "text": "Alexia: John! monsters kidnapped Cynthia but I managed to run away!",
+        "text": "Alexia: John! monsters kidnapped Cynthia!",
         "text_dt": 1300,
+    },
+    {
+        "duration": 3000,
+        "text": "Alexia: I managed to run away!",
+        "text_dt": 1000,
     },
     {
         "duration": 3000,
@@ -391,12 +403,12 @@ CAVE_GARDEN_SCENE = [
         "zoom": 1.2,
     },
     {
-        "duration": 4200,
+        "duration": 4000,
         # Go back to the player
         "zoom": 1,
         "zoom_duration": 1800,
-        "text": "John: Oh no!",
-        "text_dt": 1500,
+        "text": "John:  .  .  . ",
+        "text_dt": 1800,
         "pos": (
             2080,
             2800,

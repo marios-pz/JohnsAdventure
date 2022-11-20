@@ -189,7 +189,7 @@ class BigShadowDummy(Enemy):
         self,
         level_instance,
         pos: tuple[int, int],
-        hp: int = 1650,
+        hp: int = 1350,
         xp_drop: int = 350,
     ):
         calc_intensity = ceil(5 * hp / xp_drop)  # 12 is the damages

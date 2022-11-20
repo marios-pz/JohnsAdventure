@@ -1,7 +1,9 @@
 import pygame
 import asyncio
+from data.scripts.AI.enemies import BigShadowDummy
 
 from data.scripts.PLAYER.items import get_save, make_save
+from data.scripts.POSTPROCESSING import gamestate
 
 from data.scripts.QUESTS import quest
 from data.scripts.sound_manager import SoundManager
@@ -447,6 +449,7 @@ class GameManager:
             )
             return
 
+        print("gamestate", self.game_state)
         if self.game_state is not None:
             self.loaded_states[self.game_state.id] = self.game_state
 
@@ -468,6 +471,7 @@ class GameManager:
             else:
                 must_store_begin_pos = True
 
+            print("STates:", self.loaded_states)
             self.last_player_instance = copy(self.player)
             self.last_loaded_states = copy(self.loaded_states)
 
@@ -535,12 +539,11 @@ class GameManager:
             pygame.display.update()
 
         if last_state == "none":  # update pos according to spawn points
-
-            key: str = list(self.game_state.spawn.items())[0][0]
-
-            if self.player.rect.topleft == self.game_state.spawn[key]:
-                self.player.rect.topleft = self.game_state.spawn[key]
-
+            try:
+                keys = [key for key in self.game_state.spawn]
+                self.player.rect.topleft = self.game_state.spawn[keys[0]]
+            except:
+                pass
         else:
             # Next Level
             self.player.rect.topleft = self.game_state.spawn[last_state]
@@ -573,9 +576,9 @@ class GameManager:
                 self.last_positions = {}
                 for obj_ in self.game_state.objects:
                     if not isinstance(obj_, pygame.Rect):
-                        self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
+                        self.last_positions[id(obj_)] = obj_.rect.topleft
                     else:
-                        self.last_positions[id(obj_)] = copy(obj_.topleft)
+                        self.last_positions[id(obj_)] = obj_.topleft
 
     def respawn(self):
         self.player.rect = self.last_player_instance.rect
@@ -586,6 +589,14 @@ class GameManager:
         self.player.health_ratio = self.last_player_instance.health_ratio
         self.player.health = self.last_player_instance.health
         self.loaded_states = copy(self.last_loaded_states)
+
+        # Put back boss hp
+        for obj_ in self.game_state.objects:
+            if isinstance(obj_, BigShadowDummy):
+                obj_.hp = obj_.MAX_HP
+                obj_.show_hp = obj_.MAX_HP
+                break
+
         if self.last_game_state_tag in self.loaded_states:
             self.player.rect.topleft = self.loaded_states[
                 self.last_game_state_tag
@@ -742,8 +753,6 @@ class GameManager:
                     self.end_game_bg = self.DISPLAY.copy()
                     self.init_death_screen()
                     self.player.health = self.player.backup_hp
-
-                print(self.framerate.get_fps())
 
             self.routine()
 

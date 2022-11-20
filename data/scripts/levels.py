@@ -1102,7 +1102,7 @@ class Gymnasium(GameState):
             ),
         }
 
-        self.spawn = {"johns_garden": (500, 0), "cave_passage": (4790, -150)}
+        self.spawn = {"johns_garden": (500, 0), "cave_passage": (4590, -150)}
 
         self.cave_stuff = generate_chunk(
             self,
@@ -1129,10 +1129,12 @@ class Gymnasium(GameState):
     def update(self, camera, dt):
         self.screen.blit(self.green_leaf, (0, 0))
 
+        quest = self.player.game_instance.quest_manager.quests[
+            "A new beginning"
+        ]
+
         if (
-            self.player.game_instance.quest_manager.quests[
-                "A new beginning"
-            ].quest_state["Go find Cynthia in school"]
+            quest.quest_state["Go find Cynthia in school"]
             and not self.cyn_gone
         ):
             self.objects.pop()  # pop cynthia
@@ -1141,17 +1143,15 @@ class Gymnasium(GameState):
             self.cyn_gone = True
 
         if not get_cutscene_played(self.id) and not self.started_script:
-            # gets player's current main mission and then sub mission
-            if self.player.game_instance.quest_manager.quests[
-                "A new beginning"
-            ].quest_state["Ask alexia"]:
+            self.objects.extend(self.cave_stuff)
+            self.exit_rects["cave_passage"] = (
+                Rect(4970, -200, 64, 64),
+                "Are you sure you want to get in ?",
+            )
+
+            if quest.quest_state["Ask alexia"]:
                 self.started_script = True
                 self.ended_script = False
-                self.objects.extend(self.cave_stuff)
-                self.exit_rects["cave_passage"] = (
-                    Rect(4970, -200, 64, 64),
-                    "Are you sure you want to get in ?",
-                )
 
         return super(Gymnasium, self).update(camera, dt)
 
@@ -1490,6 +1490,7 @@ class CaveEntrance(GameState):
             player_instance,
             prop_objects,
             "cave_entrance",
+            light_state="inside_dark",
         )
 
         self.spawn = {
