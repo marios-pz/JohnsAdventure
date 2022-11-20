@@ -7,8 +7,25 @@
         "interact": 32,
         "dash": 1073742049,
         "inventory": 101,
-        "healing": 113
+        "healing": 113,
+        "fullscreen": 1073741893
     },
-    "coins": 0,
-    "world": "johns_room"
+    "world": "player_room",
+    "player": {
+        "pos": [
+            498,
+            294
+        ],
+        "inventory": [],
+        "health_potions": 0,
+        "level": 16,
+        "xp": 80,
+        "coins": 790,
+        "stats": {
+            "points": 1,
+            "damage": 10,
+            "endurance": 1,
+            "crit_chance": 0.0505
+        }
+    }
 }

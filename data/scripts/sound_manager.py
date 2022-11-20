@@ -4,8 +4,12 @@ from .utils import resource_path
 
 
 class SoundManager:
-
-    def __init__(self, sound_only: bool = False, music_only: bool = False, volume: float = 0.3) -> None:
+    def __init__(
+        self,
+        sound_only: bool = False,
+        music_only: bool = False,
+        volume: float = 0.3,
+    ) -> None:
         # in order to simplify the load and optimize things, we will load this class
         # several times but only part of it, for example, in the player class,
         # you will load sound_only = True because you don't need an access to the
@@ -16,28 +20,58 @@ class SoundManager:
 
         self.volume = volume
 
-        self.sounds = {
-            "letterSound": pg.mixer.Sound(resource_path("data/sound/letter_sound.wav")),
-            "woodenSword": pg.mixer.Sound(resource_path("data/sound/sword_slice.flac")),
-            "dummyHit": pg.mixer.Sound(resource_path("data/sound/dummy_hit.wav")),
-            "magic_shooting": pg.mixer.Sound(resource_path("data/sound/magic_shooting.wav"))
+        self.sounds = (
+            {
+                "woodenSword": pg.mixer.Sound(
+                    resource_path("data/sound/sword_slice.wav")
+                ),
+                "manosSword": pg.mixer.Sound(
+                    resource_path("data/sound/manos_sword.flac")
+                ),
+                "HealUp": pg.mixer.Sound(
+                    resource_path("data/sound/HealUp.wav")
+                ),
+                "ShadowSummon": pg.mixer.Sound(
+                    resource_path("data/sound/ShadowSummon.wav")
+                ),
+                "dummyHit": pg.mixer.Sound(
+                    resource_path("data/sound/dummy_hit.wav")
+                ),
+                "magic_shooting": pg.mixer.Sound(
+                    resource_path("data/sound/magic_shooting.wav")
+                ),
+                "PlayerHit": pg.mixer.Sound(
+                    resource_path("data/sound/hurt.wav")
+                ),
+            }
+            if not music_only
+            else {}
+        )
 
-        } if not music_only else {}
-
-        self.musics = {
-            "forest_theme": resource_path("data/sound/forest_theme.flac"),
-            "Select_UI": resource_path("data/sound/Select_UI.wav"),
-            "city_theme": resource_path("data/sound/city_theme.mp3"),
-            "credits": resource_path("data/sound/credits.mp3"),
-            "garden_theme": resource_path("data/sound/cave_garden.mp3"),
-            "main_theme": resource_path("data/sound/main.flac"),
-
-        } if not sound_only else {}
+        self.musics = (
+            {
+                "main_theme": resource_path("data/sound/main_theme.flac"),
+                "forest_theme": resource_path("data/sound/forest_theme.flac"),
+                "city_theme": resource_path("data/sound/city_theme.mp3"),
+                "credits": resource_path("data/sound/credits.mp3"),
+                "garden_theme": resource_path("data/sound/cave_garden.mp3"),
+                "feevos": resource_path("data/sound/feevos.mp3"),
+                "dramatic": resource_path("data/sound/dramatic.flac"),
+            }
+            if not sound_only
+            else {}
+        )
         self.playing_music = "none"
 
-    def play_sound(self, key: str) -> bool:  # return False if the sound couldn't be player, True otherwise
+    def play_sound(
+        self, key: str
+    ) -> bool:  # return False if the sound couldn't be player, True otherwise
         if key not in self.sounds:
-            print("Error when playing sound : unable to find ", key, "in database.")
+            print(
+                "Error when playing sound : unable to find ",
+                key,
+                "in database.",
+            )
             return False
         self.sounds[key].set_volume(self.volume)
         self.sounds[key].play()

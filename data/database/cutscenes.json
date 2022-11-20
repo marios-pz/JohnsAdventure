@@ -5,10 +5,17 @@
   "manos_hut": false,
   "training_field": false,
   "gymnasium": false,
+  "cave_passage": false,
   "cave_garden": false,
   "cave_entrance": false,
   "cave_room_1": false,
   "cave_room_2": false,
-  "cave_passage": false,
+  "cave_room_3": false,
+  "cave_room_4": false,
+  "cave_room_5": false,
+  "cave_room_6": false,
+  "cave_room_7": false,
+  "cave_room_8": false,
+  "cave_room_9": false,
   "credits": false
 }

@@ -1,18 +1,30 @@
-'''
+"""
     Welcome to John's Adventure! Hope you like my new game!
 
-    Please be patient with some pieces of the code, it will take some time to clean the code ;')
+    Please be patient with some pieces of the code,
+    it will take some time to clean the code ;')
 
-'''
+"""
+
+from data.scripts.world import GameManager
+
+import asyncio
+import sys
+
+flags = sys.argv
 
 
-import pygame as pg
-import threading
+def main(
+    debug: bool = False,
+    first_state: str = "player_room",
+    no_rect: bool = True,
+):
+    gm = GameManager(debug=debug, first_state=first_state, no_rect=no_rect)
+    asyncio.run(gm.update())
 
-from data.scripts.world import main, GameManager
-from data.scripts.utils import resource_path
 
-
-if __name__ == '__main__':
-    game_instance = main()
-    game_instance.update()
+if __name__ == "__main__":
+    if len(flags) > 1:
+        main(debug=True, first_state=flags[1], no_rect=False)
+    else:
+        main()
