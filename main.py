@@ -30,12 +30,13 @@ else:
 
         pygame.init()
 
-        # FONTS
+
         if not sys.platform in ["emscripten"]:
             pygame.mixer.pre_init(44100, 32, 2, 4096)  # Frequency, 32 Bit sound, channels, buffer
 
         pygame.display.set_caption("iBoxStudio Engine")
         pygame.mouse.set_visible(False)
+
         # CONSTS
 
         DISPLAY = pygame.display.set_mode((1280, 720), flags=pygame.SRCALPHA)
@@ -50,6 +51,10 @@ else:
             self.loop_state = None
 
         def state_loading(self, events):
+            if pygame.time.get_ticks() > 6000:
+                self.loop_state = self.state_game
+                return
+
             self.DISPLAY.fill((255, 255, 255))
 
             if pygame.time.get_ticks() - self.delay_scaling > 25 and self.start_scale - self.current_scale > 0.75:
@@ -67,6 +72,84 @@ else:
                 )
 
             self.framerate.tick(self.FPS)
+
+
+        def start_new_level(self, level_id, last_state="none", first_pos=None, respawn=False):
+
+            if level_id == "credits":
+                self.player.UI_interaction_anim.clear()
+                self.state = "credits"
+                self.game_state = self.state_manager["credits"](self.DISPLAY, self.player, self.prop_objects)
+                return
+
+            if self.game_state is not None:
+                self.loaded_states[self.game_state.id] = self.game_state
+
+            # load all the sheets (to delete them afterwards)
+            init_sheets()
+
+            if not respawn:
+                if last_state != "none":
+                    self.last_game_state_tag = last_state
+                if self.game_state is not None:
+                    self.last_game_state = copy(self.game_state)
+                    self.last_positions = {}
+                    for obj_ in self.game_state.objects:
+                        if not isinstance(obj_, pygame.Rect):
+                            self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
+                        else:
+                            self.last_positions[id(obj_)] = copy(obj_.topleft)
+                    must_store_begin_pos = False
+                else:
+                    must_store_begin_pos = True
+
+                self.last_player_instance = copy(self.player)
+                self.last_loaded_states = copy(self.loaded_states)
+
+            # print(self.last_player_instance, self.last_game_state_tag, self.last_loaded_states)
+            # print(self.player, self.state, self.loaded_states)
+
+            self.game_state = self.state_manager[level_id](self.DISPLAY, self.player, self.prop_objects) \
+                    if level_id not in self.loaded_states else self.loaded_states[level_id]
+
+            start = pygame.time.get_ticks()  # time to start (track the loading screen duration)
+            self.state = level_id  # update the current state to the next one
+            self.player.UI_interaction_anim.clear()  # empty the UI animations
+            load_type = ["loading..." if first_pos is None else "main_loading", 750]  # [load_type, duration]
+            self.loading_screen.init(load_type[0], duration=load_type[1])  # initialize the loading screen
+
+            if last_state == "none":  # update pos according to spawn points
+                keys = [key for key in self.game_state.spawn]
+                self.player.rect.topleft = self.game_state.spawn[keys[0]]
+            else:
+                self.player.rect.topleft = self.game_state.spawn[last_state]
+
+            # replace the player for the cutscene (if needed)
+            if first_pos is not None and not self.debug:
+                self.player.rect.topleft = first_pos
+                self.first_state = True
+
+            # load all the lights in the game
+            self.game_state.lights_manager.init_level(self.game_state)
+            # unload the sheets (theoretically supposed to save RAM)
+            del_sheets()
+            # stop the player from moving
+            self.player.Left = self.player.Right = self.player.Up = self.player.Down = False
+
+            self.new_level_popup = self.new_level_font.render(TITLE_TRANSLATOR[self.state], True, (255, 255, 255))
+            self.new_level_popup_rect = self.new_level_popup.get_rect(centerx=self.W // 2, bottom=0)
+            self.begin_new_level_popup = pygame.time.get_ticks()
+            self.showing_nl_popup = True
+
+            if not respawn:
+                if must_store_begin_pos:
+                    self.last_positions = {}
+                    for obj_ in self.game_state.objects:
+                        if not isinstance(obj_, pygame.Rect):
+                            self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
+                        else:
+                            self.last_positions[id(obj_)] = copy(obj_.topleft)
+
 
         def state_game(self, events):
             # if the credits are playing, the player doesn't get updated, so the controls aren't checked, and
