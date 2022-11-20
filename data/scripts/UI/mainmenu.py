@@ -1,4 +1,4 @@
-import pygame as p
+import pygame
 import json
 from ..utils import scale, load, resource_path
 
@@ -10,19 +10,19 @@ class Menu:
         self.screen, self.title_font = screen, title_font
         self.game_instance = game_instance
 
-        # Macros 
+        # Macros
         self.half_w, self.half_h = self.screen.get_width() // 2, self.screen.get_height() // 2
 
         # Setup the white colored title with black outline
         self.title_logo = [title_font.render("John's Adventure", True, (255 * i, 255 * i, 255 * i)) for i in [0, 1]]
 
         # Background image
-        self.bg_img = p.transform.scale(
+        self.bg_img = pygame.transform.scale(
             load(resource_path('data/ui/main_menu/background1.png')),
             (1280, 720)  # Due to its less size, I am transforming it to 720p because its the default res
         )
 
-        self.bg_img2 = p.transform.scale(
+        self.bg_img2 = pygame.transform.scale(
             load(resource_path('data/ui/main_menu/background2.png')),
             (1280, 720)  # Due to its less size, I am transforming it to 720p because its the default res
         )
@@ -38,7 +38,7 @@ class Menu:
             for i in range(3)
         ]
 
-        self.f = p.font.Font(resource_path("data/database/menu-font.ttf"), 24)
+        self.f = pygame.font.Font(resource_path("data/database/menu-font.ttf"), 24)
 
         self.btns_text = [
             self.f.render("Play", True, (255, 255, 255)),
@@ -79,7 +79,7 @@ class Menu:
 
         self.start_game = False  # if True, player click Play button]
 
-        self.start_time = p.time.get_ticks()
+        self.start_time = pygame.time.get_ticks()
 
     ''' Utils '''
 
@@ -128,13 +128,13 @@ class Menu:
                 self.screen.blit(self.f.render("Please fill the keys!", True, (0, 0, 0)),
                                  (self.half_w - 220, self.half_h - 200))
 
-            #  Key Button    
+            #  Key Button
             key_data = list(self.save["controls"].values())
             for i, key in enumerate(self.keybinds):
 
                 group_y = 20  # A temp value to tweak the Y position of all of them
 
-                bind = f"{p.key.name(key_data[i])}" if type(key_data[i]) is int else " "
+                bind = f"{pygame.key.name(key_data[i])}" if type(key_data[i]) is int else " "
 
                 if i < 4:
                     rect = key.get_rect(center=(self.half_w - 120, self.half_h - 110 + group_y + 60 * i))
@@ -145,8 +145,8 @@ class Menu:
 
                 self.draw_txt(bind, rect, key)  # Center text
 
-                # if the player clicks the button, reset the keybind and save the index for configuration         
-                if rect.collidepoint(m) and self.event.type == p.MOUSEBUTTONDOWN and self.event.button == 1:
+                # if the player clicks the button, reset the keybind and save the index for configuration
+                if rect.collidepoint(m) and self.event.type == pygame.MOUSEBUTTONDOWN and self.event.button == 1:
                     self.changing, self.controls_error, self.change_key_index = True, False, i
                     # Find the key using list()[index]
                     txt = list(self.save["controls"])[i]
@@ -154,18 +154,18 @@ class Menu:
 
     ''' Drawing/ Function '''
 
-    def update(self, mouse):
+    def update(self, events, mouse):
         # Menu background
 
-        if p.time.get_ticks() - self.start_time < 4500:
+        if pygame.time.get_ticks() - self.start_time < 4500:
 
-            if p.time.get_ticks() - self.start_time < 2250:
+            if pygame.time.get_ticks() - self.start_time < 2250:
                 self.screen.blit(self.bg_img2, (0, 0))
             else:
                 self.screen.blit(self.bg_img, (0, 0))
 
         else:
-            self.start_time = p.time.get_ticks()
+            self.start_time = pygame.time.get_ticks()
 
         ''' User interact with Settings button'''
         if self.show_settings:
@@ -173,20 +173,20 @@ class Menu:
         else:
             self.buttons_menu(mouse)
 
-        self.controls(mouse)
-        self.screen.blit(self.mouse_icon, p.mouse.get_pos())
+        self.controls(events, mouse)
+        self.screen.blit(self.mouse_icon, pygame.mouse.get_pos())
 
-    def controls(self, m):
+    def controls(self, events, m):
         '''
             Any input related to the menu. I am saving event to a value because Game Class needs it to execute the game.
             self.changing occurs when you click on the keybinds and show settings when you click the button 'Settings'.
         '''
-        for e in p.event.get():
+        for e in events:
             self.event = e  # I am passing this to the keybinds
             match e.type:
-                case p.QUIT:
+                case pygame.QUIT:
                     self.game_instance.quit_()
-                case p.MOUSEBUTTONDOWN:
+                case pygame.MOUSEBUTTONDOWN:
                     if not self.show_settings:
                         if self.btns_rects[0].collidepoint(m):
                             self.start_game = True
@@ -195,7 +195,7 @@ class Menu:
                         if self.btns_rects[2].collidepoint(m):
                             raise SystemExit
 
-                case p.KEYDOWN:
+                case pygame.KEYDOWN:
                     if self.changing:
                         controls = list(self.save["controls"])
                         # Find Duplicate among keys (amongus ??!?!?)
@@ -203,7 +203,7 @@ class Menu:
                             if e.key == btn:
                                 self.controls_error = True
 
-                        if e.key != p.K_ESCAPE and not self.controls_error:  # Escape button is not allowed
+                        if e.key != pygame.K_ESCAPE and not self.controls_error:  # Escape button is not allowed
                             txt = controls[self.change_key_index]
                             self.save["controls"][txt] = e.key
                             self.controls_error = self.changing = self.blank_keys = False  # Change the button and close it
@@ -212,9 +212,9 @@ class Menu:
                             self.blank_keys = True
 
                             # if everything is correct, write the new data to the json and close the menu
-                    if self.show_settings and e.key == p.K_ESCAPE and not self.blank_keys:
+                    if self.show_settings and e.key == pygame.K_ESCAPE and not self.blank_keys:
                         self.save_data()
                         self.show_settings = False
 
-                case p.K_F12:
-                    p.display.toggle_fullscreen()
+                case pygame.K_F12:
+                    pygame.display.toggle_fullscreen()
