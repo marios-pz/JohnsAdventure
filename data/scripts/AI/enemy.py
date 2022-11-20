@@ -620,7 +620,7 @@ class Enemy:
                 vec(pl_rect.center)
             )
 
-            print(GET_DISTANCE)
+            # print(GET_DISTANCE)
             if (
                 GET_DISTANCE
                 <= self.attacking_distance - self.hitbox_rect[3] // 2

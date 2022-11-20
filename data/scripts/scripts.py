@@ -325,8 +325,8 @@ TRAINING_FIELD_SCENE_2 = [
     {
         "duration": 3500,
         "pos": (1138, 1526),
-        "text": "Manos: Then meet my at my hut",
-        "text_dt": 1500,
+        "text": "Manos: Then meet me at my hut",
+        "text_dt": 1700,
     },
 ]
 
