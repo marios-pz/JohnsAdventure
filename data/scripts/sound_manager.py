@@ -17,20 +17,20 @@ class SoundManager:
         self.volume = volume
 
         self.sounds = {
-            "letterSound": pg.mixer.Sound(resource_path("data/sound/letter_sound.wav")),
-            "woodenSword": pg.mixer.Sound(resource_path("data/sound/sword_slice.flac")),
-            "dummyHit": pg.mixer.Sound(resource_path("data/sound/dummy_hit.wav")),
-            "magic_shooting": pg.mixer.Sound(resource_path("data/sound/magic_shooting.wav"))
+            "letterSound": pg.mixer.Sound(resource_path("data/sound/letter_sound.ogg")),
+            "woodenSword": pg.mixer.Sound(resource_path("data/sound/sword_slice.ogg")),
+            "dummyHit": pg.mixer.Sound(resource_path("data/sound/dummy_hit.ogg")),
+            "magic_shooting": pg.mixer.Sound(resource_path("data/sound/magic_shooting.ogg"))
 
         } if not music_only else {}
 
         self.musics = {
-            "forest_theme": resource_path("data/sound/forest_theme.flac"),
-            "Select_UI": resource_path("data/sound/Select_UI.wav"),
-            "city_theme": resource_path("data/sound/city_theme.mp3"),
-            "credits": resource_path("data/sound/credits.mp3"),
-            "garden_theme": resource_path("data/sound/cave_garden.mp3"),
-            "main_theme": resource_path("data/sound/main.flac"),
+            "forest_theme": resource_path("data/sound/forest_theme.ogg"),
+            "Select_UI": resource_path("data/sound/Select_UI.ogg"),
+            "city_theme": resource_path("data/sound/city_theme.ogg"),
+            "credits": resource_path("data/sound/credits.ogg"),
+            "garden_theme": resource_path("data/sound/cave_garden.ogg"),
+            "main_theme": resource_path("data/sound/main.ogg"),
 
         } if not sound_only else {}
         self.playing_music = "none"
