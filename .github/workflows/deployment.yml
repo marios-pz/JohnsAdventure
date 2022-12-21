@@ -10,7 +10,7 @@ on:
 
 env:
   VERSION: v1.2
-  GAME_TITLE: Johns Adventure (Chapter 1) ${{ env.VERSION }}
+  GAME_TITLE: Johns Adventure (Chapter 1) v1.2
   
 jobs:
   gnu-linux:
