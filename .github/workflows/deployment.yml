@@ -3,13 +3,10 @@
 # - DiskImage for MacOS 
 # - Regular Zip for Windows
 
-name: Python application
+name: "John's Adventure Release"
 
 on:    
   workflow_dispatch:
-
-permissions:
-  contents: read-all|write-all
 
 jobs:
   gnu-linux:
