@@ -9,6 +9,8 @@ Project entirely written in python and pygame. <br>
 
 # John's Adventures : Chapter 1
 
+[![John's Adventure Release](https://github.com/mariospapaz/JohnsAdventure/actions/workflows/deployment.yml/badge.svg)](https://github.com/mariospapaz/JohnsAdventure/actions/workflows/deployment.yml)
+
 
 Welcome to game! The project started *seriously* at early August 2021 and ended in March 2022. 
 The games philosophy was introduced by our Story Writer. Whose idea was to find someone to bring his idea to life for a dear friend.
