@@ -9,16 +9,12 @@ on:
   workflow_dispatch:
 
 env:
-  VERSION: 1.2
-  GAME_TITLE: Johns Adventure (Chapter 1)
-  TOTAL_TITLE: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
+  GAME_TITLE: Johns Adventure (Chapter 1) v1.2
   
 jobs:
   gnu-linux:
   
     runs-on: ubuntu-22.04
-    env:
-      TITLE: ${{ env.TOTAL_TITLE }} Linux
 
     steps:
     - uses: actions/checkout@v3
@@ -43,7 +39,7 @@ jobs:
     
     - name: Start zipping 
       run: |
-        zip $(TITLE).zip ./dist/*
+        zip "$TITLE Linux".zip ./dist/*
     
     - name: Upload To Github Release
       uses: xresloader/upload-to-github-release@v1.3.9
@@ -56,13 +52,11 @@ jobs:
         # With verbose: true, be verbose.
         verbose: true
         # Set custom tag name.
-        tag_name: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
+        tag_name: ${{ env.GAME_TITLE }}
         
   applepay:  
     runs-on: macos-11
-    env:
-      TITLE: ${{ env.TOTAL_TITLE }} Mac Rosetta
-
+    
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.11
@@ -86,7 +80,7 @@ jobs:
     
     - name: Start zipping 
       run: |
-        zip $(TITLE).zip ./dist/*
+        zip "$TITLE  Mac Rosetta".zip ./dist/*
     
     - name: Upload To Github Release
       uses: xresloader/upload-to-github-release@v1.3.9
@@ -99,12 +93,10 @@ jobs:
         # With verbose: true, be verbose.
         verbose: true
         # Set custom tag name.
-        tag_name: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
+        tag_name: ${{ env.GAME_TITLE }}
         
   billgates:  
     runs-on: windows-2019
-    env:
-      TITLE: ${{ env.TOTAL_TITLE }} Windows
 
     steps:
     - uses: actions/checkout@v3
@@ -135,5 +127,5 @@ jobs:
         # With verbose: true, be verbose.
         verbose: true
         # Set custom tag name.
-        tag_name: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
+        tag_name: ${{ env.GAME_TITLE }}
 
