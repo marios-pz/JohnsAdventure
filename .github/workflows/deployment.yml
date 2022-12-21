@@ -53,7 +53,7 @@ jobs:
         # With verbose: true, be verbose.
         verbose: true
         # Set custom tag name.
-        tag_name: ${{ env.GAME_TITLE }}
+        tag_name: ${{ env.VERSION }}
         
   applepay:  
     runs-on: macos-12
@@ -94,7 +94,7 @@ jobs:
         # With verbose: true, be verbose.
         verbose: true
         # Set custom tag name.
-        tag_name: ${{ env.GAME_TITLE }}
+        tag_name: ${{ env.VERSION }}
         
   billgates:  
     runs-on: windows-2019
