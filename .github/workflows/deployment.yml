@@ -15,8 +15,10 @@ env:
   
 jobs:
   gnu-linux:
-
+  
     runs-on: ubuntu-22.04
+    env:
+      TITLE: ${{ env.TOTAL_TITLE }} Linux
 
     steps:
     - uses: actions/checkout@v3
@@ -41,7 +43,7 @@ jobs:
     
     - name: Start zipping 
       run: |
-        zip ${{ env.TOTAL_TITLE }}.zip ./dist/*
+        zip $(TITLE).zip ./dist/*
     
     - name: Upload To Github Release
       uses: xresloader/upload-to-github-release@v1.3.9
@@ -50,6 +52,85 @@ jobs:
       with:
         # The files or file patterns to upload. You can upload multiple files by split them by semicolon. You can use the glob pattern to find the files.
         file: ./*.zip
+        branches: main
+        # With verbose: true, be verbose.
+        verbose: true
+        # Set custom tag name.
+        tag_name: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
+        
+  applepay:  
+    runs-on: macos-11
+    env:
+      TITLE: ${{ env.TOTAL_TITLE }} Mac Rosetta
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy pyinstaller
+        pip install pygame --pre
+        
+    - name: Build game 
+      run: |
+        pyinstaller build.spec
+        chmod +x ./dist/*
+        
+    - name: Install Zip package
+      uses: montudor/action-zip@v1.0.0
+    
+    - name: Start zipping 
+      run: |
+        zip $(TITLE).zip ./dist/*
+    
+    - name: Upload To Github Release
+      uses: xresloader/upload-to-github-release@v1.3.9
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        # The files or file patterns to upload. You can upload multiple files by split them by semicolon. You can use the glob pattern to find the files.
+        file: ./*.zip
+        branches: main
+        # With verbose: true, be verbose.
+        verbose: true
+        # Set custom tag name.
+        tag_name: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
+        
+  billgates:  
+    runs-on: windows-2019
+    env:
+      TITLE: ${{ env.TOTAL_TITLE }} Windows
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy pyinstaller
+        pip install pygame --pre
+        
+    - name: Build game 
+      run: |
+        pyinstaller build.spec
+        chmod +x ./dist/*
+    
+    - name: Upload To Github Release
+      uses: xresloader/upload-to-github-release@v1.3.9
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        # The files or file patterns to upload. You can upload multiple files by split them by semicolon. You can use the glob pattern to find the files.
+        file: ./dist/*.exe
         branches: main
         # With verbose: true, be verbose.
         verbose: true
