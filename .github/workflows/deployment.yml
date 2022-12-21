@@ -9,7 +9,8 @@ on:
   workflow_dispatch:
 
 env:
-  GAME_TITLE: Johns Adventure (Chapter 1) v1.2
+  VERSION: v1.2
+  GAME_TITLE: Johns Adventure (Chapter 1) ${{ env.VERSION }}
   
 jobs:
   gnu-linux:
@@ -127,5 +128,5 @@ jobs:
         # With verbose: true, be verbose.
         verbose: true
         # Set custom tag name.
-        tag_name: ${{ env.GAME_TITLE }}
+        tag_name: ${{ env.VERSION }}
 
