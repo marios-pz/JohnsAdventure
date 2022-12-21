@@ -11,6 +11,7 @@ on:
 env:
   VERSION: 1.2
   GAME_TITLE: Johns Adventure (Chapter 1)
+  TOTAL_TITLE: ${{ env.GAME_TITLE }} ${{ env.VERSION }}
   
 jobs:
   gnu-linux:
@@ -40,7 +41,7 @@ jobs:
     
     - name: Start zipping 
       run: |
-        zip $(GAME_TITLE GAME_VERSION).zip ./dist/*
+        zip ${{ env.TOTAL_TITLE }}.zip ./dist/*
     
     - name: Upload To Github Release
       uses: xresloader/upload-to-github-release@v1.3.9
