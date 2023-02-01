@@ -1,7 +1,7 @@
 {
   "A new beginning": {
     "xp": 100,
-    "finished": true,
+    "finished": false,
     "content": {
       "steps": {
         "Talk to Cynthia in the kitchen": "TARGET:Cynthia TYPE:Interact LEVEL:kitchen",
