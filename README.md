@@ -30,7 +30,7 @@ python3 main.py
 ---
 ## Credits
 
-- Programming: [Marios Papazogloy](https://github.com/mariospapaz) and [Theophile Aumont](https://github.com/fkS124)
+- Programming: Me and [Theophile Aumont](https://github.com/fkS124)
  
 - Story Telling: Manos Danezis
 
