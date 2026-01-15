@@ -1,8 +1,8 @@
 """
-    Welcome to John's Adventure! Hope you like my new game!
+Welcome to John's Adventure! Hope you like my new game!
 
-    Please be patient with some pieces of the code,
-    it will take some time to clean the code ;')
+Please be patient with some pieces of the code,
+it will take some time to clean the code ;')
 
 """
 

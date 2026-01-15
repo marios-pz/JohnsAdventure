@@ -31,6 +31,9 @@ class UI_Spritesheet:
         with open(resource_path("data/database/ui.json")) as f:
             self.data = json.load(f)
 
+        # Cache for parsed sprites to prevent memory leaks
+        self._sprite_cache = {}
+
     def get_sprite(self, x: int, y: int, w: int, h: int) -> pygame.Surface:
         sprite = pygame.Surface((w, h))
         sprite.set_colorkey((255, 255, 255))
@@ -38,10 +41,17 @@ class UI_Spritesheet:
         return sprite
 
     def parse_sprite(self, name: str):
+        # Check cache first
+        if name in self._sprite_cache:
+            return self._sprite_cache[name].copy()  # Return a copy to prevent modification
+
+        # Parse and cache the sprite
         sprite = self.data["frames"][name]["frame"]
-        return self.get_sprite(
+        parsed_sprite = self.get_sprite(
             sprite["x"], sprite["y"], sprite["w"], sprite["h"]
         )
+        self._sprite_cache[name] = parsed_sprite
+        return parsed_sprite.copy()  # Return a copy
 
 
 def load_sheet(sheet, coo, flip=False):

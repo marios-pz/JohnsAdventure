@@ -58,10 +58,9 @@ def init_sheets():
 
 
 def del_sheets():
-    # If you want to delete it from memory, just clear the dict :D
-    return  # temporary bug fix
+    # Delete spritesheets from memory to free RAM
     global sheets
-    del sheets
+    sheets.clear()  # Clear the dictionary instead of deleting it
 
 
 class PropGetter:
@@ -395,7 +394,10 @@ class Chest(Prop):
         self.rewarded = False
 
         # ------------ ANIMATION ----------------
-        self.ui = UI_Spritesheet("data/ui/UI_spritesheet.png")
+        # Use shared UI spritesheet instance
+        if not hasattr(UI_Spritesheet, '_shared_instance'):
+            UI_Spritesheet._shared_instance = UI_Spritesheet("data/ui/UI_spritesheet.png")
+        self.ui = UI_Spritesheet._shared_instance
         self.UI_button = [
             scale(self.ui.parse_sprite("chest_popup"), 2),
             scale(self.ui.parse_sprite("chest_popup_hover"), 2),

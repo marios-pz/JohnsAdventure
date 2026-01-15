@@ -134,7 +134,10 @@ class GameManager:
         self.FPS = 50
 
         # ------------- SPRITESHEET ---------------
-        self.ui = UI_Spritesheet("data/ui/UI_spritesheet.png")
+        # Shared UI spritesheet to avoid loading the same spritesheet twice
+        if not hasattr(UI_Spritesheet, '_shared_instance'):
+            UI_Spritesheet._shared_instance = UI_Spritesheet("data/ui/UI_spritesheet.png")
+        self.ui = UI_Spritesheet._shared_instance
 
         # ------------ FRAMERATE ------------------
         self.framerate = pygame.time.Clock()
@@ -186,7 +189,8 @@ class GameManager:
             self.cutscene_engine,
         )
 
-        self.last_player_instance: Player | None = copy(self.player)
+        # Store only essential data for respawn to prevent memory leaks
+        self.last_player_data: dict | None = None
         self.last_loaded_states: dict[str, GameState] = {}
         self.last_game_state_tag: str = first_state
         self.last_game_state: GameState | None = None
@@ -222,8 +226,10 @@ class GameManager:
             "cave_passage": CaveRoomPassage,
             "credits": Credits,
         }
+        # Keep only last 2 levels in memory to prevent memory leaks
         self.loaded_states: dict[str, GameState] = {}
         self.game_state: GameState | None = None
+        self.MAX_LOADED_LEVELS = 2  # Maximum levels to keep in memory
 
         # ------------ DEBUG ----------------------
         self.debug = debug
@@ -238,8 +244,8 @@ class GameManager:
 
         # ------------- DEATH SCREEN --------------
         self.begin_end_screen = 0
-        # layer + bg
-        self.end_game_bg = self.DISPLAY.copy()
+        # layer + bg (create on demand to save memory)
+        self.end_game_bg = None
         self.black_layer = pygame.Surface(self.DISPLAY.get_size())
         self.black_layer.set_alpha(200)
 
@@ -452,6 +458,17 @@ class GameManager:
         print("gamestate", self.game_state)
         if self.game_state is not None:
             self.loaded_states[self.game_state.id] = self.game_state
+            # Limit loaded states to prevent memory leaks
+            if len(self.loaded_states) > self.MAX_LOADED_LEVELS:
+                # Remove oldest loaded state (not current or last)
+                states_to_remove = []
+                for state_id in self.loaded_states:
+                    if state_id not in [self.last_game_state_tag, level_id]:
+                        states_to_remove.append(state_id)
+                # Remove all but keep the most recent ones
+                for state_id in states_to_remove[:-1]:  # Keep one extra for safety
+                    if state_id in self.loaded_states:
+                        del self.loaded_states[state_id]
 
         # load all the sheets (to delete them afterwards)
         init_sheets()
@@ -460,20 +477,33 @@ class GameManager:
             if last_state != "none":
                 self.last_game_state_tag = last_state
             if self.game_state is not None:
-                self.last_game_state = copy(self.game_state)
+                # Don't copy entire game state, just store reference
+                self.last_game_state = self.game_state
                 self.last_positions = {}
                 for obj_ in self.game_state.objects:
                     if not isinstance(obj_, pygame.Rect):
-                        self.last_positions[id(obj_)] = copy(obj_.rect.topleft)
+                        self.last_positions[id(obj_)] = obj_.rect.topleft  # No copy needed
                     else:
-                        self.last_positions[id(obj_)] = copy(obj_.topleft)
+                        self.last_positions[id(obj_)] = obj_.topleft  # No copy needed
                 must_store_begin_pos = False
             else:
                 must_store_begin_pos = True
 
             print("STates:", self.loaded_states)
-            self.last_player_instance = copy(self.player)
-            self.last_loaded_states = copy(self.loaded_states)
+            # Store only essential player data for respawn
+            self.last_player_data = {
+                'rect': self.player.rect.copy(),
+                'xp': self.player.xp,
+                'experience': self.player.experience,
+                'inventory_items': self.player.inventory.items.copy() if self.player.inventory else [],
+                'inventory_scroll': self.player.inventory.index_scroll if self.player.inventory else 0,
+                'health_target': self.player.health_target,
+                'health_ratio': self.player.health_ratio,
+                'health': self.player.health,
+                'maximum_health': self.player.maximum_health,
+                'backup_hp': self.player.backup_hp
+            }
+            self.last_loaded_states = self.loaded_states.copy()  # Shallow copy is enough
 
         def load_new_level(parent, level_):
             import gc
@@ -581,14 +611,18 @@ class GameManager:
                         self.last_positions[id(obj_)] = obj_.topleft
 
     def respawn(self):
-        self.player.rect = self.last_player_instance.rect
-        self.player.xp = self.last_player_instance.xp
-        self.player.experience = self.last_player_instance.experience
-        self.player.inventory = self.last_player_instance.inventory
-        self.player.health_target = self.last_player_instance.health_target
-        self.player.health_ratio = self.last_player_instance.health_ratio
-        self.player.health = self.last_player_instance.health
-        self.loaded_states = copy(self.last_loaded_states)
+        if self.last_player_data:
+            self.player.rect = self.last_player_data['rect']
+            self.player.xp = self.last_player_data['xp']
+            self.player.experience = self.last_player_data['experience']
+            self.player.inventory.items = self.last_player_data['inventory_items']
+            self.player.inventory.index_scroll = self.last_player_data['inventory_scroll']
+            self.player.health_target = self.last_player_data['health_target']
+            self.player.health_ratio = self.last_player_data['health_ratio']
+            self.player.health = self.last_player_data['health']
+            self.player.maximum_health = self.last_player_data['maximum_health']
+            self.player.backup_hp = self.last_player_data['backup_hp']
+        self.loaded_states = self.last_loaded_states.copy()  # Shallow copy
 
         # Put back boss hp
         for obj_ in self.game_state.objects:
