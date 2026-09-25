@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://npcs/npc.gd" id="1_qrhw5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs.png" id="2_untt7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxg4d"]
+size = Vector2(46.8, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spog6"]
+atlas = ExtResource("2_untt7")
+region = Rect2(1, 1, 26, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10lyo"]
+atlas = ExtResource("2_untt7")
+region = Rect2(27, 1, 26, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65kdf"]
+atlas = ExtResource("2_untt7")
+region = Rect2(53, 1, 26, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j42mv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spog6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10lyo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65kdf")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.5
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyjai"]
+size = Vector2(138, 176)
+
+[node name="Cynthia" type="CharacterBody2D" unique_id=935896332]
+motion_mode = 1
+script = ExtResource("1_qrhw5")
+id = "Cynthia"
+display_name = "Cynthia"
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1064199334]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_sxg4d")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=431399479]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_j42mv")
+animation = &"idle"
+offset = Vector2(0, -21)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1370075216]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="InteractArea" unique_id=531957224]
+position = Vector2(0, -48)
+shape = SubResource("RectangleShape2D_jyjai")

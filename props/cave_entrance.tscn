@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/houses.png" id="1_n15kn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rfsn"]
+atlas = ExtResource("1_n15kn")
+region = Rect2(776, 0, 424, 323)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_klk2s"]
+size = Vector2(1272, 915)
+
+[node name="CaveEntrance" type="Node2D" unique_id=1562848955]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1122388938]
+position = Vector2(0, -600)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_3rfsn")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1958076862]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=976854252]
+position = Vector2(636, -82.5)
+shape = SubResource("RectangleShape2D_klk2s")

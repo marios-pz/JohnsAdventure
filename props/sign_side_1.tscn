@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_tqrk2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_45hf4"]
+atlas = ExtResource("1_tqrk2")
+region = Rect2(151, 302, 52, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrrdv"]
+size = Vector2(24, 45)
+
+[node name="SignSide1" type="Node2D" unique_id=1824026571]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1235099406]
+position = Vector2(0, -195)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_45hf4")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=749900184]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=877520170]
+position = Vector2(78, -58.5)
+shape = SubResource("RectangleShape2D_hrrdv")

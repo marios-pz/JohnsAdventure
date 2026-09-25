@@ -1,0 +1,335 @@
+{
+	"_doc": "Plays once when John is in 'level' and 'after_step' is done. Step keys: duration (ms), pos (camera centre), zoom, zoom_duration, text + text_dt (typed over ms), centered_text + centered_text_dt, image ('cutscene1' | 'black'), waiting_end. 'then': level to travel to when it ends.",
+	"intro": {
+		"level": "johns_room",
+		"after_step": "",
+		"steps": [
+			{
+				"duration": 3000,
+				"image": "cutscene1"
+			},
+			{
+				"duration": 3000,
+				"image": "black",
+				"centered_text": "PORTO RAFTI 202X ALTERNATIVE UNIVERSE",
+				"centered_text_dt": 2000
+			},
+			{
+				"duration": 3000,
+				"image": "black",
+				"centered_text": "A universe where humans and monsters lived peacefully.",
+				"centered_text_dt": 2000,
+				"waiting_end": 1000
+			},
+			{
+				"duration": 2000,
+				"image": "black",
+				"centered_text": "But on this day, the unpredictable happened...",
+				"centered_text_dt": 2000,
+				"waiting_end": 1000
+			},
+			{
+				"duration": 2500,
+				"image": "black",
+				"centered_text": "C.. Cynthia!",
+				"centered_text_dt": 1000,
+				"waiting_end": 1000
+			},
+			{
+				"duration": 0,
+				"pos": [
+					560,
+					400
+				],
+				"zoom": 1.4,
+				"text": "John: Man. What a dream.",
+				"text_dt": 1600,
+				"waiting_end": 2500
+			},
+			{
+				"duration": 1000,
+				"pos": [
+					1086,
+					230
+				],
+				"text": "John: I better check on her.",
+				"text_dt": 1600,
+				"waiting_end": 1000
+			},
+			{
+				"duration": 1200,
+				"pos": [
+					560,
+					400
+				],
+				"zoom": 1,
+				"zoom_duration": 1200
+			}
+		]
+	},
+	"kitchen": {
+		"level": "kitchen",
+		"after_step": "Talk to Cynthia in the kitchen",
+		"steps": [
+			{
+				"duration": 2500,
+				"pos": [
+					570,
+					260
+				],
+				"zoom": 1.2,
+				"text": "Cynthia: Hello brother.",
+				"text_dt": 1200
+			},
+			{
+				"duration": 3500,
+				"text": "Cynthia: You look pale. Are you alright?",
+				"text_dt": 1500
+			},
+			{
+				"duration": 3500,
+				"text": "John: I had a very weird nightmare.",
+				"text_dt": 1400
+			},
+			{
+				"duration": 3500,
+				"pos": [
+					640,
+					620
+				],
+				"text": "Cynthia: Anyway.. Manos is waiting for you in the training field.",
+				"text_dt": 1600
+			},
+			{
+				"duration": 3500,
+				"pos": [
+					570,
+					260
+				],
+				"zoom": 1,
+				"zoom_duration": 1500,
+				"text": "Cynthia: I'll go meet my friends at school. See you around!",
+				"text_dt": 1600
+			}
+		]
+	},
+	"training": {
+		"level": "training_field",
+		"after_step": "Meet Manos at the training field",
+		"steps": [
+			{
+				"duration": 1000,
+				"pos": [
+					1150,
+					900
+				],
+				"zoom": 1.2
+			},
+			{
+				"duration": 3000,
+				"text": "Manos: Hey John, ready for your usual training?",
+				"text_dt": 1400
+			},
+			{
+				"duration": 2000,
+				"text": "John: I sure am!",
+				"text_dt": 1000
+			},
+			{
+				"duration": 2500,
+				"text": "Candy: *meow meow*",
+				"text_dt": 1000
+			},
+			{
+				"duration": 3000,
+				"pos": [
+					1600,
+					900
+				],
+				"text": "Manos: Grab your sword from the chest, then show me your skills on those dummies.",
+				"text_dt": 1800
+			}
+		]
+	},
+	"ambush": {
+		"level": "training_field",
+		"after_step": "Report back to Manos",
+		"steps": [
+			{
+				"duration": 2500,
+				"pos": [
+					1150,
+					900
+				],
+				"zoom": 1.2,
+				"text": "Manos: Good! You're getting better!",
+				"text_dt": 1200
+			},
+			{
+				"duration": 2000,
+				"pos": [
+					1750,
+					900
+				],
+				"text": "Manos: Wait.. this purple aura.. It couldn't be HIM.",
+				"text_dt": 1500
+			},
+			{
+				"duration": 3000,
+				"pos": [
+					1150,
+					900
+				],
+				"text": "Manos: Shadows! Defeat them, John! I'll go get my gear.",
+				"text_dt": 1500
+			},
+			{
+				"duration": 3000,
+				"text": "Manos: And check on Cynthia at school, she might be in danger!",
+				"text_dt": 1500
+			}
+		]
+	},
+	"school": {
+		"level": "school",
+		"after_step": "Ask Alexia what happened",
+		"steps": [
+			{
+				"duration": 3000,
+				"pos": [
+					1356,
+					560
+				],
+				"zoom": 1.2,
+				"text": "Alexia: John! Monsters kidnapped Cynthia!",
+				"text_dt": 1300
+			},
+			{
+				"duration": 3000,
+				"text": "Alexia: I barely managed to run away.",
+				"text_dt": 1200
+			},
+			{
+				"duration": 3000,
+				"text": "John: Oh no! Where did they take her?",
+				"text_dt": 1200
+			},
+			{
+				"duration": 3500,
+				"text": "Alexia: Shadows are guarding the gate, you can't go back that way.",
+				"text_dt": 1500
+			},
+			{
+				"duration": 3000,
+				"pos": [
+					2400,
+					260
+				],
+				"text": "Alexia: But there's an old ladder behind the trees. It leads to the caves.",
+				"text_dt": 1600
+			},
+			{
+				"duration": 3000,
+				"pos": [
+					1356,
+					560
+				],
+				"zoom": 1,
+				"zoom_duration": 1200,
+				"text": "Alexia: Good luck! Hopefully it won't have any monsters.",
+				"text_dt": 1500
+			}
+		]
+	},
+	"boss": {
+		"level": "cave_garden",
+		"after_step": "Reach the cave garden",
+		"steps": [
+			{
+				"duration": 3000,
+				"pos": [
+					500,
+					900
+				],
+				"text": "John: Well that was.. dangerous.",
+				"text_dt": 1300
+			},
+			{
+				"duration": 2500,
+				"text": "John: Hmm? What is that?",
+				"text_dt": 1000
+			},
+			{
+				"duration": 2500,
+				"pos": [
+					1400,
+					800
+				],
+				"zoom": 1.2
+			},
+			{
+				"duration": 2000,
+				"text": "The Big Dummie awakens!",
+				"text_dt": 1000
+			},
+			{
+				"duration": 1500,
+				"pos": [
+					500,
+					900
+				],
+				"zoom": 1,
+				"zoom_duration": 1200
+			}
+		]
+	},
+	"ending": {
+		"level": "manos_hut",
+		"after_step": "Find Manos in his hut",
+		"then": "credits",
+		"steps": [
+			{
+				"duration": 3500,
+				"pos": [
+					664,
+					330
+				],
+				"zoom": 1.2,
+				"text": "Manos: John! What took you so long?",
+				"text_dt": 1300
+			},
+			{
+				"duration": 3500,
+				"text": "John: The road was blocked, I made it through the caves.",
+				"text_dt": 1500
+			},
+			{
+				"duration": 3500,
+				"text": "John: The monsters took Cynthia. We have to get her back!",
+				"text_dt": 1500
+			},
+			{
+				"duration": 4000,
+				"text": "Manos: This aura belongs to no one else but my old nemesis.. Alcemenos.",
+				"text_dt": 1800
+			},
+			{
+				"duration": 4000,
+				"text": "Manos: He must be using his old base.",
+				"text_dt": 1500
+			},
+			{
+				"duration": 4000,
+				"zoom": 1,
+				"text": "Manos: We must go to Porto Rafti before the sun goes down.",
+				"text_dt": 1600
+			},
+			{
+				"duration": 2500,
+				"image": "black",
+				"centered_text": "To be continued...",
+				"centered_text_dt": 1500
+			}
+		]
+	}
+}

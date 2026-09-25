@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_3gd2k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fxkm"]
+atlas = ExtResource("1_3gd2k")
+region = Rect2(217, 109, 34, 33)
+
+[node name="HoriTurn" type="Node2D" unique_id=1913311885]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1374240161]
+position = Vector2(0, -49.5)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_2fxkm")
+centered = false

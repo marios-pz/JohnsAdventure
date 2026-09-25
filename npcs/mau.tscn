@@ -1,0 +1,89 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://npcs/npc.gd" id="1_nueir"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs.png" id="2_8s3le"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5w5p3"]
+size = Vector2(51.6, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0xu7"]
+atlas = ExtResource("2_8s3le")
+region = Rect2(131, 49, 43, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydfhc"]
+atlas = ExtResource("2_8s3le")
+region = Rect2(174, 49, 43, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oubk3"]
+atlas = ExtResource("2_8s3le")
+region = Rect2(217, 49, 43, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1r0e"]
+atlas = ExtResource("2_8s3le")
+region = Rect2(42, 49, 43, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gltji"]
+atlas = ExtResource("2_8s3le")
+region = Rect2(85, 49, 43, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25xbt"]
+atlas = ExtResource("2_8s3le")
+region = Rect2(128, 49, 43, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sw3fu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0xu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydfhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oubk3")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1r0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gltji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25xbt")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uw3al"]
+size = Vector2(146, 116)
+
+[node name="Mau" type="CharacterBody2D" unique_id=740709301]
+motion_mode = 1
+script = ExtResource("1_nueir")
+id = "Mau"
+display_name = "Mau"
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1749971717]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_5w5p3")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=651972377]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_sw3fu")
+animation = &"idle"
+offset = Vector2(0, -16.5)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1316923089]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="InteractArea" unique_id=2019787397]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_uw3al")

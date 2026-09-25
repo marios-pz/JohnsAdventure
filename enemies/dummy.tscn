@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_0ch3w"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dummy.png" id="2_eqjt0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fot1n"]
+size = Vector2(56, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aomga"]
+atlas = ExtResource("2_eqjt0")
+region = Rect2(0, 48, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwflk"]
+atlas = ExtResource("2_eqjt0")
+region = Rect2(34, 48, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eev6l"]
+atlas = ExtResource("2_eqjt0")
+region = Rect2(68, 48, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgw1x"]
+atlas = ExtResource("2_eqjt0")
+region = Rect2(102, 48, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydo5f"]
+atlas = ExtResource("2_eqjt0")
+region = Rect2(0, 0, 34, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sy8ta"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aomga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwflk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eev6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgw1x")
+}],
+"loop": 0,
+"name": &"hit",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydo5f")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjdpe"]
+size = Vector2(10, 10)
+
+[node name="Dummy" type="CharacterBody2D" unique_id=1625219216]
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_0ch3w")
+kind = "Dummy"
+display_name = "Training Dummy"
+max_hp = 60
+xp = 40
+knockable = false
+is_static = true
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=282001522]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_fot1n")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=523934931]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_sy8ta")
+animation = &"idle"
+centered = false
+offset = Vector2(-17, -47)
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=187267836]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea" unique_id=14034423]
+position = Vector2(13, -22)
+shape = SubResource("RectangleShape2D_fjdpe")
+
+[node name="HealthBar" type="Node2D" parent="." unique_id=1165114928]
+visible = false
+position = Vector2(-55, -206)
+
+[node name="Back" type="ColorRect" parent="HealthBar" unique_id=1006550174]
+offset_right = 110.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=199813149]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 109.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0.9, 0.1, 0.1, 1)

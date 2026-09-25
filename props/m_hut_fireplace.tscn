@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/hut_furniture.png" id="1_h4x1g"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lights/cone.png" id="2_wqg5v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdpq6"]
+atlas = ExtResource("1_h4x1g")
+region = Rect2(0, 2, 74, 236)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0w2uy"]
+size = Vector2(129, 243)
+
+[node name="MHutFireplace" type="Node2D" unique_id=1637226583]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1701795778]
+position = Vector2(0, -432)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_fdpq6")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1375638507]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=20350346]
+position = Vector2(64.5, 145.5)
+shape = SubResource("RectangleShape2D_0w2uy")
+
+[node name="ConeLight" type="Node2D" parent="." unique_id=1714912938]
+position = Vector2(126, 105)
+
+[node name="Light" type="PointLight2D" parent="ConeLight" unique_id=260324677]
+position = Vector2(144, 0)
+color = Color(0.8117647, 0.4392157, 0.09019608, 1)
+energy = 0.9882353
+texture = ExtResource("2_wqg5v")
+texture_scale = 1.125

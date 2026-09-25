@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_s4ahi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8215a"]
+atlas = ExtResource("1_s4ahi")
+region = Rect2(242, 236, 14, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vyo7c"]
+size = Vector2(28, 32)
+
+[node name="Bush" type="Node2D" unique_id=1692948001]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=56946761]
+position = Vector2(0, -16)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_8215a")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1137638646]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=154394272]
+position = Vector2(14, 0)
+shape = SubResource("RectangleShape2D_vyo7c")

@@ -1,0 +1,253 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_ni4vg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/world/school_gate.png" id="2_ll1fo"]
+[ext_resource type="PackedScene" path="res://props/grass.tscn" id="3_fkrkp"]
+[ext_resource type="PackedScene" path="res://props/h_ladder.tscn" id="4_hr644"]
+[ext_resource type="PackedScene" path="res://npcs/alexia.tscn" id="5_au65s"]
+[ext_resource type="Script" path="res://npcs/npc.gd" id="6_ejcnl"]
+[ext_resource type="PackedScene" path="res://props/tree.tscn" id="7_hah42"]
+[ext_resource type="Script" path="res://objects/exit.gd" id="8_b82ph"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1clnm"]
+size = Vector2(2712, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5wtar"]
+size = Vector2(120, 1268)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_51pmv"]
+size = Vector2(120, 1268)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c30qj"]
+size = Vector2(1220, 278)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i1qx1"]
+size = Vector2(1220, 278)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4q2u"]
+size = Vector2(272, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwjek"]
+size = Vector2(272, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8hywv"]
+size = Vector2(272, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_13ghg"]
+size = Vector2(130, 120)
+
+[node name="School" type="Node2D" unique_id=476451847]
+script = ExtResource("1_ni4vg")
+level_id = "school"
+title = "School"
+music = "city_theme"
+background = Color(0.23921569, 0.4745098, 0.023529412, 1)
+camera_limits = Rect2(-100, -200, 2912, 1600)
+
+[node name="Ground" type="Node2D" parent="." unique_id=740429587]
+
+[node name="Courtyard" type="Sprite2D" parent="Ground" unique_id=2088842613]
+scale = Vector2(4, 4)
+texture = ExtResource("2_ll1fo")
+centered = false
+
+[node name="Grass" type="Node2D" parent="Ground" unique_id=158152445 instance=ExtResource("3_fkrkp")]
+position = Vector2(270.1446, 442.19348)
+
+[node name="Grass2" type="Node2D" parent="Ground" unique_id=249829421 instance=ExtResource("3_fkrkp")]
+position = Vector2(196.13268, 438.12573)
+
+[node name="Grass3" type="Node2D" parent="Ground" unique_id=738650148 instance=ExtResource("3_fkrkp")]
+position = Vector2(2411.978, 854.1003)
+
+[node name="Grass4" type="Node2D" parent="Ground" unique_id=1785326985 instance=ExtResource("3_fkrkp")]
+position = Vector2(2389.5615, 790.7553)
+
+[node name="Grass5" type="Node2D" parent="Ground" unique_id=558753361 instance=ExtResource("3_fkrkp")]
+position = Vector2(2310.946, 839.445)
+
+[node name="Grass6" type="Node2D" parent="Ground" unique_id=594976431 instance=ExtResource("3_fkrkp")]
+position = Vector2(286.5222, 875.9382)
+
+[node name="Grass7" type="Node2D" parent="Ground" unique_id=2130714778 instance=ExtResource("3_fkrkp")]
+position = Vector2(219.42719, 913.5714)
+
+[node name="Grass8" type="Node2D" parent="Ground" unique_id=1464187635 instance=ExtResource("3_fkrkp")]
+position = Vector2(293.13025, 934.2198)
+
+[node name="Grass9" type="Node2D" parent="Ground" unique_id=1922441265 instance=ExtResource("3_fkrkp")]
+position = Vector2(1127.9578, 374.98312)
+
+[node name="Grass10" type="Node2D" parent="Ground" unique_id=897628112 instance=ExtResource("3_fkrkp")]
+position = Vector2(1062.9312, 404.7092)
+
+[node name="Grass11" type="Node2D" parent="Ground" unique_id=834292555 instance=ExtResource("3_fkrkp")]
+position = Vector2(1610.519, 375.21768)
+
+[node name="Grass12" type="Node2D" parent="Ground" unique_id=1691342971 instance=ExtResource("3_fkrkp")]
+position = Vector2(1546.6116, 404.27493)
+
+[node name="Grass13" type="Node2D" parent="Ground" unique_id=2123080757 instance=ExtResource("3_fkrkp")]
+position = Vector2(1615.3353, 432.0694)
+
+[node name="HiddenLadder" type="Node2D" parent="Ground" unique_id=423571009]
+metadata/show_after = "Ask Alexia what happened"
+
+[node name="HLadder" type="Node2D" parent="Ground/HiddenLadder" unique_id=2031638780 instance=ExtResource("4_hr644")]
+position = Vector2(2420, 330)
+
+[node name="World" type="Node2D" parent="." unique_id=1053933334]
+y_sort_enabled = true
+
+[node name="Wall" type="StaticBody2D" parent="World" unique_id=272416384]
+position = Vector2(0, -60)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/Wall" unique_id=662022376]
+position = Vector2(1356, 60)
+shape = SubResource("RectangleShape2D_1clnm")
+
+[node name="@StaticBody2D@42" type="StaticBody2D" parent="World" unique_id=49205023]
+position = Vector2(-40, 0)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@42" unique_id=1920895581]
+position = Vector2(60, 634)
+shape = SubResource("RectangleShape2D_5wtar")
+
+[node name="@StaticBody2D@43" type="StaticBody2D" parent="World" unique_id=107089640]
+position = Vector2(2632, 0)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@43" unique_id=600816550]
+position = Vector2(60, 634)
+shape = SubResource("RectangleShape2D_51pmv")
+
+[node name="@StaticBody2D@44" type="StaticBody2D" parent="World" unique_id=2044217943]
+position = Vector2(0, 990)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@44" unique_id=2046986459]
+position = Vector2(610, 139)
+shape = SubResource("RectangleShape2D_c30qj")
+
+[node name="@StaticBody2D@45" type="StaticBody2D" parent="World" unique_id=2057562990]
+position = Vector2(1492, 990)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@45" unique_id=1442755042]
+position = Vector2(610, 139)
+shape = SubResource("RectangleShape2D_i1qx1")
+
+[node name="@StaticBody2D@46" type="StaticBody2D" parent="World" unique_id=583681201]
+position = Vector2(1220, 1330)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@46" unique_id=1159067442]
+position = Vector2(136, 30)
+shape = SubResource("RectangleShape2D_b4q2u")
+
+[node name="ShadowBarrier" type="Node2D" parent="World" unique_id=788804810]
+y_sort_enabled = true
+position = Vector2(1220, 990)
+metadata/show_after = "Find Cynthia at school"
+
+[node name="Wall" type="StaticBody2D" parent="World/ShadowBarrier" unique_id=737894613]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/ShadowBarrier/Wall" unique_id=267940937]
+position = Vector2(136, 80)
+shape = SubResource("RectangleShape2D_rwjek")
+
+[node name="Veil" type="ColorRect" parent="World/ShadowBarrier" unique_id=1852336484]
+offset_right = 272.0
+offset_bottom = 160.0
+mouse_filter = 2
+color = Color(0.4, 0.1, 0.7, 0.45)
+
+[node name="Wisps" type="CPUParticles2D" parent="World/ShadowBarrier" unique_id=1964502827]
+position = Vector2(136, 150)
+amount = 40
+lifetime = 1.6
+emission_shape = 3
+emission_rect_extents = Vector2(136, 10)
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+color = Color(0.5, 0.15, 0.85, 0.8)
+
+[node name="Alexia" type="CharacterBody2D" parent="World" unique_id=1068571711 instance=ExtResource("5_au65s")]
+position = Vector2(1356, 600)
+motion_mode = 1
+script = ExtResource("6_ejcnl")
+id = "Alexia"
+display_name = "Alexia"
+
+[node name="Tree" type="Node2D" parent="World" unique_id=1020757531 instance=ExtResource("7_hah42")]
+position = Vector2(60, 272.5)
+
+[node name="Tree2" type="Node2D" parent="World" unique_id=1509117331 instance=ExtResource("7_hah42")]
+position = Vector2(520, 272.5)
+
+[node name="Tree3" type="Node2D" parent="World" unique_id=2105088838 instance=ExtResource("7_hah42")]
+position = Vector2(980, 272.5)
+
+[node name="Tree4" type="Node2D" parent="World" unique_id=588160379 instance=ExtResource("7_hah42")]
+position = Vector2(1520, 272.5)
+
+[node name="Tree5" type="Node2D" parent="World" unique_id=1211656347 instance=ExtResource("7_hah42")]
+position = Vector2(1980, 272.5)
+
+[node name="Tree6" type="Node2D" parent="World" unique_id=204407959 instance=ExtResource("7_hah42")]
+position = Vector2(900, 872.5)
+
+[node name="Tree7" type="Node2D" parent="World" unique_id=594042163 instance=ExtResource("7_hah42")]
+position = Vector2(1440, 872.5)
+
+[node name="Tree8" type="Node2D" parent="World" unique_id=47602115 instance=ExtResource("7_hah42")]
+position = Vector2(2180, 372.5)
+
+[node name="Tree9" type="Node2D" parent="World" unique_id=2092650507 instance=ExtResource("7_hah42")]
+position = Vector2(2330, 692.5)
+
+[node name="Tree10" type="Node2D" parent="World" unique_id=429582245 instance=ExtResource("7_hah42")]
+position = Vector2(2150, 832.5)
+
+[node name="Overlay" type="Node2D" parent="." unique_id=1944844878]
+z_index = 20
+
+[node name="Exits" type="Node2D" parent="." unique_id=1755915865]
+
+[node name="ToVillage" type="Area2D" parent="Exits" unique_id=465606556]
+position = Vector2(1220, 1200)
+script = ExtResource("8_b82ph")
+target = "village"
+metadata/hide_after = "Find Cynthia at school"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToVillage" unique_id=1493997127]
+position = Vector2(136, 50)
+shape = SubResource("RectangleShape2D_8hywv")
+
+[node name="ToCavePassage" type="Area2D" parent="Exits" unique_id=795335114]
+position = Vector2(2400, 270)
+script = ExtResource("8_b82ph")
+target = "cave_passage"
+display_name = "Old ladder"
+prompt = "Climb down the hidden ladder?"
+metadata/show_after = "Ask Alexia what happened"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToCavePassage" unique_id=434588497]
+position = Vector2(65, 60)
+shape = SubResource("RectangleShape2D_13ghg")
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1525892530]
+
+[node name="village" type="Marker2D" parent="Spawns" unique_id=1791193725]
+position = Vector2(1356, 900)
+
+[node name="cave_passage" type="Marker2D" parent="Spawns" unique_id=1622137016]
+position = Vector2(2466, 470)

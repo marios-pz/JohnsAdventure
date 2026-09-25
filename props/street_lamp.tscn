@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_jjn3e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lights/radial.png" id="2_54e52"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_746om"]
+atlas = ExtResource("1_jjn3e")
+region = Rect2(185, 144, 68, 76)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gydrp"]
+size = Vector2(45, 75)
+
+[node name="StreetLamp" type="Node2D" unique_id=270348123]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=917514723]
+position = Vector2(0, -150)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_746om")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1511518698]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1323279161]
+position = Vector2(97.5, 37.5)
+shape = SubResource("RectangleShape2D_gydrp")
+
+[node name="Light" type="PointLight2D" parent="." unique_id=1742034611]
+position = Vector2(33, -102)
+color = Color(1, 1, 0.2, 1)
+energy = 0.7058824
+texture = ExtResource("2_54e52")
+texture_scale = 1.40625
+
+[node name="@PointLight2D@2" type="PointLight2D" parent="." unique_id=185509849]
+position = Vector2(168, -102)
+color = Color(1, 1, 0.2, 1)
+energy = 0.7058824
+texture = ExtResource("2_54e52")
+texture_scale = 1.40625

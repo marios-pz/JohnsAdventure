@@ -1,0 +1,21 @@
+{
+	"_doc": "Guided tutorial tips, shown in order. level '' = anywhere. done_on = the action that completes the tip (see autoload/tutorial.gd). Placeholders like {attack} become the right key/button for the current device.",
+	"tips": [
+		{"id": "move", "level": "johns_room", "after_step": "", "done_on": "move",
+			"text": "Walk around with {move}."},
+		{"id": "interact", "level": "johns_room", "after_step": "", "done_on": "interact",
+			"text": "Go to the stairs and press {interact} to use them. {interact} also talks to people and opens chests."},
+		{"id": "weapon", "level": "training_field", "after_step": "Meet Manos at the training field", "done_on": "weapon",
+			"text": "Open the chest next to Manos with {interact} to get a sword."},
+		{"id": "attack", "level": "training_field", "after_step": "", "done_on": "attack",
+			"text": "Attack with {attack}. Aim with the {aim}. Hit a training dummy!"},
+		{"id": "combo", "level": "training_field", "after_step": "", "done_on": "combo",
+			"text": "Press {attack} three times in rhythm for a combo. The third hit is a powerful finisher."},
+		{"id": "inventory", "level": "", "after_step": "Defeat the training dummies", "done_on": "inventory",
+			"text": "Press {inventory} to open your inventory, stats and quest log. Spend upgrade points there when you level up."},
+		{"id": "dash", "level": "", "after_step": "Report back to Manos", "done_on": "dash",
+			"text": "Enemies flash red right before they strike. Dash with {dash} - you can't be hurt while dashing, and it cancels your attack."},
+		{"id": "heal", "level": "", "after_step": "Report back to Manos", "done_on": "heal",
+			"text": "Hurt? Drink a potion with {heal}. Chests hold more potions."}
+	]
+}

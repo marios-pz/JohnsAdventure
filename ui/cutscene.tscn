@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/cutscene.gd" id="1_hulut"]
+
+[node name="Cutscene" type="CanvasLayer" unique_id=821906801]
+layer = 10
+script = ExtResource("1_hulut")
+
+[node name="Black" type="ColorRect" parent="." unique_id=1566878015]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Image" type="TextureRect" parent="." unique_id=1976160492]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TopBar" type="ColorRect" parent="." unique_id=1407712652]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -90.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="." unique_id=1283110106]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 720.0
+offset_bottom = 810.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Text" type="Label" parent="BottomBar" unique_id=400576165]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CenteredText" type="Label" parent="." unique_id=1146055422]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

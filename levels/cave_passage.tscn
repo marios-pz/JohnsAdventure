@@ -1,0 +1,275 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_6fjd2"]
+[ext_resource type="PackedScene" path="res://props/cave_spike_small.tscn" id="2_jtglv"]
+[ext_resource type="PackedScene" path="res://props/c_wall_corner.tscn" id="3_rvvte"]
+[ext_resource type="PackedScene" path="res://props/c_wall_mid.tscn" id="4_1qcaj"]
+[ext_resource type="PackedScene" path="res://props/c_flipped_corner_turn.tscn" id="5_7smmq"]
+[ext_resource type="PackedScene" path="res://props/c_wall_corner_turn.tscn" id="6_lckso"]
+[ext_resource type="PackedScene" path="res://props/c_wall_side.tscn" id="7_0jvuc"]
+[ext_resource type="PackedScene" path="res://props/c_flipped_corner.tscn" id="8_edt8g"]
+[ext_resource type="PackedScene" path="res://props/ladder.tscn" id="9_r0ece"]
+[ext_resource type="PackedScene" path="res://objects/torch.tscn" id="10_lkhgj"]
+[ext_resource type="Script" path="res://objects/torch.gd" id="11_r2hqu"]
+[ext_resource type="PackedScene" path="res://enemies/goblin.tscn" id="12_ypuue"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="13_nlbgi"]
+[ext_resource type="PackedScene" path="res://objects/chest.tscn" id="14_s8eqp"]
+[ext_resource type="Script" path="res://objects/chest.gd" id="15_o2du3"]
+[ext_resource type="Script" path="res://objects/exit.gd" id="16_lxqba"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ox07w"]
+size = Vector2(100, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wqin"]
+size = Vector2(474, 90)
+
+[node name="CavePassage" type="Node2D" unique_id=1453783629]
+script = ExtResource("1_6fjd2")
+level_id = "cave_passage"
+title = "Cave Passage"
+music = "garden_theme"
+background = Color(0.22745098, 0.19607843, 0.25882354, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1524679016]
+color = Color(0.62, 0.6, 0.7, 1)
+
+[node name="Ground" type="Node2D" parent="." unique_id=1026235207]
+
+[node name="CaveSpikeSmall" type="Node2D" parent="Ground" unique_id=1271596042 instance=ExtResource("2_jtglv")]
+position = Vector2(97.58373, 261.1252)
+
+[node name="CaveSpikeSmall2" type="Node2D" parent="Ground" unique_id=1871235487 instance=ExtResource("2_jtglv")]
+position = Vector2(69.54421, 273.9594)
+
+[node name="CaveSpikeSmall3" type="Node2D" parent="Ground" unique_id=430220498 instance=ExtResource("2_jtglv")]
+position = Vector2(87.32361, 226.62062)
+
+[node name="CaveSpikeSmall4" type="Node2D" parent="Ground" unique_id=430930163 instance=ExtResource("2_jtglv")]
+position = Vector2(118.29405, 310.2211)
+
+[node name="CaveSpikeSmall5" type="Node2D" parent="Ground" unique_id=2090114895 instance=ExtResource("2_jtglv")]
+position = Vector2(38.940926, 253.65839)
+
+[node name="CaveSpikeSmall6" type="Node2D" parent="Ground" unique_id=398867697 instance=ExtResource("2_jtglv")]
+position = Vector2(2215.2256, 857.1569)
+
+[node name="CaveSpikeSmall7" type="Node2D" parent="Ground" unique_id=451289661 instance=ExtResource("2_jtglv")]
+position = Vector2(2176.1116, 882.4742)
+
+[node name="CaveSpikeSmall8" type="Node2D" parent="Ground" unique_id=1834999321 instance=ExtResource("2_jtglv")]
+position = Vector2(2206.6455, 828.093)
+
+[node name="CaveSpikeSmall9" type="Node2D" parent="Ground" unique_id=1580042944 instance=ExtResource("2_jtglv")]
+position = Vector2(2225.5095, 890.8754)
+
+[node name="CaveSpikeSmall10" type="Node2D" parent="Ground" unique_id=1985938285 instance=ExtResource("2_jtglv")]
+position = Vector2(2150.9397, 857.40497)
+
+[node name="CaveSpikeSmall11" type="Node2D" parent="Ground" unique_id=1783753039 instance=ExtResource("2_jtglv")]
+position = Vector2(1467.6454, 904.4466)
+
+[node name="CaveSpikeSmall12" type="Node2D" parent="Ground" unique_id=885666259 instance=ExtResource("2_jtglv")]
+position = Vector2(1424.0883, 924.4003)
+
+[node name="CaveSpikeSmall13" type="Node2D" parent="Ground" unique_id=795913276 instance=ExtResource("2_jtglv")]
+position = Vector2(1450.3468, 881.4079)
+
+[node name="CaveSpikeSmall14" type="Node2D" parent="Ground" unique_id=193364067 instance=ExtResource("2_jtglv")]
+position = Vector2(1401.1539, 900.22943)
+
+[node name="World" type="Node2D" parent="." unique_id=626139824]
+y_sort_enabled = true
+
+[node name="CWallCorner" type="Node2D" parent="World" unique_id=1380034115 instance=ExtResource("3_rvvte")]
+position = Vector2(0, 109.5)
+
+[node name="CWallMid" type="Node2D" parent="World" unique_id=364641356 instance=ExtResource("4_1qcaj")]
+position = Vector2(477, 109.5)
+
+[node name="CWallMid2" type="Node2D" parent="World" unique_id=30059301 instance=ExtResource("4_1qcaj")]
+position = Vector2(951, 109.5)
+
+[node name="CWallMid3" type="Node2D" parent="World" unique_id=1703156377 instance=ExtResource("4_1qcaj")]
+position = Vector2(1425, 109.5)
+
+[node name="CFlippedCornerTurn" type="Node2D" parent="World" unique_id=434840411 instance=ExtResource("5_7smmq")]
+position = Vector2(1899, 109.5)
+
+[node name="CWallCornerTurn" type="Node2D" parent="World" unique_id=1561026948 instance=ExtResource("6_lckso")]
+position = Vector2(0, 109.5)
+
+[node name="CWallSide" type="Node2D" parent="World" unique_id=578546898 instance=ExtResource("7_0jvuc")]
+position = Vector2(0, 352.5)
+
+[node name="CWallSide2" type="Node2D" parent="World" unique_id=257504159 instance=ExtResource("7_0jvuc")]
+position = Vector2(0, 772.5)
+
+[node name="CWallSide3" type="Node2D" parent="World" unique_id=851603782 instance=ExtResource("7_0jvuc")]
+position = Vector2(2340, 352.5)
+
+[node name="CWallSide4" type="Node2D" parent="World" unique_id=1719047057 instance=ExtResource("7_0jvuc")]
+position = Vector2(2340, 772.5)
+
+[node name="CWallCorner2" type="Node2D" parent="World" unique_id=1055841678 instance=ExtResource("3_rvvte")]
+position = Vector2(0, 1066.5)
+
+[node name="CWallMid4" type="Node2D" parent="World" unique_id=618871283 instance=ExtResource("4_1qcaj")]
+position = Vector2(951, 1066.5)
+
+[node name="CWallMid5" type="Node2D" parent="World" unique_id=953287752 instance=ExtResource("4_1qcaj")]
+position = Vector2(1425, 1066.5)
+
+[node name="CFlippedCorner" type="Node2D" parent="World" unique_id=1012795133 instance=ExtResource("8_edt8g")]
+position = Vector2(1899, 1066.5)
+
+[node name="Ladder" type="Node2D" parent="World" unique_id=289603543 instance=ExtResource("9_r0ece")]
+position = Vector2(2090, 80)
+
+[node name="Torch" type="Node2D" parent="World" unique_id=1403972334 instance=ExtResource("10_lkhgj")]
+position = Vector2(400, 214)
+script = ExtResource("11_r2hqu")
+
+[node name="Torch2" type="Node2D" parent="World" unique_id=1529320752 instance=ExtResource("10_lkhgj")]
+position = Vector2(1000, 214)
+script = ExtResource("11_r2hqu")
+
+[node name="Torch3" type="Node2D" parent="World" unique_id=1275053912 instance=ExtResource("10_lkhgj")]
+position = Vector2(1600, 214)
+script = ExtResource("11_r2hqu")
+
+[node name="Torch4" type="Node2D" parent="World" unique_id=1733688497 instance=ExtResource("10_lkhgj")]
+position = Vector2(1180, 1010)
+script = ExtResource("11_r2hqu")
+radius = 200.0
+
+[node name="Goblin" type="CharacterBody2D" parent="World" unique_id=972852275 instance=ExtResource("12_ypuue")]
+position = Vector2(700, 600)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_nlbgi")
+kind = "Goblin"
+display_name = "Goblin"
+max_hp = 40
+xp = 25
+speed = 155.0
+attack_range = 70.0
+windup = 0.3
+recover = 0.6
+knockback = 220.0
+
+[node name="Goblin2" type="CharacterBody2D" parent="World" unique_id=1748310398 instance=ExtResource("12_ypuue")]
+position = Vector2(950, 480)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_nlbgi")
+kind = "Goblin"
+display_name = "Goblin"
+max_hp = 40
+xp = 25
+speed = 155.0
+attack_range = 70.0
+windup = 0.3
+recover = 0.6
+knockback = 220.0
+
+[node name="Goblin3" type="CharacterBody2D" parent="World" unique_id=170031065 instance=ExtResource("12_ypuue")]
+position = Vector2(1350, 720)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_nlbgi")
+kind = "Goblin"
+display_name = "Goblin"
+max_hp = 40
+xp = 25
+speed = 155.0
+attack_range = 70.0
+windup = 0.3
+recover = 0.6
+knockback = 220.0
+
+[node name="Goblin4" type="CharacterBody2D" parent="World" unique_id=649878306 instance=ExtResource("12_ypuue")]
+position = Vector2(1650, 470)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_nlbgi")
+kind = "Goblin"
+display_name = "Goblin"
+max_hp = 40
+xp = 25
+speed = 155.0
+attack_range = 70.0
+windup = 0.3
+recover = 0.6
+knockback = 220.0
+
+[node name="Chest" type="StaticBody2D" parent="World" unique_id=1022416036 instance=ExtResource("14_s8eqp")]
+position = Vector2(1950, 880)
+collision_mask = 0
+script = ExtResource("15_o2du3")
+coins = 25
+potions = 2
+
+[node name="Overlay" type="Node2D" parent="." unique_id=2046965480]
+z_index = 20
+
+[node name="Void" type="ColorRect" parent="Overlay" unique_id=406891633]
+offset_left = -1500.0
+offset_top = -1500.0
+offset_right = 3876.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="@ColorRect@47" type="ColorRect" parent="Overlay" unique_id=464906181]
+offset_left = -1500.0
+offset_top = 1176.0
+offset_right = 3876.0
+offset_bottom = 2676.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="@ColorRect@48" type="ColorRect" parent="Overlay" unique_id=445964558]
+offset_left = -1500.0
+offset_bottom = 1176.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="@ColorRect@49" type="ColorRect" parent="Overlay" unique_id=1283261634]
+offset_left = 2376.0
+offset_right = 3876.0
+offset_bottom = 1176.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Exits" type="Node2D" parent="." unique_id=1751415341]
+
+[node name="ToSchool" type="Area2D" parent="Exits" unique_id=221786833]
+position = Vector2(2080, 200)
+script = ExtResource("16_lxqba")
+target = "school"
+display_name = "Ladder"
+prompt = "Climb back up?"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToSchool" unique_id=703119832]
+position = Vector2(50, 40)
+shape = SubResource("RectangleShape2D_ox07w")
+
+[node name="ToCaveDepths" type="Area2D" parent="Exits" unique_id=1917352316]
+position = Vector2(477, 1070)
+script = ExtResource("16_lxqba")
+target = "cave_depths"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToCaveDepths" unique_id=127023555]
+position = Vector2(237, 45)
+shape = SubResource("RectangleShape2D_1wqin")
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1917846508]
+
+[node name="school" type="Marker2D" parent="Spawns" unique_id=1919869835]
+position = Vector2(2134, 360)
+
+[node name="cave_depths" type="Marker2D" parent="Spawns" unique_id=477029175]
+position = Vector2(714, 960)

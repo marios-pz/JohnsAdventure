@@ -1,0 +1,159 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_qt2cy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/guardian.png" id="2_1x1e3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxnhm"]
+size = Vector2(60, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oeci8"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(0, 34, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w632u"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(67, 34, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftla1"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(134, 34, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_netyr"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(201, 34, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nsus"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(268, 34, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhutl"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(0, 0, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8klkq"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(0, 0, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfibq"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(67, 0, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dnei"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(134, 0, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ed6ns"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(201, 0, 67, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xba0i"]
+atlas = ExtResource("2_1x1e3")
+region = Rect2(268, 0, 67, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pmvco"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oeci8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w632u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftla1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_netyr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nsus")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhutl")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8klkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfibq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dnei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ed6ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xba0i")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htrfx"]
+size = Vector2(200, 100)
+
+[node name="Guardian" type="CharacterBody2D" unique_id=180762205]
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_qt2cy")
+kind = "Guardian"
+display_name = "Guardian"
+max_hp = 150
+xp = 80
+speed = 65.0
+damage = 13
+attack_range = 170.0
+windup = 0.65
+recover = 1.1
+knockback = 480.0
+knockable = false
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1641564895]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_sxnhm")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1262968068]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_pmvco")
+animation = &"idle"
+centered = false
+offset = Vector2(-16, -34)
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=1289109123]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea" unique_id=1808864556]
+position = Vector2(110, -18)
+shape = SubResource("RectangleShape2D_htrfx")
+
+[node name="HealthBar" type="Node2D" parent="." unique_id=1050320325]
+visible = false
+position = Vector2(-55, -188)
+
+[node name="Back" type="ColorRect" parent="HealthBar" unique_id=1051260768]
+offset_right = 110.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=898743958]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 109.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0.9, 0.1, 0.1, 1)

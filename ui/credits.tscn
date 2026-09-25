@@ -1,0 +1,141 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/credits.gd" id="1_orljq"]
+[ext_resource type="FontFile" path="res://assets/fonts/blacksword.otf" id="2_74u3g"]
+
+[node name="Credits" type="Control" unique_id=1405665388]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_orljq")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1245107871]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Lines" type="VBoxContainer" parent="." unique_id=702332602]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 720.0
+offset_bottom = 720.0
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Lines" unique_id=1408392005]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_74u3g")
+theme_override_font_sizes/font_size = 52
+text = "John's Adventure"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Lines" unique_id=472396453]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Chapter 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Lines" unique_id=9076797]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="Lines" unique_id=555490354]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Programming"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="Lines" unique_id=507152891]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Marios Papazoglou"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="Lines" unique_id=1741987390]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Theophile Aumont"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label7" type="Label" parent="Lines" unique_id=808603060]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label8" type="Label" parent="Lines" unique_id=386601132]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Art"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label9" type="Label" parent="Lines" unique_id=1482802335]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Marios Papazoglou"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label10" type="Label" parent="Lines" unique_id=496684429]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label11" type="Label" parent="Lines" unique_id=377227923]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Story"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label12" type="Label" parent="Lines" unique_id=1823580050]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Manos Danezis"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label13" type="Label" parent="Lines" unique_id=1849398939]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label14" type="Label" parent="Lines" unique_id=1809843193]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label15" type="Label" parent="Lines" unique_id=1005874662]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Thanos Pallis"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label16" type="Label" parent="Lines" unique_id=1251524322]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label17" type="Label" parent="Lines" unique_id=832738153]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Thank you for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1

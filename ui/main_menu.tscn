@@ -1,0 +1,99 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/main_menu.gd" id="1_8uxxo"]
+[ext_resource type="Texture2D" path="res://assets/ui/menu_bg1.png" id="2_ei257"]
+[ext_resource type="FontFile" path="res://assets/fonts/blacksword.otf" id="3_p8ri8"]
+[ext_resource type="PackedScene" path="res://ui/how_to_play.tscn" id="4_ubpvv"]
+[ext_resource type="Script" path="res://ui/how_to_play.gd" id="5_arv2f"]
+
+[node name="MainMenu" type="Control" unique_id=2061791398]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_8uxxo")
+
+[node name="Background" type="TextureRect" parent="." unique_id=225923852]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_ei257")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="." unique_id=524646180]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_top = 80.0
+offset_right = 500.0
+offset_bottom = 230.0
+theme_override_fonts/font = ExtResource("3_p8ri8")
+theme_override_font_sizes/font_size = 96
+theme_override_constants/outline_size = 12
+text = "John's Adventure"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="." unique_id=777211825]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 222.0
+offset_right = 200.0
+offset_bottom = 252.0
+theme_override_font_sizes/font_size = 20
+text = "Chapter 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=1624797249]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 330.0
+offset_right = 100.0
+offset_bottom = 330.0
+theme_override_constants/separation = 10
+
+[node name="ContinueButton" type="Button" parent="Buttons" unique_id=2029134753]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Continue"
+
+[node name="NewGameButton" type="Button" parent="Buttons" unique_id=1227347851]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "New Game"
+
+[node name="HowToPlayButton" type="Button" parent="Buttons" unique_id=158456705]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "How to Play"
+
+[node name="QuitButton" type="Button" parent="Buttons" unique_id=1901875836]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Quit"
+
+[node name="HowToPlay" type="PanelContainer" parent="." unique_id=362479883 instance=ExtResource("4_ubpvv")]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -290.0
+offset_right = 400.0
+offset_bottom = 290.0
+script = ExtResource("5_arv2f")

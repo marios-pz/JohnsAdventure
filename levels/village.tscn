@@ -1,0 +1,509 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_w2pu8"]
+[ext_resource type="PackedScene" path="res://props/hori_road.tscn" id="2_p4yrh"]
+[ext_resource type="PackedScene" path="res://props/ver_road.tscn" id="3_4as5p"]
+[ext_resource type="PackedScene" path="res://props/ver_road_half.tscn" id="4_k2u2v"]
+[ext_resource type="PackedScene" path="res://props/ver_dirt.tscn" id="5_bfnlc"]
+[ext_resource type="PackedScene" path="res://props/hori_road_half.tscn" id="6_yng70"]
+[ext_resource type="PackedScene" path="res://props/grass.tscn" id="7_yt3ba"]
+[ext_resource type="PackedScene" path="res://props/bush.tscn" id="8_6gvgy"]
+[ext_resource type="PackedScene" path="res://props/hill_mid.tscn" id="9_6ugpt"]
+[ext_resource type="PackedScene" path="res://props/hill_side_outer_rev.tscn" id="10_kgswg"]
+[ext_resource type="PackedScene" path="res://props/hill_side_outer.tscn" id="11_2eucf"]
+[ext_resource type="PackedScene" path="res://props/john_house.tscn" id="12_fuxrk"]
+[ext_resource type="PackedScene" path="res://props/manos_hut.tscn" id="13_kkapv"]
+[ext_resource type="PackedScene" path="res://props/feevos_shop.tscn" id="14_q06i2"]
+[ext_resource type="PackedScene" path="res://props/cave_entrance.tscn" id="15_rw4ol"]
+[ext_resource type="PackedScene" path="res://props/cave_spike.tscn" id="16_qihe8"]
+[ext_resource type="PackedScene" path="res://props/hori_fence.tscn" id="17_gsxdn"]
+[ext_resource type="PackedScene" path="res://props/hori_fence_rev.tscn" id="18_g80y2"]
+[ext_resource type="PackedScene" path="res://props/tree.tscn" id="19_r62yx"]
+[ext_resource type="PackedScene" path="res://props/street_lamp.tscn" id="20_eqs58"]
+[ext_resource type="PackedScene" path="res://props/sign_all.tscn" id="21_jtbic"]
+[ext_resource type="PackedScene" path="res://npcs/mau.tscn" id="22_wj2t5"]
+[ext_resource type="Script" path="res://npcs/npc.gd" id="23_f5exm"]
+[ext_resource type="PackedScene" path="res://npcs/candy.tscn" id="24_pit8o"]
+[ext_resource type="Script" path="res://objects/exit.gd" id="25_imm40"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qouu6"]
+size = Vector2(4700, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ojmt"]
+size = Vector2(90, 220)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hkv5c"]
+size = Vector2(60, 3200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i68b3"]
+size = Vector2(4000, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f75i7"]
+size = Vector2(60, 1680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3c36"]
+size = Vector2(60, 1200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1tdtv"]
+size = Vector2(100, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gobs8"]
+size = Vector2(100, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_06wni"]
+size = Vector2(672, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmfpg"]
+size = Vector2(120, 340)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pimed"]
+size = Vector2(60, 170)
+
+[node name="Village" type="Node2D" unique_id=178763800]
+script = ExtResource("1_w2pu8")
+level_id = "village"
+title = "Porto Rafti Village"
+music = "forest_theme"
+background = Color(0.23921569, 0.4745098, 0.023529412, 1)
+camera_limits = Rect2(-200, -330, 4120, 3210)
+
+[node name="Ground" type="Node2D" parent="." unique_id=52382602]
+
+[node name="HoriRoad" type="Node2D" parent="Ground" unique_id=857265248 instance=ExtResource("2_p4yrh")]
+position = Vector2(-100, 1551)
+
+[node name="HoriRoad2" type="Node2D" parent="Ground" unique_id=1092021254 instance=ExtResource("2_p4yrh")]
+position = Vector2(887, 1551)
+
+[node name="HoriRoad3" type="Node2D" parent="Ground" unique_id=49809861 instance=ExtResource("2_p4yrh")]
+position = Vector2(1874, 1551)
+
+[node name="HoriRoad4" type="Node2D" parent="Ground" unique_id=515707939 instance=ExtResource("2_p4yrh")]
+position = Vector2(2861, 1551)
+
+[node name="HoriRoad5" type="Node2D" parent="Ground" unique_id=779138084 instance=ExtResource("2_p4yrh")]
+position = Vector2(3848, 1551)
+
+[node name="VerRoad" type="Node2D" parent="Ground" unique_id=271888172 instance=ExtResource("3_4as5p")]
+position = Vector2(2673, 229.5)
+
+[node name="VerRoadHalf" type="Node2D" parent="Ground" unique_id=1882126029 instance=ExtResource("4_k2u2v")]
+position = Vector2(2673, 1000.5)
+
+[node name="VerRoadHalf2" type="Node2D" parent="Ground" unique_id=268192674 instance=ExtResource("4_k2u2v")]
+position = Vector2(2673, 1483.5)
+
+[node name="VerDirt" type="Node2D" parent="Ground" unique_id=2101547238 instance=ExtResource("5_bfnlc")]
+position = Vector2(652, 1392.5)
+
+[node name="VerDirt2" type="Node2D" parent="Ground" unique_id=945862270 instance=ExtResource("5_bfnlc")]
+position = Vector2(1870, 1481.5)
+
+[node name="VerRoad2" type="Node2D" parent="Ground" unique_id=1300019471 instance=ExtResource("3_4as5p")]
+position = Vector2(1880, 2131.5)
+
+[node name="HoriRoadHalf" type="Node2D" parent="Ground" unique_id=1037987832 instance=ExtResource("6_yng70")]
+position = Vector2(1422, 2281)
+
+[node name="Grass" type="Node2D" parent="Ground" unique_id=158152445 instance=ExtResource("7_yt3ba")]
+position = Vector2(175.01237, 1441.406)
+
+[node name="Grass2" type="Node2D" parent="Ground" unique_id=52933904 instance=ExtResource("7_yt3ba")]
+position = Vector2(95.41226, 1439.1796)
+
+[node name="Grass3" type="Node2D" parent="Ground" unique_id=161979978 instance=ExtResource("7_yt3ba")]
+position = Vector2(1174.778, 1448.656)
+
+[node name="Grass4" type="Node2D" parent="Ground" unique_id=2004870791 instance=ExtResource("7_yt3ba")]
+position = Vector2(1086.8971, 1434.0559)
+
+[node name="Grass5" type="Node2D" parent="Ground" unique_id=147660633 instance=ExtResource("7_yt3ba")]
+position = Vector2(2175.9553, 1442.6674)
+
+[node name="Grass6" type="Node2D" parent="Ground" unique_id=410458599 instance=ExtResource("7_yt3ba")]
+position = Vector2(2080.622, 1436.541)
+
+[node name="Grass7" type="Node2D" parent="Ground" unique_id=1887708953 instance=ExtResource("7_yt3ba")]
+position = Vector2(3055.9805, 1393.7759)
+
+[node name="Grass8" type="Node2D" parent="Ground" unique_id=1875633332 instance=ExtResource("7_yt3ba")]
+position = Vector2(2970.8188, 1439.5344)
+
+[node name="Grass9" type="Node2D" parent="Ground" unique_id=1763546422 instance=ExtResource("7_yt3ba")]
+position = Vector2(470.4643, 1686.2512)
+
+[node name="Grass10" type="Node2D" parent="Ground" unique_id=234283880 instance=ExtResource("7_yt3ba")]
+position = Vector2(373.53986, 1665.2843)
+
+[node name="Grass11" type="Node2D" parent="Ground" unique_id=1373746122 instance=ExtResource("7_yt3ba")]
+position = Vector2(1491.582, 1684.583)
+
+[node name="Grass12" type="Node2D" parent="Ground" unique_id=493478239 instance=ExtResource("7_yt3ba")]
+position = Vector2(1424.6805, 1698.3623)
+
+[node name="Grass13" type="Node2D" parent="Ground" unique_id=1326498034 instance=ExtResource("7_yt3ba")]
+position = Vector2(2462.0627, 1676.8208)
+
+[node name="Grass14" type="Node2D" parent="Ground" unique_id=188584180 instance=ExtResource("7_yt3ba")]
+position = Vector2(2384.7246, 1662.5391)
+
+[node name="Grass15" type="Node2D" parent="Ground" unique_id=791577595 instance=ExtResource("7_yt3ba")]
+position = Vector2(3370.2327, 1682.5674)
+
+[node name="Grass16" type="Node2D" parent="Ground" unique_id=68518573 instance=ExtResource("7_yt3ba")]
+position = Vector2(3283.1462, 1664.3496)
+
+[node name="Grass17" type="Node2D" parent="Ground" unique_id=1174905447 instance=ExtResource("7_yt3ba")]
+position = Vector2(2384.2415, 1211.6311)
+
+[node name="Grass18" type="Node2D" parent="Ground" unique_id=1293977354 instance=ExtResource("7_yt3ba")]
+position = Vector2(2366.8132, 1146.7311)
+
+[node name="Grass19" type="Node2D" parent="Ground" unique_id=1814952520 instance=ExtResource("7_yt3ba")]
+position = Vector2(2900.8567, 1389.8505)
+
+[node name="Grass20" type="Node2D" parent="Ground" unique_id=539208813 instance=ExtResource("7_yt3ba")]
+position = Vector2(2029.4722, 2024.3206)
+
+[node name="Bush" type="Node2D" parent="Ground" unique_id=1692948001 instance=ExtResource("8_6gvgy")]
+position = Vector2(2593.0603, 1408.0127)
+
+[node name="Bush2" type="Node2D" parent="Ground" unique_id=1964548398 instance=ExtResource("8_6gvgy")]
+position = Vector2(2809.0115, 1396.2406)
+
+[node name="World" type="Node2D" parent="." unique_id=273010662]
+y_sort_enabled = true
+
+[node name="HillMid" type="Node2D" parent="World" unique_id=1477381896 instance=ExtResource("9_6ugpt")]
+position = Vector2(-300, -17)
+
+[node name="HillMid2" type="Node2D" parent="World" unique_id=294861036 instance=ExtResource("9_6ugpt")]
+position = Vector2(372, -17)
+
+[node name="HillMid3" type="Node2D" parent="World" unique_id=1998471380 instance=ExtResource("9_6ugpt")]
+position = Vector2(1044, -17)
+
+[node name="HillSideOuterRev" type="Node2D" parent="World" unique_id=452564695 instance=ExtResource("10_kgswg")]
+position = Vector2(1716, -18.5)
+
+[node name="HillSideOuter" type="Node2D" parent="World" unique_id=1822760797 instance=ExtResource("11_2eucf")]
+position = Vector2(3060, -18.5)
+
+[node name="HillMid4" type="Node2D" parent="World" unique_id=1613382171 instance=ExtResource("9_6ugpt")]
+position = Vector2(3732, -17)
+
+[node name="Wall" type="StaticBody2D" parent="World" unique_id=1918362720]
+position = Vector2(-300, -330)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/Wall" unique_id=1806410394]
+position = Vector2(2350, 20)
+shape = SubResource("RectangleShape2D_qouu6")
+
+[node name="JohnHouse" type="Node2D" parent="World" unique_id=837790130 instance=ExtResource("12_fuxrk")]
+position = Vector2(300, 1100)
+
+[node name="ManosHut" type="Node2D" parent="World" unique_id=1844616651 instance=ExtResource("13_kkapv")]
+position = Vector2(1500, 1111)
+
+[node name="FeevosShop" type="Node2D" parent="World" unique_id=1600614283 instance=ExtResource("14_q06i2")]
+position = Vector2(2950, 1300)
+
+[node name="CaveEntrance" type="Node2D" parent="World" unique_id=1562848955 instance=ExtResource("15_rw4ol")]
+position = Vector2(150, 2450)
+
+[node name="Rocks" type="Node2D" parent="World" unique_id=746649242]
+y_sort_enabled = true
+metadata/hide_after = "Defeat the Big Dummie"
+
+[node name="CaveSpike" type="Node2D" parent="World/Rocks" unique_id=114031749 instance=ExtResource("16_qihe8")]
+position = Vector2(1430, 2190.5)
+
+[node name="CaveSpike2" type="Node2D" parent="World/Rocks" unique_id=500375643 instance=ExtResource("16_qihe8")]
+position = Vector2(1470, 2240.5)
+
+[node name="CaveSpike3" type="Node2D" parent="World/Rocks" unique_id=1504211426 instance=ExtResource("16_qihe8")]
+position = Vector2(1420, 2280.5)
+
+[node name="CaveSpike4" type="Node2D" parent="World/Rocks" unique_id=212573492 instance=ExtResource("16_qihe8")]
+position = Vector2(1465, 2330.5)
+
+[node name="CaveSpike5" type="Node2D" parent="World/Rocks" unique_id=1515635528 instance=ExtResource("16_qihe8")]
+position = Vector2(1440, 2370.5)
+
+[node name="Wall" type="StaticBody2D" parent="World/Rocks" unique_id=1253191327]
+position = Vector2(1422, 2150)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/Rocks/Wall" unique_id=67637207]
+position = Vector2(45, 110)
+shape = SubResource("RectangleShape2D_7ojmt")
+
+[node name="HoriFence" type="Node2D" parent="World" unique_id=2055616898 instance=ExtResource("17_gsxdn")]
+position = Vector2(-50, 1384)
+
+[node name="HoriFenceRev" type="Node2D" parent="World" unique_id=1477871531 instance=ExtResource("18_g80y2")]
+position = Vector2(770, 1384)
+
+[node name="@StaticBody2D@34" type="StaticBody2D" parent="World" unique_id=1500370677]
+position = Vector2(-60, -300)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@34" unique_id=2107155231]
+position = Vector2(30, 1600)
+shape = SubResource("RectangleShape2D_hkv5c")
+
+[node name="@StaticBody2D@35" type="StaticBody2D" parent="World" unique_id=2005038801]
+position = Vector2(-60, 2820)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@35" unique_id=284888090]
+position = Vector2(2000, 30)
+shape = SubResource("RectangleShape2D_i68b3")
+
+[node name="@StaticBody2D@36" type="StaticBody2D" parent="World" unique_id=784606575]
+position = Vector2(3900, -300)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@36" unique_id=753786233]
+position = Vector2(30, 840)
+shape = SubResource("RectangleShape2D_f75i7")
+
+[node name="@StaticBody2D@37" type="StaticBody2D" parent="World" unique_id=2055651366]
+position = Vector2(3900, 1720)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@37" unique_id=855144737]
+position = Vector2(30, 600)
+shape = SubResource("RectangleShape2D_d3c36")
+
+[node name="Tree" type="Node2D" parent="World" unique_id=1020757531 instance=ExtResource("19_r62yx")]
+position = Vector2(-303.45493, 430.30774)
+
+[node name="Tree2" type="Node2D" parent="World" unique_id=77476426 instance=ExtResource("19_r62yx")]
+position = Vector2(-183.45493, 560.30774)
+
+[node name="Tree3" type="Node2D" parent="World" unique_id=1599717650 instance=ExtResource("19_r62yx")]
+position = Vector2(-299.76172, 712.2991)
+
+[node name="Tree4" type="Node2D" parent="World" unique_id=427675207 instance=ExtResource("19_r62yx")]
+position = Vector2(-49.76172, 842.2991)
+
+[node name="Tree5" type="Node2D" parent="World" unique_id=500045521 instance=ExtResource("19_r62yx")]
+position = Vector2(-304.0057, 958.7102)
+
+[node name="Tree6" type="Node2D" parent="World" unique_id=2096160131 instance=ExtResource("19_r62yx")]
+position = Vector2(-184.0057, 1088.7102)
+
+[node name="Tree7" type="Node2D" parent="World" unique_id=2144411740 instance=ExtResource("19_r62yx")]
+position = Vector2(-311.29196, 1253.0477)
+
+[node name="Tree8" type="Node2D" parent="World" unique_id=1193866712 instance=ExtResource("19_r62yx")]
+position = Vector2(-61.29196, 1383.0477)
+
+[node name="Tree9" type="Node2D" parent="World" unique_id=1737169089 instance=ExtResource("19_r62yx")]
+position = Vector2(-310.02164, 1786.8481)
+
+[node name="Tree10" type="Node2D" parent="World" unique_id=629915109 instance=ExtResource("19_r62yx")]
+position = Vector2(-298.73813, 2042.1637)
+
+[node name="Tree11" type="Node2D" parent="World" unique_id=1790091353 instance=ExtResource("19_r62yx")]
+position = Vector2(-178.73813, 2172.1636)
+
+[node name="Tree12" type="Node2D" parent="World" unique_id=1757016796 instance=ExtResource("19_r62yx")]
+position = Vector2(1603.223, 2629.7505)
+
+[node name="Tree13" type="Node2D" parent="World" unique_id=9989177 instance=ExtResource("19_r62yx")]
+position = Vector2(1743.223, 2779.7505)
+
+[node name="Tree14" type="Node2D" parent="World" unique_id=169028667 instance=ExtResource("19_r62yx")]
+position = Vector2(1907.7269, 2635.5403)
+
+[node name="Tree15" type="Node2D" parent="World" unique_id=903592956 instance=ExtResource("19_r62yx")]
+position = Vector2(2187.727, 2785.5403)
+
+[node name="Tree16" type="Node2D" parent="World" unique_id=22288812 instance=ExtResource("19_r62yx")]
+position = Vector2(2177.6816, 2636.1243)
+
+[node name="Tree17" type="Node2D" parent="World" unique_id=795247510 instance=ExtResource("19_r62yx")]
+position = Vector2(2317.6816, 2786.1243)
+
+[node name="Tree18" type="Node2D" parent="World" unique_id=1018172225 instance=ExtResource("19_r62yx")]
+position = Vector2(2439.9233, 2644.251)
+
+[node name="Tree19" type="Node2D" parent="World" unique_id=620505381 instance=ExtResource("19_r62yx")]
+position = Vector2(2719.9233, 2794.251)
+
+[node name="Tree20" type="Node2D" parent="World" unique_id=1460153255 instance=ExtResource("19_r62yx")]
+position = Vector2(2752.2566, 2641.1162)
+
+[node name="Tree21" type="Node2D" parent="World" unique_id=1696012489 instance=ExtResource("19_r62yx")]
+position = Vector2(2892.2566, 2791.1162)
+
+[node name="Tree22" type="Node2D" parent="World" unique_id=590786716 instance=ExtResource("19_r62yx")]
+position = Vector2(3019.91, 2659.8665)
+
+[node name="Tree23" type="Node2D" parent="World" unique_id=670461342 instance=ExtResource("19_r62yx")]
+position = Vector2(3299.91, 2809.8665)
+
+[node name="Tree24" type="Node2D" parent="World" unique_id=79380838 instance=ExtResource("19_r62yx")]
+position = Vector2(3334.6697, 2638.2622)
+
+[node name="Tree25" type="Node2D" parent="World" unique_id=684292704 instance=ExtResource("19_r62yx")]
+position = Vector2(3474.6697, 2788.2622)
+
+[node name="Tree26" type="Node2D" parent="World" unique_id=459876227 instance=ExtResource("19_r62yx")]
+position = Vector2(3598.603, 2637.6174)
+
+[node name="Tree27" type="Node2D" parent="World" unique_id=363886925 instance=ExtResource("19_r62yx")]
+position = Vector2(3878.603, 2787.6174)
+
+[node name="Tree28" type="Node2D" parent="World" unique_id=305866949 instance=ExtResource("19_r62yx")]
+position = Vector2(3490.2798, 466.24628)
+
+[node name="Tree29" type="Node2D" parent="World" unique_id=656699348 instance=ExtResource("19_r62yx")]
+position = Vector2(3620.2798, 586.2463)
+
+[node name="Tree30" type="Node2D" parent="World" unique_id=1844036255 instance=ExtResource("19_r62yx")]
+position = Vector2(3502.1006, 743.94305)
+
+[node name="Tree31" type="Node2D" parent="World" unique_id=1769470142 instance=ExtResource("19_r62yx")]
+position = Vector2(3762.1006, 863.94305)
+
+[node name="Tree32" type="Node2D" parent="World" unique_id=797665048 instance=ExtResource("19_r62yx")]
+position = Vector2(3498.8313, 1069.2306)
+
+[node name="Tree33" type="Node2D" parent="World" unique_id=1035043930 instance=ExtResource("19_r62yx")]
+position = Vector2(3628.8313, 1189.2306)
+
+[node name="Tree34" type="Node2D" parent="World" unique_id=1368886158 instance=ExtResource("19_r62yx")]
+position = Vector2(3505.9082, 2097.9756)
+
+[node name="Tree35" type="Node2D" parent="World" unique_id=998459941 instance=ExtResource("19_r62yx")]
+position = Vector2(3635.9082, 2217.9756)
+
+[node name="Tree36" type="Node2D" parent="World" unique_id=798760034 instance=ExtResource("19_r62yx")]
+position = Vector2(3497.088, 2568.9143)
+
+[node name="Tree37" type="Node2D" parent="World" unique_id=768631827 instance=ExtResource("19_r62yx")]
+position = Vector2(3757.088, 2688.9143)
+
+[node name="Tree38" type="Node2D" parent="World" unique_id=460868573 instance=ExtResource("19_r62yx")]
+position = Vector2(1014.59235, 768.86993)
+
+[node name="Tree39" type="Node2D" parent="World" unique_id=911722840 instance=ExtResource("19_r62yx")]
+position = Vector2(1163.3575, 411.09818)
+
+[node name="Tree40" type="Node2D" parent="World" unique_id=851913602 instance=ExtResource("19_r62yx")]
+position = Vector2(2383.7297, 656.202)
+
+[node name="Tree41" type="Node2D" parent="World" unique_id=290489138 instance=ExtResource("19_r62yx")]
+position = Vector2(2446.3613, 2167.7583)
+
+[node name="Tree42" type="Node2D" parent="World" unique_id=2109835157 instance=ExtResource("19_r62yx")]
+position = Vector2(2206.9368, 2292.469)
+
+[node name="Tree43" type="Node2D" parent="World" unique_id=327687375 instance=ExtResource("19_r62yx")]
+position = Vector2(2374.739, 1919.9016)
+
+[node name="StreetLamp" type="Node2D" parent="World" unique_id=270348123 instance=ExtResource("20_eqs58")]
+position = Vector2(1300, 1490)
+
+[node name="StreetLamp2" type="Node2D" parent="World" unique_id=1659865241 instance=ExtResource("20_eqs58")]
+position = Vector2(2450, 1490)
+
+[node name="StreetLamp3" type="Node2D" parent="World" unique_id=2049016941 instance=ExtResource("20_eqs58")]
+position = Vector2(3350, 1490)
+
+[node name="SignAll" type="Node2D" parent="World" unique_id=2100699815 instance=ExtResource("21_jtbic")]
+position = Vector2(2500, 1515)
+
+[node name="Mau" type="CharacterBody2D" parent="World" unique_id=740709301 instance=ExtResource("22_wj2t5")]
+position = Vector2(2200, 1900)
+motion_mode = 1
+script = ExtResource("23_f5exm")
+id = "Mau"
+display_name = "Mau"
+wander_distance = 300.0
+
+[node name="Candy" type="CharacterBody2D" parent="World" unique_id=373128952 instance=ExtResource("24_pit8o")]
+position = Vector2(1000, 1450)
+motion_mode = 1
+script = ExtResource("23_f5exm")
+id = "Candy"
+display_name = "Candy"
+wander_distance = 250.0
+speed = 90.0
+metadata/show_after = "Defeat the Big Dummie"
+
+[node name="Overlay" type="Node2D" parent="." unique_id=1046909008]
+z_index = 20
+
+[node name="Exits" type="Node2D" parent="." unique_id=678234497]
+
+[node name="ToKitchen" type="Area2D" parent="Exits" unique_id=689130567]
+position = Vector2(654, 1205)
+script = ExtResource("25_imm40")
+target = "kitchen"
+display_name = "John's house"
+prompt = "Go inside?"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToKitchen" unique_id=470404106]
+position = Vector2(50, 35)
+shape = SubResource("RectangleShape2D_1tdtv")
+
+[node name="ToManosHut" type="Area2D" parent="Exits" unique_id=1591577939]
+position = Vector2(1872, 1180)
+script = ExtResource("25_imm40")
+target = "manos_hut"
+display_name = "Manos's hut"
+prompt = "Enter Manos's hut?"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToManosHut" unique_id=2093936465]
+position = Vector2(50, 30)
+shape = SubResource("RectangleShape2D_gobs8")
+
+[node name="ToSchool" type="Area2D" parent="Exits" unique_id=186594086]
+position = Vector2(2388, -250)
+script = ExtResource("25_imm40")
+target = "school"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToSchool" unique_id=2117178173]
+position = Vector2(336, 30)
+shape = SubResource("RectangleShape2D_06wni")
+
+[node name="ToTrainingField" type="Area2D" parent="Exits" unique_id=1520448412]
+position = Vector2(3840, 1380)
+script = ExtResource("25_imm40")
+target = "training_field"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToTrainingField" unique_id=45888042]
+position = Vector2(60, 170)
+shape = SubResource("RectangleShape2D_gmfpg")
+
+[node name="ToCaveGarden" type="Area2D" parent="Exits" unique_id=1452114100]
+position = Vector2(1440, 2170)
+script = ExtResource("25_imm40")
+target = "cave_garden"
+metadata/show_after = "Defeat the Big Dummie"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToCaveGarden" unique_id=1968270175]
+position = Vector2(30, 85)
+shape = SubResource("RectangleShape2D_pimed")
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1412208888]
+
+[node name="kitchen" type="Marker2D" parent="Spawns" unique_id=216025098]
+position = Vector2(704, 1330)
+
+[node name="manos_hut" type="Marker2D" parent="Spawns" unique_id=474281437]
+position = Vector2(1922, 1340)
+
+[node name="school" type="Marker2D" parent="Spawns" unique_id=566375850]
+position = Vector2(2724, 150)
+
+[node name="training_field" type="Marker2D" parent="Spawns" unique_id=989710487]
+position = Vector2(3680, 1560)
+
+[node name="cave_garden" type="Marker2D" parent="Spawns" unique_id=1824207981]
+position = Vector2(1580, 2300)

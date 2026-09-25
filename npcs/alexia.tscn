@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://npcs/npc.gd" id="1_0b0rs"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs.png" id="2_f1vxe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gf1bv"]
+size = Vector2(46.8, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2top1"]
+atlas = ExtResource("2_f1vxe")
+region = Rect2(0, 169, 26, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwoeb"]
+atlas = ExtResource("2_f1vxe")
+region = Rect2(26, 169, 26, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s443w"]
+atlas = ExtResource("2_f1vxe")
+region = Rect2(52, 169, 26, 43)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjvjk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2top1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwoeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s443w")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.5
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tq5wi"]
+size = Vector2(138, 179)
+
+[node name="Alexia" type="CharacterBody2D" unique_id=1068571711]
+motion_mode = 1
+script = ExtResource("1_0b0rs")
+id = "Alexia"
+display_name = "Alexia"
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=30672708]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_gf1bv")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1385355715]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_bjvjk")
+animation = &"idle"
+offset = Vector2(0, -21.5)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1207093328]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="InteractArea" unique_id=307955335]
+position = Vector2(0, -49.5)
+shape = SubResource("RectangleShape2D_tq5wi")

@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/houses.png" id="1_q4gp1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lights/radial.png" id="2_e86rx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43i3y"]
+atlas = ExtResource("1_q4gp1")
+region = Rect2(557, 64, 218, 213)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3fv18"]
+size = Vector2(540, 390)
+
+[sub_resource type="Gradient" id="Gradient_svn3s"]
+colors = PackedColorArray(0.7, 0.7, 0.7, 0.7, 0.85, 0.85, 0.85, 0)
+
+[node name="FeevosShop" type="Node2D" unique_id=1600614283]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1707786590]
+position = Vector2(0, -600)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_43i3y")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1203771410]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=944282588]
+position = Vector2(330, -159)
+shape = SubResource("RectangleShape2D_3fv18")
+
+[node name="Smoke" type="CPUParticles2D" parent="." unique_id=2118537897]
+position = Vector2(504, -555)
+amount = 14
+texture = ExtResource("2_e86rx")
+lifetime = 4.0
+preprocess = 4.0
+direction = Vector2(0.3, -1)
+spread = 12.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 45.0
+scale_amount_min = 0.12
+scale_amount_max = 0.3
+color_ramp = SubResource("Gradient_svn3s")

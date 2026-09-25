@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/cave_walls.png" id="1_2vf40"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0xfj"]
+atlas = ExtResource("1_2vf40")
+region = Rect2(35, 150, 159, 73)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kn8vj"]
+size = Vector2(474, 129)
+
+[node name="CFlippedCorner" type="Node2D" unique_id=1012795133]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=710870741]
+position = Vector2(0, -109.5)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_p0xfj")
+centered = false
+flip_h = true
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=451457110]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=2066086404]
+position = Vector2(240, 45)
+shape = SubResource("RectangleShape2D_kn8vj")

@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_0jhwr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvawa"]
+atlas = ExtResource("1_0jhwr")
+region = Rect2(259, 249, 28, 26)
+
+[node name="Grass" type="Node2D" unique_id=158152445]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1351983010]
+position = Vector2(0, -26)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_jvawa")
+centered = false

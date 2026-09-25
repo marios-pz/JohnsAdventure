@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/houses.png" id="1_e7rdp"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lights/radial.png" id="2_3d8s3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sx800"]
+atlas = ExtResource("1_e7rdp")
+region = Rect2(0, 0, 282, 344)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8y66"]
+size = Vector2(846, 510)
+
+[sub_resource type="Gradient" id="Gradient_rbd8g"]
+colors = PackedColorArray(0.7, 0.7, 0.7, 0.7, 0.85, 0.85, 0.85, 0)
+
+[node name="ManosHut" type="Node2D" unique_id=1844616651]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=709745452]
+position = Vector2(0, -831)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_sx800")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=64262119]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1141007333]
+position = Vector2(423, -207)
+shape = SubResource("RectangleShape2D_b8y66")
+
+[node name="Smoke" type="CPUParticles2D" parent="." unique_id=2123295837]
+position = Vector2(240, -465)
+amount = 14
+texture = ExtResource("2_3d8s3")
+lifetime = 4.0
+preprocess = 4.0
+direction = Vector2(0.3, -1)
+spread = 12.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 45.0
+scale_amount_min = 0.12
+scale_amount_max = 0.3
+color_ramp = SubResource("Gradient_rbd8g")

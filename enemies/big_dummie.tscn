@@ -1,0 +1,241 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://enemies/boss.gd" id="1_3bp74"]
+[ext_resource type="PackedScene" path="res://enemies/shadow_dummy.tscn" id="2_45paf"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow_dummy.png" id="3_lebys"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ydv6"]
+size = Vector2(120, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1cll"]
+atlas = ExtResource("3_lebys")
+region = Rect2(0, 50, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5q1lw"]
+atlas = ExtResource("3_lebys")
+region = Rect2(29, 50, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23siq"]
+atlas = ExtResource("3_lebys")
+region = Rect2(58, 50, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjdns"]
+atlas = ExtResource("3_lebys")
+region = Rect2(87, 50, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ub7m"]
+atlas = ExtResource("3_lebys")
+region = Rect2(116, 50, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2srm"]
+atlas = ExtResource("3_lebys")
+region = Rect2(0, 75, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awe2p"]
+atlas = ExtResource("3_lebys")
+region = Rect2(29, 75, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sirkj"]
+atlas = ExtResource("3_lebys")
+region = Rect2(58, 75, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oypd0"]
+atlas = ExtResource("3_lebys")
+region = Rect2(87, 75, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u1g0"]
+atlas = ExtResource("3_lebys")
+region = Rect2(116, 75, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ninbk"]
+atlas = ExtResource("3_lebys")
+region = Rect2(0, 0, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ft8w7"]
+atlas = ExtResource("3_lebys")
+region = Rect2(0, 0, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dl7xc"]
+atlas = ExtResource("3_lebys")
+region = Rect2(29, 0, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8ynt"]
+atlas = ExtResource("3_lebys")
+region = Rect2(58, 0, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vsn5"]
+atlas = ExtResource("3_lebys")
+region = Rect2(87, 0, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qe5w"]
+atlas = ExtResource("3_lebys")
+region = Rect2(116, 0, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1e8u"]
+atlas = ExtResource("3_lebys")
+region = Rect2(0, 25, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0k8i"]
+atlas = ExtResource("3_lebys")
+region = Rect2(29, 25, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvrbc"]
+atlas = ExtResource("3_lebys")
+region = Rect2(58, 25, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8j2m"]
+atlas = ExtResource("3_lebys")
+region = Rect2(87, 25, 29, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pd63f"]
+atlas = ExtResource("3_lebys")
+region = Rect2(116, 25, 29, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u05jv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1cll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q1lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23siq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjdns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ub7m")
+}],
+"loop": 0,
+"name": &"attack_left",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2srm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awe2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sirkj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oypd0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u1g0")
+}],
+"loop": 0,
+"name": &"attack_right",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ninbk")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ft8w7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dl7xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8ynt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vsn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qe5w")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1e8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0k8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvrbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8j2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pd63f")
+}],
+"loop": 1,
+"name": &"walk_right",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jit7m"]
+size = Vector2(200, 200)
+
+[node name="BigDummie" type="CharacterBody2D" unique_id=1536092815]
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_3bp74")
+minion = ExtResource("2_45paf")
+kind = "BigDummie"
+display_name = "The Big Dummie"
+max_hp = 600
+xp = 400
+speed = 75.0
+damage = 14
+sight_range = 1400.0
+attack_range = 170.0
+windup = 0.7
+recover = 1.0
+knockback = 550.0
+knockable = false
+aura = true
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=949921718]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_4ydv6")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=640707218]
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_u05jv")
+animation = &"idle"
+centered = false
+offset = Vector2(-14.5, -24)
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=715975795]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea" unique_id=1432341777]
+position = Vector2(140, -28)
+shape = SubResource("RectangleShape2D_jit7m")
+
+[node name="Aura" type="CPUParticles2D" parent="." unique_id=451991178]
+show_behind_parent = true
+position = Vector2(0, -96)
+amount = 16
+lifetime = 1.2
+emission_shape = 3
+emission_rect_extents = Vector2(58, 67.2)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 60.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color = Color(0.45, 0.15, 0.8, 0.8)

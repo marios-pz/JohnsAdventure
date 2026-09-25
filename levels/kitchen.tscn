@@ -1,0 +1,175 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_yg3w2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/world/kitchen.png" id="2_j37k6"]
+[ext_resource type="PackedScene" path="res://npcs/cynthia.tscn" id="3_a8v1b"]
+[ext_resource type="Script" path="res://npcs/npc.gd" id="4_amo3k"]
+[ext_resource type="Script" path="res://objects/exit.gd" id="5_vqm0c"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lights/cone.png" id="6_48ea6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_33cff"]
+size = Vector2(40, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7hu8"]
+size = Vector2(1280, 133)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0npq"]
+size = Vector2(10, 586)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkim1"]
+size = Vector2(1280, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pnyds"]
+size = Vector2(250, 350)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxbpt"]
+size = Vector2(64, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ct8bv"]
+size = Vector2(990, 230)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsnc5"]
+size = Vector2(256, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8eye8"]
+size = Vector2(138, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cogh"]
+size = Vector2(195, 90)
+
+[node name="Kitchen" type="Node2D" unique_id=973022329]
+script = ExtResource("1_yg3w2")
+level_id = "kitchen"
+title = "Kitchen"
+camera_limits = Rect2(0, 0, 1280, 720)
+start_position = Vector2(570, 531)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=736285511]
+color = Color(0.72, 0.7, 0.74, 1)
+
+[node name="Ground" type="Node2D" parent="." unique_id=782161910]
+
+[node name="Background" type="Sprite2D" parent="Ground" unique_id=666312854]
+scale = Vector2(2.825607, 2.7480917)
+texture = ExtResource("2_j37k6")
+centered = false
+
+[node name="World" type="Node2D" parent="." unique_id=1444294341]
+y_sort_enabled = true
+
+[node name="Wall" type="StaticBody2D" parent="World" unique_id=2122519772]
+position = Vector2(-40, 0)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/Wall" unique_id=1468500369]
+position = Vector2(20, 360)
+shape = SubResource("RectangleShape2D_33cff")
+
+[node name="@StaticBody2D@27" type="StaticBody2D" parent="World" unique_id=1698217569]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@27" unique_id=1763974708]
+position = Vector2(640, 66.5)
+shape = SubResource("RectangleShape2D_x7hu8")
+
+[node name="@StaticBody2D@28" type="StaticBody2D" parent="World" unique_id=1937423870]
+position = Vector2(1270, 134)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@28" unique_id=520551164]
+position = Vector2(5, 293)
+shape = SubResource("RectangleShape2D_y0npq")
+
+[node name="@StaticBody2D@29" type="StaticBody2D" parent="World" unique_id=488008434]
+position = Vector2(0, 711)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@29" unique_id=1105979792]
+position = Vector2(640, 4.5)
+shape = SubResource("RectangleShape2D_vkim1")
+
+[node name="@StaticBody2D@30" type="StaticBody2D" parent="World" unique_id=1531812293]
+position = Vector2(20, 250)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@30" unique_id=1794684455]
+position = Vector2(125, 175)
+shape = SubResource("RectangleShape2D_pnyds")
+
+[node name="@StaticBody2D@31" type="StaticBody2D" parent="World" unique_id=1228543281]
+position = Vector2(280, 300)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@31" unique_id=1742220667]
+position = Vector2(32, 128)
+shape = SubResource("RectangleShape2D_bxbpt")
+
+[node name="@StaticBody2D@32" type="StaticBody2D" parent="World" unique_id=461780413]
+position = Vector2(10, 0)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@32" unique_id=1142859769]
+position = Vector2(495, 115)
+shape = SubResource("RectangleShape2D_ct8bv")
+
+[node name="@StaticBody2D@33" type="StaticBody2D" parent="World" unique_id=420675936]
+position = Vector2(1020, 440)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@33" unique_id=873271899]
+position = Vector2(128, 100)
+shape = SubResource("RectangleShape2D_xsnc5")
+
+[node name="Cynthia" type="CharacterBody2D" parent="World" unique_id=935896332 instance=ExtResource("3_a8v1b")]
+position = Vector2(570, 283)
+motion_mode = 1
+script = ExtResource("4_amo3k")
+id = "Cynthia"
+display_name = "Cynthia"
+metadata/hide_after = "Meet Manos at the training field"
+
+[node name="Overlay" type="Node2D" parent="." unique_id=818754135]
+z_index = 20
+
+[node name="Exits" type="Node2D" parent="." unique_id=1628319425]
+
+[node name="ToJohnsRoom" type="Area2D" parent="Exits" unique_id=1885785067]
+position = Vector2(1054, 150)
+script = ExtResource("5_vqm0c")
+target = "johns_room"
+display_name = "Stairs"
+prompt = "Back to your room?"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToJohnsRoom" unique_id=1836564490]
+position = Vector2(69, 60)
+shape = SubResource("RectangleShape2D_8eye8")
+
+[node name="ToVillage" type="Area2D" parent="Exits" unique_id=767120389]
+position = Vector2(551, 630)
+script = ExtResource("5_vqm0c")
+target = "village"
+display_name = "Front door"
+prompt = "Go outside?"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToVillage" unique_id=237134592]
+position = Vector2(97.5, 45)
+shape = SubResource("RectangleShape2D_0cogh")
+
+[node name="Spawns" type="Node2D" parent="." unique_id=165351165]
+
+[node name="johns_room" type="Marker2D" parent="Spawns" unique_id=1866384073]
+position = Vector2(1123, 330)
+
+[node name="village" type="Marker2D" parent="Spawns" unique_id=2043782755]
+position = Vector2(640, 560)
+
+[node name="ConeLight" type="Node2D" parent="." unique_id=1605979340]
+position = Vector2(309, 27)
+rotation = 1.6057029
+scale = Vector2(1, 0.9444444)
+
+[node name="Light" type="PointLight2D" parent="ConeLight" unique_id=982741173]
+position = Vector2(280, 0)
+energy = 0.6
+texture = ExtResource("6_48ea6")
+texture_scale = 2.1875

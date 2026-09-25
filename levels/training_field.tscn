@@ -1,0 +1,372 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_dq5ui"]
+[ext_resource type="PackedScene" path="res://props/hori_road.tscn" id="2_2cqik"]
+[ext_resource type="PackedScene" path="res://props/hori_end.tscn" id="3_71ovg"]
+[ext_resource type="PackedScene" path="res://props/grass.tscn" id="4_3ad7a"]
+[ext_resource type="PackedScene" path="res://props/hill_mid.tscn" id="5_is6af"]
+[ext_resource type="PackedScene" path="res://props/tree.tscn" id="6_05eri"]
+[ext_resource type="PackedScene" path="res://npcs/manos.tscn" id="7_q28c0"]
+[ext_resource type="Script" path="res://npcs/npc.gd" id="8_37fb3"]
+[ext_resource type="PackedScene" path="res://npcs/candy.tscn" id="9_shehs"]
+[ext_resource type="PackedScene" path="res://objects/chest.tscn" id="10_8n5f3"]
+[ext_resource type="Script" path="res://objects/chest.gd" id="11_s2maw"]
+[ext_resource type="PackedScene" path="res://enemies/dummy.tscn" id="12_kjtrg"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="13_61rx4"]
+[ext_resource type="PackedScene" path="res://enemies/shadow_dummy.tscn" id="14_a8dnh"]
+[ext_resource type="Script" path="res://objects/exit.gd" id="15_n8ipm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g6nrv"]
+size = Vector2(3400, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dap31"]
+size = Vector2(60, 1000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmt01"]
+size = Vector2(60, 800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vr8p5"]
+size = Vector2(60, 2200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypguq"]
+size = Vector2(2720, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_et8n6"]
+size = Vector2(80, 400)
+
+[node name="TrainingField" type="Node2D" unique_id=1898257199]
+script = ExtResource("1_dq5ui")
+level_id = "training_field"
+title = "Training Field"
+music = "forest_theme"
+background = Color(0.23921569, 0.4745098, 0.023529412, 1)
+camera_limits = Rect2(-140, -330, 2800, 2200)
+
+[node name="Ground" type="Node2D" parent="." unique_id=717087107]
+
+[node name="HoriRoad" type="Node2D" parent="Ground" unique_id=857265248 instance=ExtResource("2_2cqik")]
+position = Vector2(-100, 911)
+
+[node name="HoriEnd" type="Node2D" parent="Ground" unique_id=2134414332 instance=ExtResource("3_71ovg")]
+position = Vector2(887, 903.5)
+
+[node name="Grass" type="Node2D" parent="Ground" unique_id=158152445 instance=ExtResource("4_3ad7a")]
+position = Vector2(839.17, 671.5105)
+
+[node name="Grass2" type="Node2D" parent="Ground" unique_id=1835649730 instance=ExtResource("4_3ad7a")]
+position = Vector2(885.58685, 593.8925)
+
+[node name="Grass3" type="Node2D" parent="Ground" unique_id=1464851466 instance=ExtResource("4_3ad7a")]
+position = Vector2(2018.1143, 596.61896)
+
+[node name="Grass4" type="Node2D" parent="Ground" unique_id=2065622485 instance=ExtResource("4_3ad7a")]
+position = Vector2(2072.1248, 706.39856)
+
+[node name="Grass5" type="Node2D" parent="Ground" unique_id=1084268912 instance=ExtResource("4_3ad7a")]
+position = Vector2(842.6113, 1282.8004)
+
+[node name="Grass6" type="Node2D" parent="Ground" unique_id=1490122312 instance=ExtResource("4_3ad7a")]
+position = Vector2(911.2547, 1315.6565)
+
+[node name="Grass7" type="Node2D" parent="Ground" unique_id=283314973 instance=ExtResource("4_3ad7a")]
+position = Vector2(1996.3679, 1277.6036)
+
+[node name="Grass8" type="Node2D" parent="Ground" unique_id=670224102 instance=ExtResource("4_3ad7a")]
+position = Vector2(383.6941, 1018.59125)
+
+[node name="Grass9" type="Node2D" parent="Ground" unique_id=110697703 instance=ExtResource("4_3ad7a")]
+position = Vector2(394.41525, 1075.1018)
+
+[node name="Grass10" type="Node2D" parent="Ground" unique_id=898432592 instance=ExtResource("4_3ad7a")]
+position = Vector2(668.9118, 724.95966)
+
+[node name="Grass11" type="Node2D" parent="Ground" unique_id=2119184503 instance=ExtResource("4_3ad7a")]
+position = Vector2(587.11127, 724.6189)
+
+[node name="World" type="Node2D" parent="." unique_id=1022090049]
+y_sort_enabled = true
+
+[node name="HillMid" type="Node2D" parent="World" unique_id=1477381896 instance=ExtResource("5_is6af")]
+position = Vector2(-300, -17)
+
+[node name="HillMid2" type="Node2D" parent="World" unique_id=362795065 instance=ExtResource("5_is6af")]
+position = Vector2(372, -17)
+
+[node name="HillMid3" type="Node2D" parent="World" unique_id=2004650285 instance=ExtResource("5_is6af")]
+position = Vector2(1044, -17)
+
+[node name="HillMid4" type="Node2D" parent="World" unique_id=2054461675 instance=ExtResource("5_is6af")]
+position = Vector2(1716, -17)
+
+[node name="HillMid5" type="Node2D" parent="World" unique_id=1458191446 instance=ExtResource("5_is6af")]
+position = Vector2(2388, -17)
+
+[node name="Wall" type="StaticBody2D" parent="World" unique_id=138223012]
+position = Vector2(-300, -330)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/Wall" unique_id=1386969662]
+position = Vector2(1700, 20)
+shape = SubResource("RectangleShape2D_g6nrv")
+
+[node name="@StaticBody2D@38" type="StaticBody2D" parent="World" unique_id=98348465]
+position = Vector2(-60, -300)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@38" unique_id=448862954]
+position = Vector2(30, 500)
+shape = SubResource("RectangleShape2D_dap31")
+
+[node name="@StaticBody2D@39" type="StaticBody2D" parent="World" unique_id=977883500]
+position = Vector2(-60, 1100)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@39" unique_id=673152482]
+position = Vector2(30, 400)
+shape = SubResource("RectangleShape2D_hmt01")
+
+[node name="@StaticBody2D@40" type="StaticBody2D" parent="World" unique_id=2073734726]
+position = Vector2(2600, -300)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@40" unique_id=281088847]
+position = Vector2(30, 1100)
+shape = SubResource("RectangleShape2D_vr8p5")
+
+[node name="@StaticBody2D@41" type="StaticBody2D" parent="World" unique_id=776923882]
+position = Vector2(-60, 1800)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@41" unique_id=1821130729]
+position = Vector2(1360, 30)
+shape = SubResource("RectangleShape2D_ypguq")
+
+[node name="Tree" type="Node2D" parent="World" unique_id=1020757531 instance=ExtResource("6_05eri")]
+position = Vector2(-94.605484, 1657.2212)
+
+[node name="Tree2" type="Node2D" parent="World" unique_id=1777599291 instance=ExtResource("6_05eri")]
+position = Vector2(55.394516, 1797.2212)
+
+[node name="Tree3" type="Node2D" parent="World" unique_id=326631654 instance=ExtResource("6_05eri")]
+position = Vector2(218.55182, 1637.0361)
+
+[node name="Tree4" type="Node2D" parent="World" unique_id=1384930693 instance=ExtResource("6_05eri")]
+position = Vector2(518.5518, 1777.0361)
+
+[node name="Tree5" type="Node2D" parent="World" unique_id=274727411 instance=ExtResource("6_05eri")]
+position = Vector2(518.298, 1646.0264)
+
+[node name="Tree6" type="Node2D" parent="World" unique_id=494599656 instance=ExtResource("6_05eri")]
+position = Vector2(668.298, 1786.0264)
+
+[node name="Tree7" type="Node2D" parent="World" unique_id=27843860 instance=ExtResource("6_05eri")]
+position = Vector2(835.9355, 1645.1384)
+
+[node name="Tree8" type="Node2D" parent="World" unique_id=1071370555 instance=ExtResource("6_05eri")]
+position = Vector2(1135.9355, 1785.1384)
+
+[node name="Tree9" type="Node2D" parent="World" unique_id=2054220190 instance=ExtResource("6_05eri")]
+position = Vector2(1155.8279, 1653.2911)
+
+[node name="Tree10" type="Node2D" parent="World" unique_id=730346337 instance=ExtResource("6_05eri")]
+position = Vector2(1305.8279, 1793.2911)
+
+[node name="Tree11" type="Node2D" parent="World" unique_id=643687510 instance=ExtResource("6_05eri")]
+position = Vector2(1441.5277, 1644.2059)
+
+[node name="Tree12" type="Node2D" parent="World" unique_id=1370090289 instance=ExtResource("6_05eri")]
+position = Vector2(1741.5277, 1784.2059)
+
+[node name="Tree13" type="Node2D" parent="World" unique_id=140512172 instance=ExtResource("6_05eri")]
+position = Vector2(1760.2401, 1639.528)
+
+[node name="Tree14" type="Node2D" parent="World" unique_id=1975998104 instance=ExtResource("6_05eri")]
+position = Vector2(1910.2401, 1779.528)
+
+[node name="Tree15" type="Node2D" parent="World" unique_id=1110331166 instance=ExtResource("6_05eri")]
+position = Vector2(2084.5005, 1641.9172)
+
+[node name="Tree16" type="Node2D" parent="World" unique_id=1351197031 instance=ExtResource("6_05eri")]
+position = Vector2(2384.5005, 1781.9172)
+
+[node name="Tree17" type="Node2D" parent="World" unique_id=683942847 instance=ExtResource("6_05eri")]
+position = Vector2(2368.3691, 1634.7124)
+
+[node name="Tree18" type="Node2D" parent="World" unique_id=1712781625 instance=ExtResource("6_05eri")]
+position = Vector2(2518.3691, 1774.7124)
+
+[node name="Tree19" type="Node2D" parent="World" unique_id=1928013677 instance=ExtResource("6_05eri")]
+position = Vector2(2255.1257, 404.80603)
+
+[node name="Tree20" type="Node2D" parent="World" unique_id=903644129 instance=ExtResource("6_05eri")]
+position = Vector2(2385.1257, 524.806)
+
+[node name="Tree21" type="Node2D" parent="World" unique_id=1001627551 instance=ExtResource("6_05eri")]
+position = Vector2(2265.7993, 765.2872)
+
+[node name="Tree22" type="Node2D" parent="World" unique_id=335953850 instance=ExtResource("6_05eri")]
+position = Vector2(2535.7993, 885.2872)
+
+[node name="Tree23" type="Node2D" parent="World" unique_id=1178254681 instance=ExtResource("6_05eri")]
+position = Vector2(2250.1672, 1111.115)
+
+[node name="Tree24" type="Node2D" parent="World" unique_id=2092739062 instance=ExtResource("6_05eri")]
+position = Vector2(2380.1672, 1231.115)
+
+[node name="Tree25" type="Node2D" parent="World" unique_id=690911030 instance=ExtResource("6_05eri")]
+position = Vector2(2253.1821, 1457.1284)
+
+[node name="Tree26" type="Node2D" parent="World" unique_id=1236031736 instance=ExtResource("6_05eri")]
+position = Vector2(2523.1821, 1577.1284)
+
+[node name="Tree27" type="Node2D" parent="World" unique_id=2137822407 instance=ExtResource("6_05eri")]
+position = Vector2(358.82346, 544.4126)
+
+[node name="Tree28" type="Node2D" parent="World" unique_id=1025540077 instance=ExtResource("6_05eri")]
+position = Vector2(109.196815, 666.4391)
+
+[node name="Tree29" type="Node2D" parent="World" unique_id=1329274049 instance=ExtResource("6_05eri")]
+position = Vector2(270.398, 296.25296)
+
+[node name="Tree30" type="Node2D" parent="World" unique_id=128020032 instance=ExtResource("6_05eri")]
+position = Vector2(1606.6953, 457.41266)
+
+[node name="Manos" type="CharacterBody2D" parent="World" unique_id=1928069272 instance=ExtResource("7_q28c0")]
+position = Vector2(1150, 960)
+motion_mode = 1
+script = ExtResource("8_37fb3")
+id = "Manos"
+display_name = "Manos"
+metadata/hide_after = "Defeat the shadows"
+
+[node name="Candy" type="CharacterBody2D" parent="World" unique_id=373128952 instance=ExtResource("9_shehs")]
+position = Vector2(980, 1100)
+motion_mode = 1
+script = ExtResource("8_37fb3")
+id = "Candy"
+display_name = "Candy"
+wander_distance = 300.0
+speed = 90.0
+metadata/hide_after = "Defeat the Big Dummie"
+
+[node name="Chest" type="StaticBody2D" parent="World" unique_id=1022416036 instance=ExtResource("10_8n5f3")]
+position = Vector2(1350, 880)
+collision_mask = 0
+script = ExtResource("11_s2maw")
+coins = 20
+weapon_id = "training_sword"
+
+[node name="Dummy" type="CharacterBody2D" parent="World" unique_id=1625219216 instance=ExtResource("12_kjtrg")]
+position = Vector2(1650, 820)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_61rx4")
+kind = "Dummy"
+display_name = "Training Dummy"
+max_hp = 60
+xp = 40
+knockable = false
+is_static = true
+
+[node name="Dummy2" type="CharacterBody2D" parent="World" unique_id=1249674313 instance=ExtResource("12_kjtrg")]
+position = Vector2(1650, 1080)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_61rx4")
+kind = "Dummy"
+display_name = "Training Dummy"
+max_hp = 60
+xp = 40
+knockable = false
+is_static = true
+
+[node name="Dummy3" type="CharacterBody2D" parent="World" unique_id=1764545874 instance=ExtResource("12_kjtrg")]
+position = Vector2(1830, 950)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_61rx4")
+kind = "Dummy"
+display_name = "Training Dummy"
+max_hp = 60
+xp = 40
+knockable = false
+is_static = true
+
+[node name="ShadowDummy" type="CharacterBody2D" parent="World" unique_id=1921269138 instance=ExtResource("14_a8dnh")]
+position = Vector2(1780, 680)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_61rx4")
+kind = "ShadowDummy"
+display_name = "Shadow"
+max_hp = 60
+xp = 45
+speed = 115.0
+damage = 7
+attack_range = 90.0
+windup = 0.4
+recover = 0.7
+aura = true
+metadata/show_after = "Report back to Manos"
+metadata/hide_after = "Defeat the shadows"
+
+[node name="ShadowDummy2" type="CharacterBody2D" parent="World" unique_id=1657648365 instance=ExtResource("14_a8dnh")]
+position = Vector2(1950, 900)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_61rx4")
+kind = "ShadowDummy"
+display_name = "Shadow"
+max_hp = 60
+xp = 45
+speed = 115.0
+damage = 7
+attack_range = 90.0
+windup = 0.4
+recover = 0.7
+aura = true
+metadata/show_after = "Report back to Manos"
+metadata/hide_after = "Defeat the shadows"
+
+[node name="ShadowDummy3" type="CharacterBody2D" parent="World" unique_id=133025422 instance=ExtResource("14_a8dnh")]
+position = Vector2(1780, 1200)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("13_61rx4")
+kind = "ShadowDummy"
+display_name = "Shadow"
+max_hp = 60
+xp = 45
+speed = 115.0
+damage = 7
+attack_range = 90.0
+windup = 0.4
+recover = 0.7
+aura = true
+metadata/show_after = "Report back to Manos"
+metadata/hide_after = "Defeat the shadows"
+
+[node name="Overlay" type="Node2D" parent="." unique_id=680902736]
+z_index = 20
+
+[node name="Exits" type="Node2D" parent="." unique_id=654065711]
+
+[node name="ToVillage" type="Area2D" parent="Exits" unique_id=131069137]
+position = Vector2(-140, 700)
+script = ExtResource("15_n8ipm")
+target = "village"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToVillage" unique_id=661212100]
+position = Vector2(40, 200)
+shape = SubResource("RectangleShape2D_et8n6")
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1865507557]
+
+[node name="village" type="Marker2D" parent="Spawns" unique_id=2135123462]
+position = Vector2(120, 900)

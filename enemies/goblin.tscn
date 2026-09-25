@@ -1,0 +1,157 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_wwx14"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/goblin.png" id="2_25ewh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_87tty"]
+size = Vector2(40, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcl7o"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(0, 25, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lwjo"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(17, 25, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o8a8"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(34, 25, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa8tl"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(51, 25, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c52ly"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(68, 25, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1yvb"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(0, 0, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4srp"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(0, 0, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75h0b"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(17, 0, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqnur"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(34, 0, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dsxgy"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(51, 0, 17, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfk0j"]
+atlas = ExtResource("2_25ewh")
+region = Rect2(68, 0, 17, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mfgwn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcl7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lwjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o8a8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa8tl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c52ly")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1yvb")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4srp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75h0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqnur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dsxgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfk0j")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4q0hk"]
+size = Vector2(70, 70)
+
+[node name="Goblin" type="CharacterBody2D" unique_id=972852275]
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_wwx14")
+kind = "Goblin"
+display_name = "Goblin"
+max_hp = 40
+xp = 25
+speed = 155.0
+attack_range = 70.0
+windup = 0.3
+recover = 0.6
+knockback = 220.0
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=693072716]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_87tty")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=583068780]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_mfgwn")
+animation = &"idle"
+centered = false
+offset = Vector2(-8.5, -25)
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=1571416835]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea" unique_id=332622813]
+position = Vector2(35, -14)
+shape = SubResource("RectangleShape2D_4q0hk")
+
+[node name="HealthBar" type="Node2D" parent="." unique_id=430554995]
+visible = false
+position = Vector2(-35, -118)
+
+[node name="Back" type="ColorRect" parent="HealthBar" unique_id=1450948677]
+offset_right = 70.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=77554535]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 69.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0.9, 0.1, 0.1, 1)

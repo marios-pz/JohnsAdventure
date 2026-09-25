@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/school_gate.png" id="1_62nek"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8b1un"]
+atlas = ExtResource("1_62nek")
+region = Rect2(0, 0, 678, 317)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chn71"]
+size = Vector2(2712, 1268)
+
+[node name="SchoolEntrance" type="Node2D" unique_id=986683921]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1287297084]
+position = Vector2(0, -634)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_8b1un")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1034201316]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=796802196]
+position = Vector2(1356, 0)
+shape = SubResource("RectangleShape2D_chn71")

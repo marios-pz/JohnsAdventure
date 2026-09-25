@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/hut_furniture.png" id="1_xmv2k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc6qj"]
+atlas = ExtResource("1_xmv2k")
+region = Rect2(79, 80, 52, 133)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyfom"]
+size = Vector2(156, 399)
+
+[node name="MHutSofa" type="Node2D" unique_id=2069826581]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=292095031]
+position = Vector2(0, -199.5)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_lc6qj")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1826852268]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=141315703]
+position = Vector2(78, 0)
+shape = SubResource("RectangleShape2D_jyfom")

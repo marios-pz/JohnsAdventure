@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_o5a7u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uh3ei"]
+atlas = ExtResource("1_o5a7u")
+region = Rect2(205, 233, 10, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxwjs"]
+size = Vector2(30, 36)
+
+[node name="CaveSpike" type="Node2D" unique_id=114031749]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=2039919782]
+position = Vector2(0, -40.5)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_uh3ei")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1625636874]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1487801038]
+position = Vector2(15, 22.5)
+shape = SubResource("RectangleShape2D_kxwjs")

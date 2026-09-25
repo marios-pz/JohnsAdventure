@@ -1,0 +1,75 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://npcs/npc.gd" id="1_vbrv4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs.png" id="2_cppl8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kifw4"]
+size = Vector2(44.4, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhni5"]
+atlas = ExtResource("2_cppl8")
+region = Rect2(119, 87, 37, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2js7g"]
+atlas = ExtResource("2_cppl8")
+region = Rect2(156, 87, 37, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twlpb"]
+atlas = ExtResource("2_cppl8")
+region = Rect2(2, 86, 38, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l65v"]
+atlas = ExtResource("2_cppl8")
+region = Rect2(40, 86, 38, 29)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jik7o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhni5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2js7g")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twlpb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l65v")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2q3xa"]
+size = Vector2(134, 104)
+
+[node name="Candy" type="CharacterBody2D" unique_id=373128952]
+motion_mode = 1
+script = ExtResource("1_vbrv4")
+id = "Candy"
+display_name = "Candy"
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=872636785]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_kifw4")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2136662456]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_jik7o")
+animation = &"idle"
+offset = Vector2(0, -13.5)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=914941345]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="InteractArea" unique_id=353715485]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_2q3xa")

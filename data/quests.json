@@ -1,0 +1,18 @@
+{
+	"A new beginning": {
+		"xp": 150,
+		"steps": [
+			{"name": "Talk to Cynthia in the kitchen", "type": "interact", "target": "Cynthia", "level": "kitchen"},
+			{"name": "Meet Manos at the training field", "type": "interact", "target": "Manos", "level": "training_field"},
+			{"name": "Defeat the training dummies", "type": "kill", "target": "Dummy", "level": "training_field"},
+			{"name": "Report back to Manos", "type": "interact", "target": "Manos", "level": "training_field"},
+			{"name": "Defeat the shadows", "type": "kill", "target": "ShadowDummy", "level": "training_field"},
+			{"name": "Find Cynthia at school", "type": "reach", "level": "school"},
+			{"name": "Ask Alexia what happened", "type": "interact", "target": "Alexia", "level": "school"},
+			{"name": "Take the hidden passage", "type": "reach", "level": "cave_passage"},
+			{"name": "Reach the cave garden", "type": "reach", "level": "cave_garden"},
+			{"name": "Defeat the Big Dummie", "type": "kill", "target": "BigDummie", "level": "cave_garden"},
+			{"name": "Find Manos in his hut", "type": "interact", "target": "Manos", "level": "manos_hut"}
+		]
+	}
+}

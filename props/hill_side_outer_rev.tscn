@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/hills.png" id="1_hhcq4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5wcb"]
+atlas = ExtResource("1_hhcq4")
+region = Rect2(0, 0, 224, 161)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q0yiq"]
+size = Vector2(672, 411)
+
+[node name="HillSideOuterRev" type="Node2D" unique_id=452564695]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=89040625]
+position = Vector2(0, -241.5)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_f5wcb")
+centered = false
+flip_h = true
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=2123647739]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1290447883]
+position = Vector2(336, 15)
+shape = SubResource("RectangleShape2D_q0yiq")

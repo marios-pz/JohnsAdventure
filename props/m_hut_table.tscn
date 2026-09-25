@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/hut_furniture.png" id="1_1xj0l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0uda"]
+atlas = ExtResource("1_1xj0l")
+region = Rect2(79, 1, 126, 75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g61ip"]
+size = Vector2(378, 225)
+
+[node name="MHutTable" type="Node2D" unique_id=31954999]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1255378743]
+position = Vector2(0, -112.5)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_i0uda")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1886288211]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1269501789]
+position = Vector2(189, 0)
+shape = SubResource("RectangleShape2D_g61ip")

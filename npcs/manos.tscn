@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://npcs/npc.gd" id="1_pgwcv"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs.png" id="2_r2xf0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6f3s"]
+size = Vector2(36, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox0jb"]
+atlas = ExtResource("2_r2xf0")
+region = Rect2(2, 120, 20, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gj6ds"]
+atlas = ExtResource("2_r2xf0")
+region = Rect2(22, 120, 20, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xbg2"]
+atlas = ExtResource("2_r2xf0")
+region = Rect2(42, 120, 20, 45)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8gt76"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox0jb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gj6ds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xbg2")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.5
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fe4p3"]
+size = Vector2(120, 185)
+
+[node name="Manos" type="CharacterBody2D" unique_id=1928069272]
+motion_mode = 1
+script = ExtResource("1_pgwcv")
+id = "Manos"
+display_name = "Manos"
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1249600999]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_o6f3s")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=107656446]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_8gt76")
+animation = &"idle"
+offset = Vector2(0, -22.5)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=318532296]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="InteractArea" unique_id=1286474944]
+position = Vector2(0, -52.5)
+shape = SubResource("RectangleShape2D_fe4p3")

@@ -1,0 +1,22 @@
+{
+	"_doc": "NPC id -> list of entries. The last entry whose 'after' step is done wins ('' = always). Each line is one page.",
+	"Mau": [{"after": "", "lines": ["Meow meow meow."]}],
+	"Candy": [
+		{"after": "", "lines": ["*meow* Candy rubs against your leg."]},
+		{"after": "Defeat the Big Dummie", "lines": ["Zzzz.", "She is sleeping on the warm carpet. Better not wake her up."]}
+	],
+	"Cynthia": [
+		{"after": "", "lines": ["Good morning brother!"]},
+		{"after": "Talk to Cynthia in the kitchen", "lines": ["Manos is waiting for you in the training field.", "I'll be at school with Alexia, see you around!"]}
+	],
+	"Manos": [
+		{"after": "", "lines": ["There you are, John."]},
+		{"after": "Meet Manos at the training field", "lines": ["Grab your sword from the chest and show those dummies what you've got."]},
+		{"after": "Report back to Manos", "lines": ["Those are shadow creatures! Take them down, John!"]},
+		{"after": "Find Manos in his hut", "lines": ["Rest up, John. Porto Rafti awaits."]}
+	],
+	"Alexia": [
+		{"after": "", "lines": ["John!"]},
+		{"after": "Ask Alexia what happened", "lines": ["The ladder behind the trees leads to the old caves.", "Go! Save Cynthia!"]}
+	]
+}

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/houses.png" id="1_2ncnb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jarvr"]
+atlas = ExtResource("1_2ncnb")
+region = Rect2(284, 59, 270, 257)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqoh0"]
+size = Vector2(675, 465)
+
+[node name="JohnHouse" type="Node2D" unique_id=837790130]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=820618776]
+position = Vector2(0, -600)
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_jarvr")
+centered = false
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1300434555]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1614162572]
+position = Vector2(403.5, -121.5)
+shape = SubResource("RectangleShape2D_nqoh0")

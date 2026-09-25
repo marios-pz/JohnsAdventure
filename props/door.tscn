@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/world/open_world.png" id="1_2pk4p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8066x"]
+atlas = ExtResource("1_2pk4p")
+region = Rect2(369, 2, 30, 47)
+
+[node name="Door" type="Node2D" unique_id=148576209]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=947227162]
+position = Vector2(0, -94)
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_8066x")
+centered = false

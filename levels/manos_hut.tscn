@@ -1,0 +1,149 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_h8ymi"]
+[ext_resource type="Texture2D" path="res://assets/sprites/world/manos_hut.png" id="2_hhwwb"]
+[ext_resource type="PackedScene" path="res://props/m_hut_bed.tscn" id="3_wahpj"]
+[ext_resource type="PackedScene" path="res://props/m_hut_sofa.tscn" id="4_4nxtl"]
+[ext_resource type="PackedScene" path="res://props/m_hut_table.tscn" id="5_0r40u"]
+[ext_resource type="PackedScene" path="res://props/m_hut_fireplace.tscn" id="6_csls1"]
+[ext_resource type="PackedScene" path="res://npcs/candy.tscn" id="7_51jrx"]
+[ext_resource type="Script" path="res://npcs/npc.gd" id="8_u0g2k"]
+[ext_resource type="PackedScene" path="res://npcs/manos.tscn" id="9_vwmf6"]
+[ext_resource type="PackedScene" path="res://objects/chest.tscn" id="10_enp8t"]
+[ext_resource type="Script" path="res://objects/chest.gd" id="11_iv7m8"]
+[ext_resource type="Script" path="res://objects/exit.gd" id="12_shmp8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/lights/cone.png" id="13_vih26"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fuf2"]
+size = Vector2(40, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_py67n"]
+size = Vector2(40, 586)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xds6a"]
+size = Vector2(1280, 173)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31frd"]
+size = Vector2(1280, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_as45j"]
+size = Vector2(150, 75)
+
+[node name="ManosHut" type="Node2D" unique_id=717479736]
+script = ExtResource("1_h8ymi")
+level_id = "manos_hut"
+title = "Manos's Hut"
+camera_limits = Rect2(0, 0, 1280, 720)
+start_position = Vector2(635, 600)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2038153534]
+color = Color(0.66, 0.62, 0.62, 1)
+
+[node name="Ground" type="Node2D" parent="." unique_id=1074695069]
+
+[node name="Background" type="Sprite2D" parent="Ground" unique_id=1544450443]
+scale = Vector2(2.825607, 2.6568265)
+texture = ExtResource("2_hhwwb")
+centered = false
+
+[node name="World" type="Node2D" parent="." unique_id=457345714]
+y_sort_enabled = true
+
+[node name="Wall" type="StaticBody2D" parent="World" unique_id=1851608754]
+position = Vector2(-40, 0)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/Wall" unique_id=2045965334]
+position = Vector2(20, 360)
+shape = SubResource("RectangleShape2D_8fuf2")
+
+[node name="@StaticBody2D@57" type="StaticBody2D" parent="World" unique_id=1700775999]
+position = Vector2(1270, 134)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@57" unique_id=820314429]
+position = Vector2(20, 293)
+shape = SubResource("RectangleShape2D_py67n")
+
+[node name="@StaticBody2D@58" type="StaticBody2D" parent="World" unique_id=1772343953]
+position = Vector2(0, 4)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@58" unique_id=1578262972]
+position = Vector2(640, 86.5)
+shape = SubResource("RectangleShape2D_xds6a")
+
+[node name="@StaticBody2D@59" type="StaticBody2D" parent="World" unique_id=468377388]
+position = Vector2(0, 711)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="World/@StaticBody2D@59" unique_id=4363184]
+position = Vector2(640, 20)
+shape = SubResource("RectangleShape2D_31frd")
+
+[node name="MHutBed" type="Node2D" parent="World" unique_id=1723441582 instance=ExtResource("3_wahpj")]
+position = Vector2(1076.5563, 307.87085)
+
+[node name="MHutSofa" type="Node2D" parent="World" unique_id=2069826581 instance=ExtResource("4_4nxtl")]
+position = Vector2(274.0839, 433.30072)
+
+[node name="MHutTable" type="Node2D" parent="World" unique_id=31954999 instance=ExtResource("5_0r40u")]
+position = Vector2(460.57394, 210.80258)
+
+[node name="MHutFireplace" type="Node2D" parent="World" unique_id=1637226583 instance=ExtResource("6_csls1")]
+position = Vector2(14.128036, 317.75647)
+
+[node name="Candy" type="CharacterBody2D" parent="World" unique_id=373128952 instance=ExtResource("7_51jrx")]
+position = Vector2(215, 440)
+motion_mode = 1
+script = ExtResource("8_u0g2k")
+id = "Candy"
+display_name = "Candy"
+
+[node name="Manos" type="CharacterBody2D" parent="World" unique_id=1928069272 instance=ExtResource("9_vwmf6")]
+position = Vector2(664, 373)
+motion_mode = 1
+script = ExtResource("8_u0g2k")
+id = "Manos"
+display_name = "Manos"
+metadata/show_after = "Defeat the Big Dummie"
+
+[node name="Chest" type="StaticBody2D" parent="World" unique_id=1022416036 instance=ExtResource("10_enp8t")]
+position = Vector2(1170, 560)
+collision_mask = 0
+script = ExtResource("11_iv7m8")
+coins = 60
+potions = 3
+metadata/show_after = "Defeat the Big Dummie"
+
+[node name="Overlay" type="Node2D" parent="." unique_id=1254436194]
+z_index = 20
+
+[node name="Exits" type="Node2D" parent="." unique_id=1272737343]
+
+[node name="ToVillage" type="Area2D" parent="Exits" unique_id=1342945509]
+position = Vector2(560, 640)
+script = ExtResource("12_shmp8")
+target = "village"
+display_name = "Door"
+prompt = "Go back outside?"
+
+[node name="Shape" type="CollisionShape2D" parent="Exits/ToVillage" unique_id=228605241]
+position = Vector2(75, 37.5)
+shape = SubResource("RectangleShape2D_as45j")
+
+[node name="Spawns" type="Node2D" parent="." unique_id=757653877]
+
+[node name="village" type="Marker2D" parent="Spawns" unique_id=806010164]
+position = Vector2(635, 600)
+
+[node name="ConeLight" type="Node2D" parent="." unique_id=347755460]
+position = Vector2(640, 35)
+rotation = 1.6057029
+scale = Vector2(1, 0.9444444)
+
+[node name="Light" type="PointLight2D" parent="ConeLight" unique_id=1176014519]
+position = Vector2(210, 0)
+energy = 0.5
+texture = ExtResource("13_vih26")
+texture_scale = 1.640625

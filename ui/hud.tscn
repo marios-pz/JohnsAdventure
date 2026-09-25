@@ -1,0 +1,586 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/hud.gd" id="1_en2x2"]
+[ext_resource type="Texture2D" path="res://assets/ui/ui_sheet.png" id="2_1v5rv"]
+[ext_resource type="PackedScene" path="res://ui/how_to_play.tscn" id="3_q43x7"]
+[ext_resource type="Script" path="res://ui/how_to_play.gd" id="4_srpbi"]
+[ext_resource type="FontFile" path="res://assets/fonts/blacksword.otf" id="5_spcu4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ff8ar"]
+atlas = ExtResource("2_1v5rv")
+region = Rect2(0, 0, 72, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0eg6"]
+atlas = ExtResource("2_1v5rv")
+region = Rect2(73, 0, 30, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b00kl"]
+atlas = ExtResource("2_1v5rv")
+region = Rect2(104, 0, 30, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so1yu"]
+atlas = ExtResource("2_1v5rv")
+region = Rect2(104, 27, 30, 26)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65xic"]
+bg_color = Color(0.9, 0.1, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mp5xd"]
+atlas = ExtResource("2_1v5rv")
+region = Rect2(0, 54, 122, 30)
+
+[node name="HUD" type="CanvasLayer" unique_id=817254495]
+process_mode = 3
+layer = 5
+script = ExtResource("1_en2x2")
+
+[node name="Bars" type="Control" parent="." unique_id=1795025812]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_filter = 2
+
+[node name="HealthTrail" type="ColorRect" parent="Bars" unique_id=824590710]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 42.0
+offset_top = 24.0
+offset_right = 204.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(1, 0.85, 0.25, 1)
+
+[node name="HealthFill" type="ColorRect" parent="Bars" unique_id=1433035973]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 42.0
+offset_top = 24.0
+offset_right = 204.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(0.86, 0.1, 0.12, 1)
+
+[node name="DashFill" type="ColorRect" parent="Bars" unique_id=906075644]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 12.0
+offset_top = 81.0
+offset_right = 204.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.25, 0.9, 0.35, 1)
+
+[node name="XpFill" type="ColorRect" parent="Bars" unique_id=43709031]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 12.0
+offset_top = 114.0
+offset_right = 204.0
+offset_bottom = 126.0
+mouse_filter = 2
+color = Color(0.25, 0.85, 0.95, 1)
+
+[node name="HealthBox" type="TextureRect" parent="Bars" unique_id=919554674]
+layout_mode = 0
+offset_right = 216.0
+offset_bottom = 138.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_ff8ar")
+expand_mode = 1
+
+[node name="LevelBox" type="TextureRect" parent="Bars" unique_id=161810278]
+layout_mode = 0
+offset_left = 226.0
+offset_right = 316.0
+offset_bottom = 78.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_m0eg6")
+expand_mode = 1
+
+[node name="LevelLabel" type="Label" parent="Bars/LevelBox" unique_id=782909514]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 32.0
+offset_right = 90.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Potions" type="Label" parent="Bars" unique_id=1048776933]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 4.0
+offset_top = 146.0
+offset_right = 364.0
+offset_bottom = 170.0
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+
+[node name="Coins" type="Label" parent="Bars" unique_id=1549121210]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 4.0
+offset_top = 168.0
+offset_right = 364.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+
+[node name="ObjectivePanel" type="PanelContainer" parent="." unique_id=877603784]
+offset_left = 16.0
+offset_top = 212.0
+offset_right = 346.0
+offset_bottom = 252.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ObjectivePanel" unique_id=160818870]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="ObjectivePanel/VBoxContainer" unique_id=992205619]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "Objective"
+vertical_alignment = 1
+
+[node name="Objective" type="Label" parent="ObjectivePanel/VBoxContainer" unique_id=155465970]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Toasts" type="VBoxContainer" parent="." unique_id=1644944577]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 310.0
+offset_right = 456.0
+offset_bottom = 310.0
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="InventoryButton" type="TextureButton" parent="." unique_id=1868720084]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -90.0
+offset_top = 16.0
+offset_right = -15.0
+offset_bottom = 81.0
+tooltip_text = "Inventory"
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_b00kl")
+texture_hover = SubResource("AtlasTexture_so1yu")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="NotifDot" type="Panel" parent="." unique_id=2111302740]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 28.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_65xic")
+
+[node name="TutorialPanel" type="PanelContainer" parent="." unique_id=1261796117]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -376.0
+offset_top = 96.0
+offset_right = -16.0
+offset_bottom = 136.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialPanel" unique_id=1454479876]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="TutorialPanel/VBoxContainer" unique_id=370177682]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.55, 0.95, 1, 1)
+text = "Tutorial"
+vertical_alignment = 1
+
+[node name="TutorialText" type="Label" parent="TutorialPanel/VBoxContainer" unique_id=7066185]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="FocusLabel" type="Label" parent="." unique_id=1031989680]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 18.0
+offset_right = 300.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelTitle" type="Label" parent="." unique_id=1162205194]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 110.0
+offset_right = 300.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dialogue" type="TextureRect" parent="." unique_id=1074254738]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -396.0
+offset_top = -190.0
+offset_right = 396.0
+offset_bottom = -14.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_mp5xd")
+expand_mode = 1
+
+[node name="DialogueText" type="Label" parent="Dialogue" unique_id=1723007272]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 46.0
+offset_top = 24.0
+offset_right = 746.0
+offset_bottom = 152.0
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.18, 0.09, 0.02, 1)
+theme_override_constants/outline_size = 0
+autowrap_mode = 3
+
+[node name="BossBar" type="Control" parent="." unique_id=1601262912]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -90.0
+offset_right = 400.0
+offset_bottom = -20.0
+mouse_filter = 2
+
+[node name="BossName" type="Label" parent="BossBar" unique_id=352940433]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BossBack" type="ColorRect" parent="BossBar" unique_id=56590956]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 34.0
+offset_right = 800.0
+offset_bottom = 62.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BossFill" type="ColorRect" parent="BossBar" unique_id=1631766073]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 4.0
+offset_top = 38.0
+offset_right = 796.0
+offset_bottom = 58.0
+mouse_filter = 2
+color = Color(0.8, 0.08, 0.1, 1)
+
+[node name="Menus" type="Control" parent="." unique_id=810819226]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Shade" type="ColorRect" parent="Menus" unique_id=2000223816]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="QuestPanel" type="PanelContainer" parent="Menus" unique_id=966333934]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -290.0
+offset_right = -50.0
+offset_bottom = 270.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menus/QuestPanel" unique_id=576737992]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Menus/QuestPanel/VBoxContainer" unique_id=16918961]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Quest log"
+vertical_alignment = 1
+
+[node name="QuestLog" type="RichTextLabel" parent="Menus/QuestPanel/VBoxContainer" unique_id=1917632021]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 440)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 15
+theme_override_font_sizes/bold_font_size = 17
+bbcode_enabled = true
+fit_content = true
+
+[node name="InventoryPanel" type="PanelContainer" parent="Menus" unique_id=1160735435]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -290.0
+offset_right = 550.0
+offset_bottom = -20.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menus/InventoryPanel" unique_id=996898247]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Menus/InventoryPanel/VBoxContainer" unique_id=1060617861]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Inventory"
+vertical_alignment = 1
+
+[node name="ItemList" type="VBoxContainer" parent="Menus/InventoryPanel/VBoxContainer" unique_id=58519826]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="InventoryFooter" type="Label" parent="Menus/InventoryPanel/VBoxContainer" unique_id=1424828771]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+
+[node name="StatsPanel" type="PanelContainer" parent="Menus" unique_id=1414654975]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_right = 550.0
+offset_bottom = 220.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menus/StatsPanel" unique_id=79004142]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="Menus/StatsPanel/VBoxContainer" unique_id=1421700678]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Stats"
+vertical_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="Menus/StatsPanel/VBoxContainer" unique_id=1976684363]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+vertical_alignment = 1
+
+[node name="DamageButton" type="Button" parent="Menus/StatsPanel/VBoxContainer" unique_id=875008229]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+alignment = 0
+
+[node name="EnduranceButton" type="Button" parent="Menus/StatsPanel/VBoxContainer" unique_id=1121432582]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+alignment = 0
+
+[node name="CritButton" type="Button" parent="Menus/StatsPanel/VBoxContainer" unique_id=982519797]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+alignment = 0
+
+[node name="CloseMenuButton" type="Button" parent="Menus" unique_id=1577652784]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 350.0
+offset_top = 240.0
+offset_right = 550.0
+offset_bottom = 288.0
+text = "Close"
+
+[node name="Pause" type="Control" parent="." unique_id=1335253832]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Shade" type="ColorRect" parent="Pause" unique_id=316351955]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="PausePanel" type="PanelContainer" parent="Pause" unique_id=1953242797]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -130.0
+offset_right = 130.0
+offset_bottom = -90.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/PausePanel" unique_id=1829629143]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Pause/PausePanel/VBoxContainer" unique_id=2038745116]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Pause/PausePanel/VBoxContainer" unique_id=1698475931]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Resume"
+
+[node name="HowToPlayButton" type="Button" parent="Pause/PausePanel/VBoxContainer" unique_id=550917082]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "How to Play"
+
+[node name="QuitButton" type="Button" parent="Pause/PausePanel/VBoxContainer" unique_id=1160766084]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Save & Quit"
+
+[node name="HowToPlay" type="PanelContainer" parent="Pause" unique_id=362479883 instance=ExtResource("3_q43x7")]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -290.0
+offset_right = 400.0
+offset_bottom = 290.0
+script = ExtResource("4_srpbi")
+
+[node name="Death" type="Control" parent="." unique_id=1840770543]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Shade" type="ColorRect" parent="Death" unique_id=1066589756]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="DeathTitle" type="Label" parent="Death" unique_id=1990015374]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -110.0
+offset_right = 400.0
+offset_bottom = -10.0
+theme_override_fonts/font = ExtResource("5_spcu4")
+theme_override_font_sizes/font_size = 72
+theme_override_colors/font_color = Color(0.9, 0.05, 0.05, 1)
+text = "DEATH"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeathHint" type="Label" parent="Death" unique_id=396325851]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = 40.0
+offset_right = 400.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fade" type="ColorRect" parent="." unique_id=332095747]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
