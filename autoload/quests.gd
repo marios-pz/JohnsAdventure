@@ -79,6 +79,8 @@ func refresh() -> void:
 
 
 func _refresh() -> void:
+	if Cutscene.holding:
+		return  # the enemies to kill have not appeared yet; the level refreshes on release
 	for quest in _quests:
 		var step := current_step(quest)
 		if step.is_empty() or step.level != _level:

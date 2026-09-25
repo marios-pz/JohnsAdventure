@@ -148,6 +148,7 @@ offset_bottom = 252.0
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ObjectivePanel" unique_id=160818870]
+mouse_filter = 2
 layout_mode = 2
 theme_override_constants/separation = 2
 
@@ -215,6 +216,7 @@ offset_bottom = 136.0
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TutorialPanel" unique_id=1454479876]
+mouse_filter = 2
 layout_mode = 2
 theme_override_constants/separation = 2
 

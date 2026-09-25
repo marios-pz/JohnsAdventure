@@ -9,9 +9,14 @@ extends CharacterBody2D
 ##
 ## AI: stand still -> chase John inside `sight_range` -> inside `attack_range`
 ## flash red for `windup` seconds (the telegraph), strike, then `recover`.
+## The strike hitbox is aimed at John when the windup starts (any direction,
+## so standing above/below an enemy is not a safe spot) and stays there: dodgeable.
 ## Knockable enemies are staggered out of their windup when hit.
 
 signal died(enemy: Enemy)
+
+const PARRY_STUN := 1.0             ## extra recover time after John parries a strike
+const PARRY_PUSH := 420.0
 
 enum State { IDLE, CHASE, WINDUP, RECOVER }
 
@@ -43,6 +48,8 @@ var _bleed_tick := 0.0
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var _attack_area: Area2D = $AttackArea
+@onready var _attack_shape: CollisionShape2D = $AttackArea/Shape
+@onready var _reach: Vector2 = _attack_shape.position  ## authored for a strike to the right
 @onready var _health_bar: Node2D = get_node_or_null("HealthBar")
 @onready var _bar_width: float = $HealthBar/Fill.size.x if _health_bar else 0.0
 
@@ -69,7 +76,7 @@ func _physics_process(delta: float) -> void:
 				var to_player := player.global_position - global_position
 				_facing_left = to_player.x < 0.0
 				if to_player.length() <= attack_range:
-					_start_windup()
+					_start_windup(to_player)
 				elif to_player.length() <= sight_range:
 					# ponytail: straight-line chase, fine for open rooms; add NavigationAgent2D if levels become mazes
 					move = to_player.normalized() * speed
@@ -117,20 +124,32 @@ func on_revealed() -> void:
 	tween.tween_property(self, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
-func _start_windup() -> void:
+func _start_windup(to_player: Vector2) -> void:
 	_state = State.WINDUP
 	_timer = windup
-	_attack_area.scale.x = -1.0 if _facing_left else 1.0
+	# Swing the (unrotated) hitbox around the body toward John; its height offset stays put.
+	_attack_shape.position = Vector2(_reach.x, 0.0).rotated(to_player.angle()) + Vector2(0.0, _reach.y)
 	sprite.modulate = Color(1.8, 0.55, 0.55)  # the telegraph: dodge now!
 
 
 func _strike() -> void:
 	sprite.modulate = _base_color()
+	_state = State.RECOVER  # before hurt(): a parry extends it
+	_timer = recover
 	for body in _attack_area.get_overlapping_bodies():
 		if body is Player:
-			body.hurt(damage, (body.global_position - global_position).normalized() * knockback)
+			body.hurt(damage, (body.global_position - global_position).normalized() * knockback, self)
+
+
+## John parried this strike: stunned, and pushed back unless heavy.
+func parried(direction: Vector2) -> void:
 	_state = State.RECOVER
-	_timer = recover
+	_timer = recover + PARRY_STUN
+	if knockable:
+		_knock = direction * PARRY_PUSH
+	var flash := create_tween()
+	sprite.self_modulate = Color(0.6, 0.6, 0.6)
+	flash.tween_property(sprite, "self_modulate", Color.WHITE, PARRY_STUN)
 
 
 func _tick_bleed(delta: float) -> void:

@@ -6,18 +6,27 @@ extends CharacterBody2D
 ## mouse cursor (or the right stick / facing direction on a controller) and
 ## chain into a 3-hit combo whose 3rd hit is a finisher. Dash cancels an attack,
 ## gives a short burst of invulnerability, passes through enemies and kicks the
-## camera (zoom punch + lean) while leaving afterimages.
+## camera (zoom punch + lean) while leaving afterimages. Parry: a short window
+## where John glows white; a strike landing in it is blocked and stuns the enemy.
 ## Stats live in the Game autoload; this node only handles feel and physics.
 
 const SPEED := 280.0
 const DASH_SPEED := 750.0
 const DASH_TIME := 0.18
-const DASH_COOLDOWN := 0.7
+const DASH_COOLDOWN := 0.5
 const COMBO_WINDOW := 0.35       ## after a swing ends, a click within this time continues the combo
-const FINISHER_MULT := 1.5       ## 3rd hit of the combo
-const FINISHER_KNOCKBACK := 1.6
+const DASH_LUNGE := 0.5          ## share of dash speed carried into an attack that cancels the dash
+const FINISHER_KNOCKBACK := 1.6  ## 3rd hit of the combo pushes harder (same damage)
 const CRIT_MULT := 1.5
 const HURT_INVULNERABILITY := 0.6
+const PARRY_WINDOW := 0.22       ## how long a parry catches strikes
+const PARRY_COOLDOWN := 0.45     ## from the press; a successful parry resets it
+const PARRY_GLOW := 0.85         ## how white John turns (0..1)
+const PARRY_WHIFF := Color(0.5, 0.5, 0.62)  ## tint while recovering from a parry that caught nothing
+## Mixes John's sprite toward pure white; modulate > 1 barely brightens dark pixels.
+const FLASH_SHADER := "shader_type canvas_item; uniform float flash = 0.0;\n" \
+		+ "void fragment() { vec4 c = texture(TEXTURE, UV) * COLOR; COLOR = vec4(mix(c.rgb, vec3(1.0), flash), c.a); }"
+const RADIAL := preload("res://assets/sprites/lights/radial.png")
 const DASH_ZOOM := 0.93          ## camera zooms out this much at the start of a dash
 const DASH_LEAN := 55.0          ## camera leads the dash direction by this many px
 const AFTERIMAGE_EVERY := 0.035
@@ -30,6 +39,9 @@ var facing := "down"
 var dash_charge := 1.0           ## 0..1, shown by the HUD
 
 var _dash_left := 0.0
+var _parry_left := 0.0
+var _parry_cooldown := 0.0
+var _told_too_soon := false
 var _dash_dir := Vector2.ZERO
 var _combo := 0
 var _combo_timer := 0.0
@@ -40,6 +52,7 @@ var _shake := 0.0
 var _lean := Vector2.ZERO
 var _afterimage_timer := 0.0
 var _focus: Node = null
+var _move_dir := Vector2.DOWN    ## last analog movement direction, the controller's aim fallback
 
 @onready var camera: Camera2D = $Camera
 @onready var _body: AnimatedSprite2D = $Body
@@ -52,6 +65,10 @@ var _focus: Node = null
 
 func _ready() -> void:
 	add_to_group("player")
+	var flash := ShaderMaterial.new()
+	flash.shader = Shader.new()
+	flash.shader.code = FLASH_SHADER
+	_body.material = flash
 	_swing.animation_finished.connect(_on_swing_finished)
 	_swing.frame_changed.connect(_on_swing_frame)
 	Game.inventory_changed.connect(_on_inventory_changed)
@@ -70,6 +87,10 @@ func is_dashing() -> bool:
 	return _dash_left > 0.0
 
 
+func is_parrying() -> bool:
+	return _parry_left > 0.0
+
+
 ## Camera shake, e.g. when hit or when the boss roars.
 func shake(strength: float) -> void:
 	_shake = maxf(_shake, strength)
@@ -82,6 +103,13 @@ func _physics_process(delta: float) -> void:
 
 	_invulnerable = maxf(0.0, _invulnerable - delta)
 	_combo_timer = maxf(0.0, _combo_timer - delta)
+	_parry_cooldown = maxf(0.0, _parry_cooldown - delta)
+	if is_parrying():
+		_parry_left -= delta
+		if not is_parrying():  # the window closed on nothing: show the recovery
+			_set_flash(0.0)
+			_body.self_modulate = PARRY_WHIFF
+			create_tween().tween_property(_body, "self_modulate", Color.WHITE, _parry_cooldown)
 
 	if not is_dashing():
 		dash_charge = minf(1.0, dash_charge + delta / DASH_COOLDOWN)
@@ -94,12 +122,13 @@ func _physics_process(delta: float) -> void:
 			_spawn_afterimage()
 		if not is_dashing():
 			set_collision_mask_value(3, true)
-	elif is_attacking():
+	elif is_attacking() or is_parrying():
 		velocity = Vector2.ZERO
 	else:
 		velocity = input * SPEED
 		if input != Vector2.ZERO:
 			facing = _direction_name(input)
+			_move_dir = input.normalized()
 
 	velocity += _knockback
 	_knockback = _knockback.move_toward(Vector2.ZERO, 2200.0 * delta)
@@ -125,6 +154,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_attack()
 	elif event.is_action_pressed("dash"):
 		_dash()
+	elif event.is_action_pressed("parry"):
+		_parry()
+	elif event.is_action_pressed("ui_cancel"):
+		Game.close_dialogue()  # B backs out of a conversation
 	elif event.is_action_pressed("heal"):
 		if Game.drink_potion():
 			Tutorial.notify("heal")
@@ -136,9 +169,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			Game.close_dialogue()
 
 
-## Enemies call this. Ignored while dashing or right after another hit.
-func hurt(amount: int, push: Vector2) -> void:
-	if _invulnerable > 0.0 or is_dashing() or Game.health <= 0:
+## Enemies call this. Ignored while dashing or right after another hit, blocked while parrying.
+func hurt(amount: int, push: Vector2, attacker: Enemy = null) -> void:
+	if Game.health <= 0:
+		return
+	if is_parrying():
+		_on_parried(attacker)
+		return
+	if _invulnerable > 0.0 or is_dashing():
 		return
 	var taken := Game.take_damage(amount)
 	_invulnerable = HURT_INVULNERABILITY
@@ -152,17 +190,22 @@ func hurt(amount: int, push: Vector2) -> void:
 
 # --- Combat -----------------------------------------------------------------------
 
-## Direction of the next swing: right stick (or facing) on a controller, else the mouse.
+## Direction of the next swing: right stick (or the way John last walked) on a
+## controller, else the mouse.
 func _aim() -> Vector2:
 	if Game.gamepad:
 		var stick := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-		return stick if stick != Vector2.ZERO else DIRECTIONS[facing]
+		return stick if stick != Vector2.ZERO else _move_dir
 	return get_global_mouse_position() - (global_position + Vector2(0, -AIM_HEIGHT))
 
 
 func _attack() -> void:
-	if Game.weapon() == null or is_dashing():
+	if Game.weapon() == null:
 		return
+	if is_dashing():  # dash-attack: end the dash early and lunge into the swing
+		_dash_left = 0.0
+		set_collision_mask_value(3, true)
+		_knockback = _dash_dir * DASH_SPEED * DASH_LUNGE
 	if is_attacking():
 		_queued_attack = true  # buffer the click so combos don't need frame-perfect timing
 		return
@@ -186,7 +229,7 @@ func _on_swing_frame() -> void:
 
 func _hit_enemies() -> void:
 	var weapon := Game.weapon()
-	var base := float(Game.damage + weapon.damage) * (FINISHER_MULT if _combo == 3 else 1.0)
+	var base := float(Game.damage + weapon.damage)
 	var hit_any := false
 	for body in _attack_area.get_overlapping_bodies():
 		if body is Enemy and not body.dead:
@@ -202,10 +245,9 @@ func _hit_enemies() -> void:
 
 
 ## A few frames of slow motion on impact make hits feel heavy.
-func _hit_stop() -> void:
+func _hit_stop(duration := 0.045) -> void:
 	Engine.time_scale = 0.05
-	await get_tree().create_timer(0.045, true, false, true).timeout
-	Engine.time_scale = 1.0
+	get_tree().create_timer(duration, true, false, true).timeout.connect(Engine.set.bind("time_scale", 1.0))
 
 
 func _on_swing_finished() -> void:
@@ -237,6 +279,89 @@ func _dash() -> void:
 	Tutorial.notify("dash")
 
 
+func _parry() -> void:
+	if is_dashing() or Game.weapon() == null:
+		return
+	if _parry_cooldown > 0.0:  # spamming: say why nothing happened (once per cooldown)
+		if not _told_too_soon:
+			_told_too_soon = true
+			FloatingText.spawn(get_parent(), global_position + Vector2(0, -170), "Too soon", Color(0.7, 0.7, 0.8), 0.5)
+		return
+	_told_too_soon = false
+	_cancel_attack()
+	_parry_left = PARRY_WINDOW
+	_parry_cooldown = PARRY_COOLDOWN
+	_set_flash(PARRY_GLOW)
+
+
+func _set_flash(amount: float) -> void:
+	_body.material.set_shader_parameter("flash", amount)
+
+
+func _on_parried(attacker: Enemy) -> void:
+	_parry_left = 0.0
+	_parry_cooldown = 0.0  # reward: ready to parry (or swing) again right away
+	_invulnerable = 0.25   # other hits in the same instant are shrugged off
+	_set_flash(1.0)
+	create_tween().tween_method(_set_flash, 1.0, 0.0, 0.3)
+	var chest := global_position + Vector2(0, -AIM_HEIGHT)
+	var at := chest
+	if is_instance_valid(attacker):
+		var away := (attacker.global_position - global_position).normalized()
+		at += away * 45.0
+		attacker.parried(away)
+	_parry_burst(at)
+	shake(10.0)
+	_hit_stop(0.09)
+	Audio.play_sfx("sword", 0.8)
+	FloatingText.spawn(get_parent(), global_position + Vector2(0, -170), "Parry!", Color.WHITE)
+	Tutorial.notify("parry")
+
+
+## White-hot sparks cooling to gold, over an additive flash that lights up dark caves.
+func _parry_burst(at: Vector2) -> void:
+	var burst := Node2D.new()
+	burst.position = at
+	burst.z_index = 45
+	get_parent().add_child(burst)
+
+	var flash := Sprite2D.new()
+	flash.texture = RADIAL
+	flash.material = CanvasItemMaterial.new()
+	flash.material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	flash.scale = Vector2.ONE * 0.2
+	burst.add_child(flash)
+	var grow := flash.create_tween().set_parallel().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	grow.tween_property(flash, "scale", Vector2.ONE * 1.4, 0.35)
+	grow.tween_property(flash, "modulate:a", 0.0, 0.35)
+
+	var cooling := Gradient.new()
+	cooling.set_color(0, Color.WHITE)
+	cooling.set_color(1, Color(1.0, 0.6, 0.15, 0.0))
+	cooling.add_point(0.35, Color(1.0, 0.93, 0.55))
+	var shrink := Curve.new()
+	shrink.add_point(Vector2(0, 1))
+	shrink.add_point(Vector2(1, 0))
+	var sparks := CPUParticles2D.new()
+	sparks.one_shot = true
+	sparks.explosiveness = 1.0
+	sparks.amount = 48
+	sparks.lifetime = 0.5
+	sparks.spread = 180.0
+	sparks.gravity = Vector2(0, 250)
+	sparks.initial_velocity_min = 260.0
+	sparks.initial_velocity_max = 640.0
+	sparks.damping_min = 500.0
+	sparks.damping_max = 900.0
+	sparks.scale_amount_min = 3.0
+	sparks.scale_amount_max = 7.0
+	sparks.scale_amount_curve = shrink
+	sparks.color_ramp = cooling
+	burst.add_child(sparks)
+	sparks.emitting = true
+	sparks.finished.connect(burst.queue_free)
+
+
 ## A fading blue copy of John's current frame, left behind while dashing.
 func _spawn_afterimage() -> void:
 	var ghost := Sprite2D.new()
@@ -259,7 +384,7 @@ func _cancel_attack() -> void:
 	_swing.visible = false
 	_body.visible = true
 	_queued_attack = false
-	_combo = 0
+	_combo_timer = COMBO_WINDOW  # the combo survives a dash-cancel
 
 
 func _on_inventory_changed() -> void:

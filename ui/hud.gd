@@ -70,7 +70,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	visible = not Cutscene.playing
+	visible = not Cutscene.playing or _fade.color.a > 0.0  # keep fading over a starting cutscene
 	var player := get_tree().get_first_node_in_group("player") as Player
 	if player:
 		_dash_fill.size.x = DASH_WIDTH * player.dash_charge
@@ -90,9 +90,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if Cutscene.playing or Game.health <= 0 or _fade.color.a > 0.0:
 		return  # during a level fade Main owns get_tree().paused
-	if event.is_action_pressed("ui_cancel") and (_menus.visible or %HowToPlay.visible):
+	if event.is_action_pressed("ui_cancel") and (_menus.visible or _pause.visible):
 		if %HowToPlay.visible:
 			%HowToPlay.close()
+		elif _pause.visible:
+			_toggle_pause()
 		else:
 			_toggle_menu()
 	elif event.is_action_pressed("pause"):
@@ -200,6 +202,8 @@ func _objective() -> String:
 
 
 func _toggle_menu() -> void:
+	if not _menus.visible and (_pause.visible or _death.visible or _fade.color.a > 0.0):
+		return  # the on-screen button skips _unhandled_input's guards
 	_menus.visible = not _menus.visible
 	get_tree().paused = _menus.visible
 	if _menus.visible:
@@ -235,7 +239,9 @@ func _refresh_tutorial() -> void:
 
 
 func _save_and_quit() -> void:
+	%QuitButton.disabled = true
 	Game.save_game()
+	await Audio.fade_out_music()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://ui/main_menu.tscn")
 

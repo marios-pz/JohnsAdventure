@@ -1,5 +1,5 @@
 {
-	"_doc": "Plays once when John is in 'level' and 'after_step' is done. Step keys: duration (ms), pos (camera centre), zoom, zoom_duration, text + text_dt (typed over ms), centered_text + centered_text_dt, image ('cutscene1' | 'black'), waiting_end. 'then': level to travel to when it ends.",
+	"_doc": "Plays once when John is in 'level' and 'after_step' is done. Step keys: duration (ms), pos (camera centre), zoom, zoom_duration, text + text_dt (typed over ms), centered_text + centered_text_dt, image ('cutscene1' | 'black'), waiting_end, boom ([x, y]: purple shockwave there; nodes unlocked by after_step appear with it). 'then': level to travel to when it ends.",
 	"intro": {
 		"level": "johns_room",
 		"after_step": "",
@@ -156,30 +156,50 @@
 		"after_step": "Report back to Manos",
 		"steps": [
 			{
-				"duration": 2500,
+				"duration": 2400,
 				"pos": [
 					1150,
 					900
 				],
 				"zoom": 1.2,
-				"text": "Manos: Good! You're getting better!",
-				"text_dt": 1200
+				"text": "Manos: Good! You're getting better every day, John. I'm proud of-",
+				"text_dt": 1800
 			},
 			{
-				"duration": 2000,
+				"duration": 450,
 				"pos": [
-					1750,
-					900
+					1840,
+					940
 				],
-				"text": "Manos: Wait.. this purple aura.. It couldn't be HIM.",
-				"text_dt": 1500
+				"zoom": 1.0,
+				"zoom_duration": 300,
+				"text": ""
 			},
 			{
-				"duration": 3000,
+				"duration": 2200,
+				"boom": [
+					1840,
+					940
+				]
+			},
+			{
+				"duration": 2600,
+				"text": "The explosion tears through the air... and the souls caught in it take on physical form.",
+				"text_dt": 1800
+			},
+			{
+				"duration": 2400,
 				"pos": [
 					1150,
 					900
 				],
+				"zoom": 1.2,
+				"zoom_duration": 600,
+				"text": "Manos: This purple aura.. It couldn't be HIM.",
+				"text_dt": 1500
+			},
+			{
+				"duration": 3000,
 				"text": "Manos: Shadows! Defeat them, John! I'll go get my gear.",
 				"text_dt": 1500
 			},

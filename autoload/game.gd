@@ -26,7 +26,7 @@ const SAVE_PATH := "user://save.json"
 const PAD_NAMES := {
 	JOY_BUTTON_A: "A", JOY_BUTTON_B: "B", JOY_BUTTON_X: "X", JOY_BUTTON_Y: "Y",
 	JOY_BUTTON_BACK: "View", JOY_BUTTON_START: "Menu", JOY_BUTTON_LEFT_SHOULDER: "LB",
-	JOY_BUTTON_RIGHT_SHOULDER: "RB",
+	JOY_BUTTON_RIGHT_SHOULDER: "RB", JOY_BUTTON_DPAD_UP: "D-pad up",
 }
 const WEAPONS := {
 	"training_sword": preload("res://items/training_sword.tres"),

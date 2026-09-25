@@ -10,12 +10,14 @@
 		{"id": "attack", "level": "training_field", "after_step": "", "done_on": "attack",
 			"text": "Attack with {attack}. Aim with the {aim}. Hit a training dummy!"},
 		{"id": "combo", "level": "training_field", "after_step": "", "done_on": "combo",
-			"text": "Press {attack} three times in rhythm for a combo. The third hit is a powerful finisher."},
+			"text": "Press {attack} three times in rhythm for a combo. The third hit knocks enemies back."},
 		{"id": "inventory", "level": "", "after_step": "Defeat the training dummies", "done_on": "inventory",
 			"text": "Press {inventory} to open your inventory, stats and quest log. Spend upgrade points there when you level up."},
 		{"id": "dash", "level": "", "after_step": "Report back to Manos", "done_on": "dash",
 			"text": "Enemies flash red right before they strike. Dash with {dash} - you can't be hurt while dashing, and it cancels your attack."},
 		{"id": "heal", "level": "", "after_step": "Report back to Manos", "done_on": "heal",
-			"text": "Hurt? Drink a potion with {heal}. Chests hold more potions."}
+			"text": "Hurt? Drink a potion with {heal}. Chests hold more potions."},
+		{"id": "parry", "level": "", "after_step": "Report back to Manos", "done_on": "parry",
+			"text": "Or stand your ground: press {parry} just as an enemy strikes to parry. You take no damage and stun it."}
 	]
 }

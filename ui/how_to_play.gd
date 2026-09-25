@@ -1,6 +1,6 @@
 extends PanelContainer
 ## "How to Play" card: controls for keyboard/mouse and controller plus the core
-## combat tips. Shared by the title screen and the pause menu.
+## combat tips. Opened from the pause menu.
 
 signal closed
 
@@ -8,16 +8,18 @@ const ROWS := [
 	["Move", "W A S D", "Left stick"],
 	["Aim", "Mouse", "Right stick"],
 	["Attack", "Left click", "X / RT"],
-	["Dash", "Shift", "B / RB"],
+	["Dash", "C", "RB"],
+	["Parry", "Shift", "LB"],
 	["Talk, open, use", "Space", "A"],
-	["Drink potion", "Q", "Y"],
-	["Inventory, stats, quests", "E", "View"],
+	["Back / close", "Esc", "B"],
+	["Drink potion", "Q", "D-pad up"],
+	["Inventory, stats, quests", "E", "Y"],
 	["Pause", "Esc / P", "Menu"],
 	["Fullscreen", "F11", "-"],
 ]
 const TIPS := [
-	"Press attack three times in rhythm: the third hit is a finisher.",
-	"Enemies flash red just before they strike. Dash away or hit them first to stagger them.",
+	"Press attack three times in rhythm: the third hit knocks enemies back.",
+	"Enemies flash red just before they strike. Dash away, hit them first to stagger them, or parry the strike to stun them.",
 	"Dashing makes you invulnerable, passes through enemies and cancels your attack.",
 	"Level up to earn upgrade points and spend them in the inventory.",
 ]

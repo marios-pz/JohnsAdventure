@@ -3,8 +3,6 @@
 [ext_resource type="Script" path="res://ui/main_menu.gd" id="1_8uxxo"]
 [ext_resource type="Texture2D" path="res://assets/ui/menu_bg1.png" id="2_ei257"]
 [ext_resource type="FontFile" path="res://assets/fonts/blacksword.otf" id="3_p8ri8"]
-[ext_resource type="PackedScene" path="res://ui/how_to_play.tscn" id="4_ubpvv"]
-[ext_resource type="Script" path="res://ui/how_to_play.gd" id="5_arv2f"]
 
 [node name="MainMenu" type="Control" unique_id=2061791398]
 layout_mode = 3
@@ -73,27 +71,8 @@ custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 text = "New Game"
 
-[node name="HowToPlayButton" type="Button" parent="Buttons" unique_id=158456705]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 40)
-layout_mode = 2
-text = "How to Play"
-
 [node name="QuitButton" type="Button" parent="Buttons" unique_id=1901875836]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 text = "Quit"
-
-[node name="HowToPlay" type="PanelContainer" parent="." unique_id=362479883 instance=ExtResource("4_ubpvv")]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -290.0
-offset_right = 400.0
-offset_bottom = 290.0
-script = ExtResource("5_arv2f")

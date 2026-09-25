@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="13_61rx4"]
 [ext_resource type="PackedScene" path="res://enemies/shadow_dummy.tscn" id="14_a8dnh"]
 [ext_resource type="Script" path="res://objects/exit.gd" id="15_n8ipm"]
+[ext_resource type="Script" path="res://objects/storm.gd" id="30_storm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g6nrv"]
 size = Vector2(3400, 40)
@@ -370,3 +371,8 @@ shape = SubResource("RectangleShape2D_et8n6")
 
 [node name="village" type="Marker2D" parent="Spawns" unique_id=2135123462]
 position = Vector2(120, 900)
+
+[node name="Storm" type="Node" parent="."]
+script = ExtResource("30_storm")
+metadata/show_after = "Report back to Manos"
+metadata/hide_after = "Defeat the Big Dummie"

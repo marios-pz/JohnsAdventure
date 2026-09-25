@@ -3,7 +3,7 @@ extends Node
 ##
 ## Shows one tip at a time and ticks it off when John actually performs the
 ## action (`done_on`). Gameplay code reports actions with Tutorial.notify():
-## "move", "interact", "weapon", "attack", "combo", "dash", "heal", "inventory".
+## "move", "interact", "weapon", "attack", "combo", "dash", "parry", "heal", "inventory".
 ## A tip only shows in its `level` ("" = anywhere) once `after_step` is done.
 
 signal changed
@@ -38,7 +38,7 @@ func text_of(tip: Dictionary) -> String:
 		"move": "the left stick" if Game.gamepad else "W A S D",
 		"aim": "right stick" if Game.gamepad else "mouse",
 		"attack": Game.key_name("attack"), "interact": Game.key_name("interact"),
-		"dash": Game.key_name("dash"), "heal": Game.key_name("heal"),
+		"dash": Game.key_name("dash"), "parry": Game.key_name("parry"), "heal": Game.key_name("heal"),
 		"inventory": Game.key_name("inventory"),
 	})
 

@@ -12,6 +12,7 @@ extends Node2D
 ## Quest gates: any node may carry the metadata `show_after` and/or `hide_after`
 ## (quest step names). It is only part of the scene while `show_after` is done
 ## and `hide_after` is not, and it appears/disappears live as the story advances.
+## During a cutscene with a "boom" step, new nodes wait for the boom.
 
 @export var level_id := ""
 @export var title := ""
@@ -39,6 +40,9 @@ func _ready() -> void:
 			_gated[node] = node.get_parent()
 	_apply_gates.call_deferred(false)
 	Quests.step_completed.connect(_on_step_completed)
+	Cutscene.released.connect(func() -> void:
+		_apply_gates(true)
+		Quests.refresh())
 
 
 func _notification(what: int) -> void:
@@ -77,16 +81,16 @@ func _apply_camera_limits(camera: Camera2D) -> void:
 	camera.limit_bottom = int(limits.end.y)
 
 
-## Called by Main once the fade-in is over.
+## Called by Main just before the fade-in.
 func start() -> void:
 	_started = true
 	_try_cutscene()
 
 
 func _on_step_completed(_quest: String, _step: String) -> void:
-	_apply_gates.call_deferred(true)
 	if _started:
-		_try_cutscene.call_deferred()
+		_try_cutscene.call_deferred()  # first, so a boom cutscene can hold the reveals below
+	_apply_gates.call_deferred(true)
 
 
 func _apply_gates(live: bool) -> void:
@@ -97,6 +101,8 @@ func _apply_gates(live: bool) -> void:
 		var active: bool = Quests.is_done(node.get_meta("show_after", "")) \
 				and not (node.has_meta("hide_after") and Quests.is_done(node.get_meta("hide_after")))
 		if active and not node.is_inside_tree():
+			if live and Cutscene.holding:
+				continue  # appears on the cutscene's boom (Cutscene.released)
 			_gated[node].add_child(node)
 			if live and node.has_method("on_revealed"):
 				node.on_revealed()

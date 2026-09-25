@@ -130,7 +130,7 @@ scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_pmvco")
 animation = &"idle"
 centered = false
-offset = Vector2(-16, -34)
+offset = Vector2(-33, -34)
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=1289109123]
 collision_layer = 0

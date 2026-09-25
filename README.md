@@ -27,18 +27,20 @@ scenes can be opened and edited in the editor, but they are played through
 ### Controls
 
 Keyboard/mouse and controller both work at any time, and on-screen prompts
-switch to the device you last touched. The title screen and pause menu have a
-**How to Play** card with the full list.
+switch to the device you last touched. The pause menu has a **How to Play**
+card with the full list.
 
 | Action                               | Keyboard & mouse | Controller (Xbox layout)             |
 | ------------------------------------ | ---------------- | ------------------------------------ |
-| Move                                 | W A S D          | Left stick / D-pad                   |
+| Move                                 | W A S D          | Left stick                           |
 | Aim                                  | Mouse            | Right stick (else: facing direction) |
 | Attack (3-hit combo)                 | Left click       | X / RT                               |
-| Dash (invulnerable, cancels attacks) | Shift            | B / RB                               |
+| Dash (invulnerable, cancels attacks) | C                | RB                                   |
+| Parry (blocks a strike, stuns)       | Shift            | LB                                   |
 | Talk / open / use                    | Space            | A                                    |
-| Drink potion                         | Q                | Y                                    |
-| Inventory, stats, quest log          | E                | View                                 |
+| Drink potion                         | Q                | D-pad up                             |
+| Inventory, stats, quest log          | E                | Y                                    |
+| Back / close                         | Esc              | B                                    |
 | Pause                                | Esc or P         | Menu                                 |
 | Fullscreen                           | F11              | -                                    |
 
@@ -85,11 +87,19 @@ Explore → talk → fight → loot chests → level up → spend upgrade points
 ### Combat
 
 - **3-hit combo.** Clicks are buffered, so the next swing starts as soon as
-  the current one ends. The 3rd hit is a finisher: ×1.5 damage and more knockback.
+  the current one ends. The 3rd hit is a finisher that knocks enemies back further.
 - **Crits.** The chance is John's crit stat plus the weapon's; a crit deals ×1.5.
-- **Dash.** 0.18 s of invulnerability that passes through enemies, with a 0.7 s cooldown.
-  It **cancels an attack** at any point. The camera zooms out, leans into the dash,
+- **Dash.** 0.18 s of invulnerability that passes through enemies, with a 0.5 s cooldown.
+  It **cancels an attack** at any point without breaking the combo, and attacking
+  mid-dash ends it early with a lunge into the swing. The camera zooms out, leans into the dash,
   and John leaves afterimages.
+- **Parry.** John glows white for 0.22 s; a strike landing in that window is
+  blocked with a spark burst and stuns the enemy (heavy ones aren't pushed back).
+  A successful parry resets its 0.45 s cooldown, and parrying cancels an attack.
+  A parry that catches nothing leaves John greyed out until he can parry again,
+  and pressing too early says "Too soon", so mashing it is visibly punished.
+- **Enemies aim.** A strike's hitbox points at John when the windup starts, in
+  any direction (no safe spot under the boss), and stays there, so it can be dodged.
 - **Readable enemies.** Every enemy flashes red during a wind-up before it
   strikes (the telegraph). Knockable enemies are **staggered** out of their
   wind-up when you hit them, so aggression is rewarded; heavy enemies (Guardian, boss) can't be staggered.

@@ -23,6 +23,7 @@ func _travel(level_id: String, from_level: String, position: Variant) -> void:
 	await hud.fade(1.0)
 
 	if level_id == "credits":
+		Game.save_game()  # keep the ending as seen, or Continue replays it
 		get_tree().paused = false
 		get_tree().change_scene_to_file("res://ui/credits.tscn")
 		return
@@ -43,6 +44,6 @@ func _travel(level_id: String, from_level: String, position: Variant) -> void:
 
 	get_tree().paused = false
 	hud.show_level_title(level.title)
+	level.start()  # under the black fade, so John never shows before an entry cutscene
 	await hud.fade(0.0)
 	_travelling = false
-	level.start()

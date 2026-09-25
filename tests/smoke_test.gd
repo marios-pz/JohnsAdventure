@@ -51,7 +51,7 @@ func _initialize() -> void:
 	for tip in tips:
 		check(tip.level == "" or levels.has(tip.level), "tutorial %s: unknown level %s" % [tip.id, tip.level])
 		check(tip.after_step == "" or quests._step_index.has(tip.after_step), "tutorial %s: unknown step" % tip.id)
-		check(tip.done_on in ["move", "interact", "weapon", "attack", "combo", "dash", "heal", "inventory"],
+		check(tip.done_on in ["move", "interact", "weapon", "attack", "combo", "dash", "parry", "heal", "inventory"],
 				"tutorial %s: unknown action %s" % [tip.id, tip.done_on])
 
 	var dialogue: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/dialogue.json"))
@@ -89,6 +89,31 @@ func _initialize() -> void:
 	check(player.is_attacking(), "player: attack did not start")
 	game.toggle_equip("training_sword")
 	check(not player.is_attacking(), "player: stuck attacking after unequip mid-swing")
+	game.toggle_equip("training_sword")
+	player._combo_timer = 0.0  # fresh combo
+	player._attack()
+	player._dash()
+	check(player.is_dashing() and not player.is_attacking(), "player: dash did not cancel the swing")
+	player._attack()
+	check(player.is_attacking() and not player.is_dashing(), "player: attack did not cancel the dash")
+	check(player._combo == 2, "player: dash-cancel broke the combo (hit %d)" % player._combo)
+	# Parry: a strike inside the window is blocked and stuns the attacker.
+	var goblin: Node = load("res://enemies/goblin.tscn").instantiate()
+	root.add_child(goblin)
+	player._parry_cooldown = 0.0
+	player._parry()
+	var hp_before: int = game.health
+	player.hurt(10, Vector2.ZERO, goblin)
+	check(game.health == hp_before, "player: parried strike still dealt damage")
+	check(goblin._timer > goblin.recover, "enemy: not stunned by a parry")
+	player.hurt(10, Vector2(1, 0), goblin)
+	check(game.health == hp_before, "player: follow-up hit in the same instant landed")
+	player._invulnerable = 0.0
+	player.hurt(10, Vector2.ZERO, goblin)
+	check(game.health < hp_before, "player: hit outside the parry window was blocked")
+	goblin._start_windup(Vector2(0, 120))  # John straight below: the strike must point down
+	check(goblin._attack_shape.position.y > goblin._reach.y + 20.0, "enemy: strike does not reach John below it")
+	goblin.free()
 	player.free()
 	game.from_dict({})
 

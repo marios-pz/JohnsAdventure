@@ -25,5 +25,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _back() -> void:
+	if not is_processing():
+		return  # already leaving
 	set_process(false)
+	await Audio.fade_out_music()
 	get_tree().change_scene_to_file("res://ui/main_menu.tscn")

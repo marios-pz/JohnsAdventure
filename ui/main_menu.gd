@@ -1,6 +1,6 @@
 extends Control
-## Title screen: Continue / New Game / How to Play / Quit.
-## Fully usable with a controller (buttons take focus, B closes How to Play).
+## Title screen: Continue / New Game / Quit.
+## Fully usable with a controller (buttons take focus).
 
 
 func _ready() -> void:
@@ -8,15 +8,10 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	Audio.play_music("main_theme")
 	%ContinueButton.visible = Game.has_save()
-	%ContinueButton.pressed.connect(_continue)
-	%NewGameButton.pressed.connect(_new_game)
-	%HowToPlayButton.pressed.connect(_show_how_to_play)
+	%ContinueButton.pressed.connect(_start.bind(true))
+	%NewGameButton.pressed.connect(_start.bind(false))
 	%QuitButton.pressed.connect(get_tree().quit)
 	%QuitButton.visible = not OS.has_feature("web")  # a browser tab can't quit itself
-	%HowToPlay.hide()
-	%HowToPlay.closed.connect(func() -> void:
-		%Buttons.show()
-		%HowToPlayButton.grab_focus())
 	(%ContinueButton if Game.has_save() else %NewGameButton).grab_focus()
 	# The two menu backgrounds alternate, like the original title screen.
 	var tween := create_tween().set_loops()
@@ -26,22 +21,12 @@ func _ready() -> void:
 	tween.tween_interval(2.25)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if %HowToPlay.visible and event.is_action_pressed("ui_cancel"):
-		%HowToPlay.close()
-		get_viewport().set_input_as_handled()
-
-
-func _continue() -> void:
-	Game.load_game()
+func _start(from_save: bool) -> void:
+	for button: Button in %Buttons.get_children():
+		button.disabled = true  # no double start while the music fades
+	if from_save:
+		Game.load_game()
+	else:
+		Game.new_game()
+	await Audio.fade_out_music()
 	get_tree().change_scene_to_file("res://main.tscn")
-
-
-func _new_game() -> void:
-	Game.new_game()
-	get_tree().change_scene_to_file("res://main.tscn")
-
-
-func _show_how_to_play() -> void:
-	%Buttons.hide()
-	%HowToPlay.open()

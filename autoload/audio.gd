@@ -17,13 +17,16 @@ const SFX := {
 	"select": "res://assets/sounds/Select_UI.ogg",
 }
 
+const MUSIC_VOLUME := 0.6
+
 var current_music := ""
 var _music := AudioStreamPlayer.new()
+var _fade: Tween
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_music.volume_db = linear_to_db(0.6)
+	_music.volume_db = linear_to_db(MUSIC_VOLUME)
 	add_child(_music)
 
 
@@ -32,6 +35,9 @@ func play_music(track: String) -> void:
 	if track == current_music:
 		return
 	current_music = track
+	if _fade:
+		_fade.kill()
+	_music.volume_db = linear_to_db(MUSIC_VOLUME)
 	var stream: AudioStreamOggVorbis = load(MUSIC[track])
 	stream.loop = true
 	_music.stream = stream
@@ -41,6 +47,19 @@ func play_music(track: String) -> void:
 func stop_music() -> void:
 	current_music = ""
 	_music.stop()
+
+
+## Fades the track out and forgets it, so the next play_music() starts fresh even
+## when it asks for the same track (title screen and John's room share main_theme).
+## Await it before changing scene between the menu and the game.
+func fade_out_music(time := 0.6) -> void:
+	current_music = ""
+	if _fade:
+		_fade.kill()
+	_fade = create_tween()
+	_fade.tween_property(_music, "volume_db", -60.0, time)
+	_fade.tween_callback(_music.stop)
+	await _fade.finished
 
 
 func play_sfx(sound: String, volume := 0.5) -> void:
