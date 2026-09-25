@@ -1,0 +1,81 @@
+# Web build: exports the "Web" preset and uploads it as a zip artifact
+# (index.html at the root, ready for itch.io or any static host).
+name: Web build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']          # a version tag also publishes a GitHub Release
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write         # creating the release and uploading its assets
+
+env:
+  GODOT_VERSION: 4.7.2
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Tag builds are named after the tag (v1.0.0), everything else after the commit (dev-39e338a).
+      - name: Version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then v="$GITHUB_REF_NAME"; else v="dev-${GITHUB_SHA::7}"; fi
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+
+      # The full template archive is ~1.3 GB: download it once, keep only what this build needs.
+      - name: Cache Godot and web templates
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}-web
+
+      - name: Install Godot and web templates
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          base="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable"
+          templates="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p ~/godot "$templates"
+          curl -sSfL "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" -o godot.zip
+          unzip -q godot.zip -d ~/godot
+          mv ~/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot/godot
+          curl -sSfL "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz" -o templates.tpz
+          unzip -q -j templates.tpz 'templates/version.txt' 'templates/web_nothreads_*' -d "$templates"
+          rm godot.zip templates.tpz
+
+      - name: Import assets
+        run: ~/godot/godot --headless --path . --import
+
+      - name: Smoke test
+        run: ~/godot/godot --headless --path . -s tests/smoke_test.gd
+
+      - name: Export Web
+        run: |
+          mkdir -p build/web
+          ~/godot/godot --headless --path . --export-release "Web" build/web/index.html
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: johns-adventure-${{ env.VERSION }}-web
+          path: build/web
+          if-no-files-found: error
+
+      - name: Package release zip
+        if: github.ref_type == 'tag'
+        run: cd build/web && zip -qr "../JohnsAdventure-$VERSION-web.zip" .
+
+      # Both workflows attach to the same release: whichever runs first creates it.
+      - name: Publish to GitHub Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$VERSION" --title "John's Adventure $VERSION" --generate-notes || true
+          gh release upload "$VERSION" "build/JohnsAdventure-$VERSION-web.zip" --clobber

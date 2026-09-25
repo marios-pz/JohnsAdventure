@@ -72,6 +72,22 @@ and saves to the browser's storage.
 3. Upload the contents of `build/web/` to any static host (itch.io: zip
    the folder and upload it as an HTML game). Threads are off, so no special headers are needed.
 
+### CI builds and releases
+
+GitHub Actions build the game on every push to `main` and every pull request:
+`web.yml` (Web, zipped) and `desktop.yml` (Windows `.exe` and Linux executable,
+game data embedded). Both run the smoke test first. Builds are downloadable from
+the run's **Artifacts**, named `johns-adventure-dev-<commit>-<platform>`.
+
+To publish a release, push a version tag:
+
+```
+git tag v1.0.0 && git push origin v1.0.0
+```
+
+The same workflows then attach `JohnsAdventure-v1.0.0-web.zip`, `-windows.zip`
+and `-linux.tar.gz` to the GitHub Release `v1.0.0`, creating it with generated notes.
+
 Keep `data/*.json` in the preset's **include filter**. Godot only exports resources
 by default, and the story data is plain JSON read at runtime. In the browser the
 Quit button is hidden, and **P** pauses too (browsers use Esc to leave fullscreen).
