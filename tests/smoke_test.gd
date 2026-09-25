@@ -80,6 +80,18 @@ func _initialize() -> void:
 			check(quests.is_done(step.name), "step '%s' did not complete" % step.name)
 		check(quests.current_step(quest).is_empty(), "quest %s not finished" % quest)
 
+	# Unequipping mid-swing must not leave John stuck in the attack state.
+	var game: Node = root.get_node("Game")
+	game.from_dict({"weapons": ["training_sword"], "equipped": "training_sword"})
+	var player: Node = load("res://player/player.tscn").instantiate()
+	root.add_child(player)
+	player._attack()
+	check(player.is_attacking(), "player: attack did not start")
+	game.toggle_equip("training_sword")
+	check(not player.is_attacking(), "player: stuck attacking after unequip mid-swing")
+	player.free()
+	game.from_dict({})
+
 	for level in levels.values():
 		level.free()
 	print("smoke test: %d failure(s)" % failures)

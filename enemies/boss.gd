@@ -14,8 +14,9 @@ func _ready() -> void:
 	add_to_group("boss")
 
 
-func take_hit(amount: int, crit: bool, push: Vector2, weapon: Weapon) -> void:
-	super(amount, crit, push, weapon)
+## Checked on every damage source, so bleed ticks can trigger phase 2 too.
+func _damage(amount: int, color: Color) -> void:
+	super(amount, color)
 	if not enraged and not dead and hp <= max_hp / 2:
 		_enrage()
 

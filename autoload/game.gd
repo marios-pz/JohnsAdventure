@@ -254,6 +254,7 @@ func respawn() -> void:
 	from_dict(_checkpoint)
 	cutscenes_played = played
 	health = max_health
+	stats_changed.emit()
 	travel_requested.emit(current_level, "", saved_position)
 
 

@@ -88,8 +88,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_death.hide()
 			Game.respawn()
 		return
-	if Cutscene.playing or Game.health <= 0:
-		return
+	if Cutscene.playing or Game.health <= 0 or _fade.color.a > 0.0:
+		return  # during a level fade Main owns get_tree().paused
 	if event.is_action_pressed("ui_cancel") and (_menus.visible or %HowToPlay.visible):
 		if %HowToPlay.visible:
 			%HowToPlay.close()
@@ -157,7 +157,9 @@ func _refresh() -> void:
 		button.text = "%s%s   +%d dmg" % ["> " if id == Game.equipped else "", item.display_name, item.damage]
 		button.icon = item.icon
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.pressed.connect(Game.toggle_equip.bind(id))
+		button.pressed.connect(func() -> void:
+			Game.toggle_equip(id)
+			_focus_first.call_deferred(list))  # the pressed button was just freed
 		list.add_child(button)
 	if Game.weapons.is_empty():
 		var empty := Label.new()
@@ -219,7 +221,7 @@ func _toggle_pause() -> void:
 ## Gives controller/keyboard focus to the first button in `container` (or Close).
 func _focus_first(container: Control) -> void:
 	for child in container.get_children():
-		if child is Button:
+		if child is Button and not child.is_queued_for_deletion():
 			child.grab_focus()
 			return
 	%CloseMenuButton.grab_focus()

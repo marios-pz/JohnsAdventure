@@ -83,6 +83,8 @@ func _physics_process(delta: float) -> void:
 	_invulnerable = maxf(0.0, _invulnerable - delta)
 	_combo_timer = maxf(0.0, _combo_timer - delta)
 
+	if not is_dashing():
+		dash_charge = minf(1.0, dash_charge + delta / DASH_COOLDOWN)
 	if is_dashing():
 		_dash_left -= delta
 		velocity = _dash_dir * DASH_SPEED
@@ -96,7 +98,6 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 	else:
 		velocity = input * SPEED
-		dash_charge = minf(1.0, dash_charge + delta / DASH_COOLDOWN)
 		if input != Vector2.ZERO:
 			facing = _direction_name(input)
 
@@ -219,12 +220,7 @@ func _on_swing_finished() -> void:
 func _dash() -> void:
 	if dash_charge < 1.0:
 		return
-	if is_attacking():  # dash cancels the swing (and the rest of the combo)
-		_swing.stop()
-		_swing.visible = false
-		_body.visible = true
-		_queued_attack = false
-		_combo = 0
+	_cancel_attack()  # dash cancels the swing (and the rest of the combo)
 	var input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	_dash_dir = input.normalized() if input != Vector2.ZERO else DIRECTIONS[facing]
 	facing = _direction_name(_dash_dir)
@@ -256,7 +252,18 @@ func _spawn_afterimage() -> void:
 	fade.tween_callback(ghost.queue_free)
 
 
+func _cancel_attack() -> void:
+	if not is_attacking():
+		return
+	_swing.stop()
+	_swing.visible = false
+	_body.visible = true
+	_queued_attack = false
+	_combo = 0
+
+
 func _on_inventory_changed() -> void:
+	_cancel_attack()  # swapping frames mid-swing never emits animation_finished (soft-lock)
 	var weapon := Game.weapon()
 	_swing.sprite_frames = weapon.attack_frames if weapon else null
 
