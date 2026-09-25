@@ -19,8 +19,8 @@ data, and gameplay code is small scripts.
 1. Open `Rework/project.godot` in Godot 4.7 or newer.
 2. Press **F5**. The game starts on the title screen (`ui/main_menu.tscn`).
 
-*Continue* resumes the autosave. The save is `user://save.json`
-(*Project → Open User Data Folder*), and deleting it gives you a fresh start. Level
+_Continue_ resumes the autosave. The save is `user://save.json`
+(_Project → Open User Data Folder_), and deleting it gives you a fresh start. Level
 scenes can be opened and edited in the editor, but they are played through
 `main.tscn`, which adds John, the HUD and the save/quest state.
 
@@ -30,20 +30,20 @@ Keyboard/mouse and controller both work at any time, and on-screen prompts
 switch to the device you last touched. The title screen and pause menu have a
 **How to Play** card with the full list.
 
-| Action | Keyboard & mouse | Controller (Xbox layout) |
-|---|---|---|
-| Move | W A S D | Left stick / D-pad |
-| Aim | Mouse | Right stick (else: facing direction) |
-| Attack (3-hit combo) | Left click | X / RT |
-| Dash (invulnerable, cancels attacks) | Shift | B / RB |
-| Talk / open / use | Space | A |
-| Drink potion | Q | Y |
-| Inventory, stats, quest log | E | View |
-| Pause | Esc or P | Menu |
-| Fullscreen | F11 | - |
+| Action                               | Keyboard & mouse | Controller (Xbox layout)             |
+| ------------------------------------ | ---------------- | ------------------------------------ |
+| Move                                 | W A S D          | Left stick / D-pad                   |
+| Aim                                  | Mouse            | Right stick (else: facing direction) |
+| Attack (3-hit combo)                 | Left click       | X / RT                               |
+| Dash (invulnerable, cancels attacks) | Shift            | B / RB                               |
+| Talk / open / use                    | Space            | A                                    |
+| Drink potion                         | Q                | Y                                    |
+| Inventory, stats, quest log          | E                | View                                 |
+| Pause                                | Esc or P         | Menu                                 |
+| Fullscreen                           | F11              | -                                    |
 
 Controls are fixed on purpose (no rebinding). To change a default, edit
-*Project → Project Settings → Input Map*.
+_Project → Project Settings → Input Map_.
 
 ### Tutorial
 
@@ -64,8 +64,8 @@ an edge or the centre. Small rooms stay centred on very wide screens.
 The project is web-ready. It uses the Compatibility renderer, is single-threaded,
 and saves to the browser's storage.
 
-1. Install the Godot 4.7 export templates (*Editor → Manage Export Templates*).
-2. Export the **Web** preset (*Project → Export*), or from a terminal:
+1. Install the Godot 4.7 export templates (_Editor → Manage Export Templates_).
+2. Export the **Web** preset (_Project → Export_), or from a terminal:
    `godot --headless --export-release "Web" build/web/index.html`
 3. Upload the contents of `build/web/` to any static host (itch.io: zip
    the folder and upload it as an HTML game). Threads are off, so no special headers are needed.
@@ -79,9 +79,11 @@ Quit button is hidden, and **P** pauses too (browsers use Esc to leave fullscree
 ## Game design
 
 ### Core loop
+
 Explore → talk → fight → loot chests → level up → spend upgrade points.
 
 ### Combat
+
 - **3-hit combo.** Clicks are buffered, so the next swing starts as soon as
   the current one ends. The 3rd hit is a finisher: ×1.5 damage and more knockback.
 - **Crits.** The chance is John's crit stat plus the weapon's; a crit deals ×1.5.
@@ -95,6 +97,7 @@ Explore → talk → fight → loot chests → level up → spend upgrade points
 - Getting hit gives John 0.6 s of invulnerability, so hits never stack unfairly.
 
 ### Progression
+
 - XP to next level = `100 × level`. A level-up fully heals and gives **1 upgrade point**.
 - Upgrades: **Damage** +2, **Endurance** +1 (a flat reduction to every hit taken), **Crit** +2 %.
 - Weapons: **Training Sword** (training field chest) and **Knight Sword**. The
@@ -104,13 +107,13 @@ Explore → talk → fight → loot chests → level up → spend upgrade points
 
 ### Enemies
 
-| Enemy | Role |
-|---|---|
-| Training Dummy | Static target that teaches the combo |
-| Shadow | Chaser with a purple aura |
-| Goblin | Fast and fragile; comes in groups |
-| Guardian | Slow and tanky with a long spear reach and a big telegraph; can't be staggered |
-| **The Big Dummie** (boss) | At half health it roars, summons 3 Shadows and gets faster |
+| Enemy                     | Role                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| Training Dummy            | Static target that teaches the combo                                           |
+| Shadow                    | Chaser with a purple aura                                                      |
+| Goblin                    | Fast and fragile; comes in groups                                              |
+| Guardian                  | Slow and tanky with a long spear reach and a big telegraph; can't be staggered |
+| **The Big Dummie** (boss) | At half health it roars, summons 3 Shadows and gets faster                     |
 
 ### World and story flow
 
@@ -132,6 +135,7 @@ The HUD always shows the current **objective**. Quest steps pop up as toasts,
 and there is an autosave (and death checkpoint) at every level transition.
 
 ### What changed from the pygame version
+
 - Hand-designed levels, not layout code. The world is now 9 compact
   levels; the original had 19 (9 near-identical cave rooms).
 - NPC dialogue changes with story progress (`data/dialogue.json`), with multiple pages.
@@ -192,7 +196,7 @@ Rework/
   calls `Game.open_dialogue()` and `Game.travel()`, and `Game.focus_changed` is
   emitted for the HUD to react to.
 - **Interaction protocol.** Anything with an `interact()` method (on the node
-  or its parent) that overlaps John's `Interactor` area on the *interactables*
+  or its parent) that overlaps John's `Interactor` area on the _interactables_
   physics layer can be used. Optional methods: `can_interact()` and
   `set_highlight(on)`. It also needs a `display_name` property.
 
@@ -200,32 +204,32 @@ Rework/
 
 Every level is a `Node2D` with `levels/level.gd` and this layout:
 
-| Node | Purpose |
-|---|---|
-| `CanvasModulate` *(optional)* | Present = dark level: lights are on and tint the scene. Absent = daylight. |
-| `Ground` | Flat decoration drawn under everything (roads, grass, room background) |
-| `World` | **Y-sorted**: props, walls, NPCs, enemies, chests. John is added here. |
-| `Overlay` | Drawn on top (the black "void" around cave rooms) |
-| `Exits` | `Exit` areas; `target` = level id or `credits` |
-| `Spawns` | `Marker2D` per entrance, **named after the level John comes from** |
+| Node                          | Purpose                                                                    |
+| ----------------------------- | -------------------------------------------------------------------------- |
+| `CanvasModulate` _(optional)_ | Present = dark level: lights are on and tint the scene. Absent = daylight. |
+| `Ground`                      | Flat decoration drawn under everything (roads, grass, room background)     |
+| `World`                       | **Y-sorted**: props, walls, NPCs, enemies, chests. John is added here.     |
+| `Overlay`                     | Drawn on top (the black "void" around cave rooms)                          |
+| `Exits`                       | `Exit` areas; `target` = level id or `credits`                             |
+| `Spawns`                      | `Marker2D` per entrance, **named after the level John comes from**         |
 
 Inspector exports on the root: `level_id`, `title`, `music`, `background`
 (clear colour), `camera_limits`, `start_position`.
 
 **Quest gates.** Add the metadata `show_after` and/or `hide_after` (a quest
-step name) to *any* node in a level. The node only exists while `show_after`
+step name) to _any_ node in a level. The node only exists while `show_after`
 is done and `hide_after` is not, and it appears or disappears live as the story
 advances. Revealed enemies play a summon effect. This single mechanism
 handles every story change in the world; there is no per-level script.
 
 ### Physics layers
 
-| Layer | Used by |
-|---|---|
-| 1 `world` | walls, props, NPC bodies, chests |
-| 2 `player` | John's body (enemy attacks and walk-in exits detect it) |
-| 3 `enemies` | enemy bodies (John's sword area detects them) |
-| 4 `interactables` | NPC/chest interact areas, doors with a prompt |
+| Layer             | Used by                                                 |
+| ----------------- | ------------------------------------------------------- |
+| 1 `world`         | walls, props, NPC bodies, chests                        |
+| 2 `player`        | John's body (enemy attacks and walk-in exits detect it) |
+| 3 `enemies`       | enemy bodies (John's sword area detects them)           |
+| 4 `interactables` | NPC/chest interact areas, doors with a prompt           |
 
 ---
 
@@ -282,6 +286,10 @@ were produced once by a migration script from the original sprite atlas data
 - Art: Marios Papazoglou
 - Story: Manos Danezis
 - Music: Thanos Pallis
+
+## AI Usage
+
+Do not use AI if you don't understand its implementations.
 
 ## License
 
